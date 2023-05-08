@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace AdminPortal
 {
@@ -8,23 +7,32 @@ namespace AdminPortal
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js").Include(
+                      "~/Content/assets/js/jquery-3.1.1.min.js",
+                      "~/Scripts/vue.js",
+                      "~/Scripts/axios.min.js",
+                      "~/Content/assets/js/popper.min.js",
+                      "~/Content/assets/js/bootstrap.js",
+                      "~/Content/assets/js/inspinia.js",
+                      "~/Content/assets/js/plugins/dataTables/datatables.min.js",
+                      "~/Content/assets/js/plugins/sweetalert/sweetalert.min.js",
+                      "~/Scripts/arrow-table.min.js",
+                      "~/Scripts/v-money.js",
+                      "~/Scripts/select2.js"
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
-
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                    ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/assets/css/bootstrap.min.css",
+                      "~/Content/assets/font-awesome/css/font-awesome.css",
+                      "~/Content/assets/css/animate.css",
+                      "~/Content/assets/css/style.css",
+                      "~/Content/assets/css/plugins/dataTables/datatables.min.css",
+                      "~/Content/assets/css/plugins/sweetalert/sweetalert.css",
+                      "~/Content/assets/css/navstyles.css",
+                      "~/Content/style.css",
+                      "~/Content/select2.min.css"
+                      ));
         }
     }
 }

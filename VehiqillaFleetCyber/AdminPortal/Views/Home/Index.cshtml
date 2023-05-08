@@ -1,31 +1,104 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@{ ViewBag.Title = "Home"; }
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="data" role="tabpanel">
+                        <table class="datatables-basic table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>id</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Date</th>
+                                    <th>Salary</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="form" role="tabpanel">
+                        <!-- Basic Layout & Basic with Icons -->
+                        <div class="row">
+                            <!-- Basic Layout -->
+                            <div class="col-xxl">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <form id="app">
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="basic-default-name" required placeholder="John Doe" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-default-company">Company</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="basic-default-company" placeholder="ACME Inc." />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-default-email">Email</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-default-email2" />
+                                                        <span class="input-group-text" id="basic-default-email2">example.com</span>
+                                                    </div>
+                                                    <div class="form-text"> You can use letters, numbers & periods </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-default-phone">Phone No</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" id="basic-default-phone" class="form-control phone-mask" placeholder="658 799 8941" aria-label="658 799 8941" aria-describedby="basic-default-phone" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-default-message">Message</label>
+                                                <div class="col-sm-10">
+                                                    <textarea id="basic-default-message" class="form-control" placeholder="Hi, Do you have a moment to talk Joe?" aria-label="Hi, Do you have a moment to talk Joe?" aria-describedby="basic-icon-default-message2"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-primary float-end" >Save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                   
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        var dt;
+        dt = $('.datatables-basic').DataTable(options);
+    </script>
+
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>

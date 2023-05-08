@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System.Web;
 using System.Web.Mvc;
 
@@ -9,23 +8,24 @@ namespace AdminPortal.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-        public ActionResult About()
+        public ActionResult Index(bool ShowDeleted = false)
         {
-            ViewBag.Message = "Your application description page.";
+           
 
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpGet]
+        public ActionResult Logout()
         {
-            ViewBag.Message = "Your contact page.";
+            Session.Abandon();
 
-            return View();
+            IAuthenticationManager AuthenticationManager = HttpContext.GetOwinContext().Authentication;
+
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+            return RedirectToAction("Login", "Account");
         }
     }
 }
