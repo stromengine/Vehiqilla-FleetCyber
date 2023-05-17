@@ -290,6 +290,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Services\DropdownsController.cs" />
+    <Compile Include="Controllers\Services\DeleteController.cs" />
+    <Compile Include="Controllers\Services\GetController.cs" />
     <Compile Include="Controllers\Services\SaveController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -299,61 +302,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305062201177_Initial.cs" />
-    <Compile Include="Migrations\202305062201177_Initial.designer.cs">
-      <DependentUpon>202305062201177_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202305171519392_Intial.cs" />
+    <Compile Include="Migrations\202305171519392_Intial.designer.cs">
+      <DependentUpon>202305171519392_Intial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305062205576_Company.cs" />
-    <Compile Include="Migrations\202305062205576_Company.designer.cs">
-      <DependentUpon>202305062205576_Company.cs</DependentUpon>
+    <Compile Include="Migrations\202305171614423_RemovedColumnsFromApp.cs" />
+    <Compile Include="Migrations\202305171614423_RemovedColumnsFromApp.designer.cs">
+      <DependentUpon>202305171614423_RemovedColumnsFromApp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305062210432_CompanyRelation.cs" />
-    <Compile Include="Migrations\202305062210432_CompanyRelation.designer.cs">
-      <DependentUpon>202305062210432_CompanyRelation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305062214595_CompanyRelation1.cs" />
-    <Compile Include="Migrations\202305062214595_CompanyRelation1.designer.cs">
-      <DependentUpon>202305062214595_CompanyRelation1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305070900511_BasicDatabase.cs" />
-    <Compile Include="Migrations\202305070900511_BasicDatabase.designer.cs">
-      <DependentUpon>202305070900511_BasicDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305071151153_CompanyUsers.cs" />
-    <Compile Include="Migrations\202305071151153_CompanyUsers.designer.cs">
-      <DependentUpon>202305071151153_CompanyUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305071156154_CompanyUsers1.cs" />
-    <Compile Include="Migrations\202305071156154_CompanyUsers1.designer.cs">
-      <DependentUpon>202305071156154_CompanyUsers1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305081520024_NameFieldinUsers.cs" />
-    <Compile Include="Migrations\202305081520024_NameFieldinUsers.designer.cs">
-      <DependentUpon>202305081520024_NameFieldinUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305081559192_urlInCompany.cs" />
-    <Compile Include="Migrations\202305081559192_urlInCompany.designer.cs">
-      <DependentUpon>202305081559192_urlInCompany.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305081636360_companyUserRemoved.cs" />
-    <Compile Include="Migrations\202305081636360_companyUserRemoved.designer.cs">
-      <DependentUpon>202305081636360_companyUserRemoved.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305081637570_companyUserRemoved1.cs" />
-    <Compile Include="Migrations\202305081637570_companyUserRemoved1.designer.cs">
-      <DependentUpon>202305081637570_companyUserRemoved1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305081738544_companyUserReadded.cs" />
-    <Compile Include="Migrations\202305081738544_companyUserReadded.designer.cs">
-      <DependentUpon>202305081738544_companyUserReadded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305081758446_companyUserReadded1.cs" />
-    <Compile Include="Migrations\202305081758446_companyUserReadded1.designer.cs">
-      <DependentUpon>202305081758446_companyUserReadded1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305081808288_companyUserReadded2.cs" />
-    <Compile Include="Migrations\202305081808288_companyUserReadded2.designer.cs">
-      <DependentUpon>202305081808288_companyUserReadded2.cs</DependentUpon>
+    <Compile Include="Migrations\202305171709085_AppVulnerabilityTable.cs" />
+    <Compile Include="Migrations\202305171709085_AppVulnerabilityTable.designer.cs">
+      <DependentUpon>202305171709085_AppVulnerabilityTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1306,6 +1265,7 @@
     <Content Include="Views\Admin\Apps.cshtml" />
     <Content Include="Views\Admin\Breaches.cshtml" />
     <Content Include="Views\Admin\Vulnerabilities.cshtml" />
+    <Content Include="Views\Admin\AppVulnerability.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Uploads\Attachments\" />
@@ -1325,47 +1285,14 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305062201177_Initial.resx">
-      <DependentUpon>202305062201177_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202305171519392_Intial.resx">
+      <DependentUpon>202305171519392_Intial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305062205576_Company.resx">
-      <DependentUpon>202305062205576_Company.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202305171614423_RemovedColumnsFromApp.resx">
+      <DependentUpon>202305171614423_RemovedColumnsFromApp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305062210432_CompanyRelation.resx">
-      <DependentUpon>202305062210432_CompanyRelation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305062214595_CompanyRelation1.resx">
-      <DependentUpon>202305062214595_CompanyRelation1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305070900511_BasicDatabase.resx">
-      <DependentUpon>202305070900511_BasicDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305071151153_CompanyUsers.resx">
-      <DependentUpon>202305071151153_CompanyUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305071156154_CompanyUsers1.resx">
-      <DependentUpon>202305071156154_CompanyUsers1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305081520024_NameFieldinUsers.resx">
-      <DependentUpon>202305081520024_NameFieldinUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305081559192_urlInCompany.resx">
-      <DependentUpon>202305081559192_urlInCompany.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305081636360_companyUserRemoved.resx">
-      <DependentUpon>202305081636360_companyUserRemoved.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305081637570_companyUserRemoved1.resx">
-      <DependentUpon>202305081637570_companyUserRemoved1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305081738544_companyUserReadded.resx">
-      <DependentUpon>202305081738544_companyUserReadded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305081758446_companyUserReadded1.resx">
-      <DependentUpon>202305081758446_companyUserReadded1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305081808288_companyUserReadded2.resx">
-      <DependentUpon>202305081808288_companyUserReadded2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202305171709085_AppVulnerabilityTable.resx">
+      <DependentUpon>202305171709085_AppVulnerabilityTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,7 +1,492 @@
 ﻿
 @{
-    ViewBag.Title = "Oems";
+    ViewBag.Title = "OEMs";
 }
 
-<h2>Oems</h2>
+@using AdminPortal.Models
 
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="data" role="tabpanel">
+                        <table class="datatables-basic table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Brand</th>
+                                    <th>Model</th>
+                                    <th>Year Manufactured</th>
+                                    <th>Country of Origin</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                }
+                                @foreach (var m in Model)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@m.Name</td>
+                                        <td>@m.Brand</td>
+                                        <td>@m.Model</td>
+                                        <td>@m.YearManufactured</td>
+                                        <td>@m.Country</td>
+                                        <td><button onclick="EditPage(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button><button onclick="Delete(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-danger ms-2"><i class="fa fa-trash"></i></button></td>
+                                    </tr>
+
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="form" role="tabpanel">
+                        <!-- Basic Layout & Basic with Icons -->
+                        <div class="row" id="app">
+                            <!-- Basic Layout -->
+                            <div class="col-xxl">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <form @@submit.prevent="handleSubmit" encytpe="multipart/form-data">
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Name">Name</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" v-model="vm.Name"  class="form-control" id="Name" required maxlength="250" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Brand">Brand</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" v-model="vm.Brand" class="form-control" id="Brand" required maxlength="250" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Model">Model</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" v-model="vm.Model" class="form-control" id="Model" required maxlength="250" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="YearManufactured">Year Manufactured</label>
+                                                <div class="col-sm-10">
+                                                    <input type="number" v-model="vm.YearManufactured" min="0" max="9999" class="form-control" id="YearManufactured" required />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Name">Country of Origin</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" list="CountryList" v-model="vm.Country" class="form-control" id="Country" required maxlength="250" />
+                                                </div>
+                                                <datalist id="CountryList">
+                                                    <option value="Afghanistan" />
+                                                    <option value="Albania" />
+                                                    <option value="Algeria" />
+                                                    <option value="American Samoa" />
+                                                    <option value="Andorra" />
+                                                    <option value="Angola" />
+                                                    <option value="Anguilla" />
+                                                    <option value="Antarctica" />
+                                                    <option value="Antigua and Barbuda" />
+                                                    <option value="Argentina" />
+                                                    <option value="Armenia" />
+                                                    <option value="Aruba" />
+                                                    <option value="Australia" />
+                                                    <option value="Austria" />
+                                                    <option value="Azerbaijan" />
+                                                    <option value="Bahamas" />
+                                                    <option value="Bahrain" />
+                                                    <option value="Bangladesh" />
+                                                    <option value="Barbados" />
+                                                    <option value="Belarus" />
+                                                    <option value="Belgium" />
+                                                    <option value="Belize" />
+                                                    <option value="Benin" />
+                                                    <option value="Bermuda" />
+                                                    <option value="Bhutan" />
+                                                    <option value="Bolivia" />
+                                                    <option value="Bosnia and Herzegovina" />
+                                                    <option value="Botswana" />
+                                                    <option value="Bouvet Island" />
+                                                    <option value="Brazil" />
+                                                    <option value="British Indian Ocean Territory" />
+                                                    <option value="Brunei Darussalam" />
+                                                    <option value="Bulgaria" />
+                                                    <option value="Burkina Faso" />
+                                                    <option value="Burundi" />
+                                                    <option value="Cambodia" />
+                                                    <option value="Cameroon" />
+                                                    <option value="Canada" />
+                                                    <option value="Cape Verde" />
+                                                    <option value="Cayman Islands" />
+                                                    <option value="Central African Republic" />
+                                                    <option value="Chad" />
+                                                    <option value="Chile" />
+                                                    <option value="China" />
+                                                    <option value="Christmas Island" />
+                                                    <option value="Cocos (Keeling) Islands" />
+                                                    <option value="Colombia" />
+                                                    <option value="Comoros" />
+                                                    <option value="Congo" />
+                                                    <option value="Congo, The Democratic Republic of The" />
+                                                    <option value="Cook Islands" />
+                                                    <option value="Costa Rica" />
+                                                    <option value="Cote D'ivoire" />
+                                                    <option value="Croatia" />
+                                                    <option value="Cuba" />
+                                                    <option value="Cyprus" />
+                                                    <option value="Czech Republic" />
+                                                    <option value="Denmark" />
+                                                    <option value="Djibouti" />
+                                                    <option value="Dominica" />
+                                                    <option value="Dominican Republic" />
+                                                    <option value="Ecuador" />
+                                                    <option value="Egypt" />
+                                                    <option value="El Salvador" />
+                                                    <option value="Equatorial Guinea" />
+                                                    <option value="Eritrea" />
+                                                    <option value="Estonia" />
+                                                    <option value="Ethiopia" />
+                                                    <option value="Falkland Islands (Malvinas)" />
+                                                    <option value="Faroe Islands" />
+                                                    <option value="Fiji" />
+                                                    <option value="Finland" />
+                                                    <option value="France" />
+                                                    <option value="French Guiana" />
+                                                    <option value="French Polynesia" />
+                                                    <option value="French Southern Territories" />
+                                                    <option value="Gabon" />
+                                                    <option value="Gambia" />
+                                                    <option value="Georgia" />
+                                                    <option value="Germany" />
+                                                    <option value="Ghana" />
+                                                    <option value="Gibraltar" />
+                                                    <option value="Greece" />
+                                                    <option value="Greenland" />
+                                                    <option value="Grenada" />
+                                                    <option value="Guadeloupe" />
+                                                    <option value="Guam" />
+                                                    <option value="Guatemala" />
+                                                    <option value="Guinea" />
+                                                    <option value="Guinea-bissau" />
+                                                    <option value="Guyana" />
+                                                    <option value="Haiti" />
+                                                    <option value="Heard Island and Mcdonald Islands" />
+                                                    <option value="Holy See (Vatican City State)" />
+                                                    <option value="Honduras" />
+                                                    <option value="Hong Kong" />
+                                                    <option value="Hungary" />
+                                                    <option value="Iceland" />
+                                                    <option value="India" />
+                                                    <option value="Indonesia" />
+                                                    <option value="Iran, Islamic Republic of" />
+                                                    <option value="Iraq" />
+                                                    <option value="Ireland" />
+                                                    <option value="Israel" />
+                                                    <option value="Italy" />
+                                                    <option value="Jamaica" />
+                                                    <option value="Japan" />
+                                                    <option value="Jordan" />
+                                                    <option value="Kazakhstan" />
+                                                    <option value="Kenya" />
+                                                    <option value="Kiribati" />
+                                                    <option value="Korea, Democratic People's Republic of" />
+                                                    <option value="Korea, Republic of" />
+                                                    <option value="Kuwait" />
+                                                    <option value="Kyrgyzstan" />
+                                                    <option value="Lao People's Democratic Republic" />
+                                                    <option value="Latvia" />
+                                                    <option value="Lebanon" />
+                                                    <option value="Lesotho" />
+                                                    <option value="Liberia" />
+                                                    <option value="Libyan Arab Jamahiriya" />
+                                                    <option value="Liechtenstein" />
+                                                    <option value="Lithuania" />
+                                                    <option value="Luxembourg" />
+                                                    <option value="Macao" />
+                                                    <option value="Macedonia, The Former Yugoslav Republic of" />
+                                                    <option value="Madagascar" />
+                                                    <option value="Malawi" />
+                                                    <option value="Malaysia" />
+                                                    <option value="Maldives" />
+                                                    <option value="Mali" />
+                                                    <option value="Malta" />
+                                                    <option value="Marshall Islands" />
+                                                    <option value="Martinique" />
+                                                    <option value="Mauritania" />
+                                                    <option value="Mauritius" />
+                                                    <option value="Mayotte" />
+                                                    <option value="Mexico" />
+                                                    <option value="Micronesia, Federated States of" />
+                                                    <option value="Moldova, Republic of" />
+                                                    <option value="Monaco" />
+                                                    <option value="Mongolia" />
+                                                    <option value="Montserrat" />
+                                                    <option value="Morocco" />
+                                                    <option value="Mozambique" />
+                                                    <option value="Myanmar" />
+                                                    <option value="Namibia" />
+                                                    <option value="Nauru" />
+                                                    <option value="Nepal" />
+                                                    <option value="Netherlands" />
+                                                    <option value="Netherlands Antilles" />
+                                                    <option value="New Caledonia" />
+                                                    <option value="New Zealand" />
+                                                    <option value="Nicaragua" />
+                                                    <option value="Niger" />
+                                                    <option value="Nigeria" />
+                                                    <option value="Niue" />
+                                                    <option value="Norfolk Island" />
+                                                    <option value="Northern Mariana Islands" />
+                                                    <option value="Norway" />
+                                                    <option value="Oman" />
+                                                    <option value="Pakistan" />
+                                                    <option value="Palau" />
+                                                    <option value="Palestinian Territory, Occupied" />
+                                                    <option value="Panama" />
+                                                    <option value="Papua New Guinea" />
+                                                    <option value="Paraguay" />
+                                                    <option value="Peru" />
+                                                    <option value="Philippines" />
+                                                    <option value="Pitcairn" />
+                                                    <option value="Poland" />
+                                                    <option value="Portugal" />
+                                                    <option value="Puerto Rico" />
+                                                    <option value="Qatar" />
+                                                    <option value="Reunion" />
+                                                    <option value="Romania" />
+                                                    <option value="Russian Federation" />
+                                                    <option value="Rwanda" />
+                                                    <option value="Saint Helena" />
+                                                    <option value="Saint Kitts and Nevis" />
+                                                    <option value="Saint Lucia" />
+                                                    <option value="Saint Pierre and Miquelon" />
+                                                    <option value="Saint Vincent and The Grenadines" />
+                                                    <option value="Samoa" />
+                                                    <option value="San Marino" />
+                                                    <option value="Sao Tome and Principe" />
+                                                    <option value="Saudi Arabia" />
+                                                    <option value="Senegal" />
+                                                    <option value="Serbia and Montenegro" />
+                                                    <option value="Seychelles" />
+                                                    <option value="Sierra Leone" />
+                                                    <option value="Singapore" />
+                                                    <option value="Slovakia" />
+                                                    <option value="Slovenia" />
+                                                    <option value="Solomon Islands" />
+                                                    <option value="Somalia" />
+                                                    <option value="South Africa" />
+                                                    <option value="South Georgia and The South Sandwich Islands" />
+                                                    <option value="Spain" />
+                                                    <option value="Sri Lanka" />
+                                                    <option value="Sudan" />
+                                                    <option value="Suriname" />
+                                                    <option value="Svalbard and Jan Mayen" />
+                                                    <option value="Swaziland" />
+                                                    <option value="Sweden" />
+                                                    <option value="Switzerland" />
+                                                    <option value="Syrian Arab Republic" />
+                                                    <option value="Taiwan, Province of China" />
+                                                    <option value="Tajikistan" />
+                                                    <option value="Tanzania, United Republic of" />
+                                                    <option value="Thailand" />
+                                                    <option value="Timor-leste" />
+                                                    <option value="Togo" />
+                                                    <option value="Tokelau" />
+                                                    <option value="Tonga" />
+                                                    <option value="Trinidad and Tobago" />
+                                                    <option value="Tunisia" />
+                                                    <option value="Turkey" />
+                                                    <option value="Turkmenistan" />
+                                                    <option value="Turks and Caicos Islands" />
+                                                    <option value="Tuvalu" />
+                                                    <option value="Uganda" />
+                                                    <option value="Ukraine" />
+                                                    <option value="United Arab Emirates" />
+                                                    <option value="United Kingdom" />
+                                                    <option value="United States" />
+                                                    <option value="United States Minor Outlying Islands" />
+                                                    <option value="Uruguay" />
+                                                    <option value="Uzbekistan" />
+                                                    <option value="Vanuatu" />
+                                                    <option value="Venezuela" />
+                                                    <option value="Viet Nam" />
+                                                    <option value="Virgin Islands, British" />
+                                                    <option value="Virgin Islands, U.S" />
+                                                    <option value="Wallis and Futuna" />
+                                                    <option value="Western Sahara" />
+                                                    <option value="Yemen" />
+                                                    <option value="Zambia" />
+                                                    <option value="Zimbabwe" />
+                                                </datalist>
+                                            </div>
+                                            <div class="row justify-content-end mt-4">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-success float-end"><i class="fa fa-save"></i> &nbsp;Save</button>
+                                                    <button type="button" onclick="window.location.reload()" class="btn btn-danger float-end mx-2"><i class="fa fa-cancel"></i> &nbsp;Cancel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        var dt;
+        dt = $('.datatables-basic').DataTable(options);
+
+    </script>
+    <script>
+        function Delete(ID) {
+            Swal.fire({
+                showCancelButton: false,
+                title: 'Are you sure you want to delete this record?',
+                icon: 'error',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/delete/oem?id=' + ID,
+                        type: "GET",
+                        cache: false,
+                        success: function (o) {
+                            toastr.error("Record has been deleted.");
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 500);
+                        }
+                    }
+                    );
+
+
+                } else if (result.isDenied) {
+
+                }
+            })
+        }
+        function EditPage(ID) {
+            $.ajax({
+
+                url: '/get/oem?id=' + ID,
+                type: "GET",
+                cache: false,
+                success: function (o) {
+                    vueContent.vm = o;
+                    //try { vueContent.vm.POST_DTE = o.POST_DTE.split('T')[0]; }
+                    //catch {
+
+                    //}
+
+                    setTimeout(function () {
+                        $('select').not(".keepDisabled").each(function () {
+                            $(this).removeAttr("disabled");
+                        })
+                        $('input').each(function () {
+                            $(this).removeAttr("disabled", "disabled");
+                        })
+
+                        if (!$(".frm").hasClass("border-bottom"))
+                            $('.click').trigger("click");
+
+                        $('select').trigger("change");
+                    }, 500);
+
+                }
+            });
+        }
+
+        var vueContent = new Vue({
+            el: '#app',
+            data: {
+                vm: {
+                    ID: 0,
+                    Name: null,
+                },
+            },
+            methods: {
+                handleSubmit() {
+                    axios.post('/save/oem', JSON.stringify(this.vm), {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.data > 0) {
+                            toastr.success("Record has been updated.");
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 500);
+
+                        }
+                        else if (response.data == 0) {
+                            toastr.success("Record has been updated.");
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 500);
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An Error has occured please contact System Administrator.',
+                                icon: 'error',
+                                showConfirmButton: false
+                            });
+                        }
+                    }).catch(error => {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An Error has occured please contact System Administrator.',
+                            icon: 'error',
+                            showConfirmButton: false
+                        })
+                    })
+                },
+                addItem() {
+                    this.vm.Users.push({ ID: 0, Email: null, Phone: null, Address: null, Name: null, UserName: null });
+                },
+                remove(index) {
+                    if (this.vm.Users.length == 1) {
+                        alert("Atleast one item is requried");
+                        return false;
+                    }
+                    let confirm = window.confirm("Are you sure you want to delete this item?");
+                    if (confirm) {
+                        this.vm.Users.splice(index, 1);
+                        toastr.error("User deleted!");
+                    }
+                },
+                LoadDropdowns() {
+
+                }
+            },
+            beforeMount() {
+                // this.LoadDropdowns()
+            },
+        });
+    </script>
+}

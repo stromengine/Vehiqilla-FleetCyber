@@ -7,13 +7,13 @@ namespace AdminPortal.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class CompanyRelation : IMigrationMetadata
+    public sealed partial class RemovedColumnsFromApp : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CompanyRelation));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RemovedColumnsFromApp));
         
         string IMigrationMetadata.Id
         {
-            get { return "202305062210432_CompanyRelation"; }
+            get { return "202305171614423_RemovedColumnsFromApp"; }
         }
         
         string IMigrationMetadata.Source

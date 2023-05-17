@@ -51,6 +51,7 @@
     <link rel="stylesheet" href="~/Content/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
     <link href="~/Content/vendor/libs/toastr/toastr.css" rel="stylesheet" />
     <link href="~/Content/vendor/libs/sweetalert2/sweetalert2.css" rel="stylesheet" />
+
     <!-- Page CSS -->
     <!-- Helpers -->
     <script src="~/Content/vendor/js/helpers.js"></script>
@@ -66,10 +67,24 @@
         .dt-buttons {
             float: right !important;
         }
+        .loader {
+            top: 0;
+            left: 0;
+            position: fixed;
+            opacity: 0.5;
+            z-index: 10000000;
+            background: white;
+            height: 100%;
+            width: 100%;
+            margin: auto;
+        }
     </style>
 </head>
 
 <body>
+    <div class="loader" id="AjaxLoader" style="display:none;">
+        <img src="~/Content/img/loading.gif" style="position:absolute;top:40%;left:40%;" />
+    </div>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar  ">
         <div class="layout-container">
@@ -111,12 +126,12 @@
                             <div data-i18n="Suppliers">Suppliers</div>
                         </a>
                     </li>
-                    <li class="menu-item">
+                    @*<li class="menu-item">
                         <a href="/Admin/Oems" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-link"></i>
                             <div data-i18n="OEMs">OEMs</div>
                         </a>
-                    </li>
+                    </li>*@
                     <li class="menu-item">
                         <a href="/Admin/Apps" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-link"></i>
@@ -428,6 +443,16 @@
     <!-- Page JS -->
     @RenderSection("scripts", required: false)
 
+
+    <script>
+        $(document)
+            .ajaxStart(function () {
+                $('#AjaxLoader').show();
+            })
+            .ajaxStop(function () {
+                $('#AjaxLoader').hide();
+            });
+    </script>
 
 </body>
 

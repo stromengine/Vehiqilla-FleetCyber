@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 using System.Web.Script.Serialization;
 
@@ -35,35 +36,32 @@ namespace AdminPortal.Models
             return NM;
         }
     }
-    public class CompanyViewModel
+    [NotMapped]
+    public class CompanyViewModel:Company
     {
-        public int ID { set; get; }
-        public string Name { set; get; }
-        public string Abbreviation { set; get; }
-        [StringLength(250)]
-        public string DisplayName { set; get; }
+      
+    }
+    [NotMapped]
+    public class CategoryViewModel:Category
+    {
 
-        public string logo { set; get; }
-        [StringLength(250)]
-        public string Address { set; get; }
-        [StringLength(250)]
-        public string Country { set; get; }
-        public string Email { set; get; }
-        public string Url { set; get; }
+    }
+    [NotMapped]
+    public class SupplierViewModel:Supplier
+    {
+       
+    }
+    [NotMapped]
+    public class OemViewModel : Oem
+    {
 
-        public ICollection<ApplicationUser> Users { get; set; }
-
-        public Company toModel()
-        {
-            Company c = new Company();
-            c.Name = this.Name;
-            c.Address = this.Address;
-            c.Country = this.Country;
-            c.Email = this.Email;
-            c.Url = this.Url;
-            c.ID = this.ID;
-            return c;
-        }
-
+    }
+    [NotMapped]
+    public class AppViewModel : ECUApp
+    {
+        public int Category_ID { get; set; }
+        public int Company_ID { get; set; }
+        public int Oem_ID { get; set; }
+        public int Supplier_ID { get; set; }
     }
 }

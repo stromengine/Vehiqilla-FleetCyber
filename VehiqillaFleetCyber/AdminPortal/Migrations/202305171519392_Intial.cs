@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class BasicDatabase : DbMigration
+    public partial class Intial : DbMigration
     {
         public override void Up()
         {
@@ -75,6 +75,90 @@
                         DateModified = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.Companies",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Name = c.String(maxLength: 250),
+                        Abbreviation = c.String(maxLength: 250),
+                        DisplayName = c.String(maxLength: 250),
+                        logo = c.String(),
+                        Address = c.String(maxLength: 250),
+                        Country = c.String(maxLength: 250),
+                        Email = c.String(),
+                        Url = c.String(),
+                        IsActive = c.Boolean(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
+                        CreatedBy = c.String(nullable: false, maxLength: 250),
+                        DateCreated = c.DateTime(nullable: false),
+                        ModifiedBy = c.String(nullable: false, maxLength: 250),
+                        DateModified = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.AspNetUsers",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(),
+                        Email = c.String(maxLength: 256),
+                        EmailConfirmed = c.Boolean(nullable: false),
+                        PasswordHash = c.String(),
+                        SecurityStamp = c.String(),
+                        PhoneNumber = c.String(),
+                        PhoneNumberConfirmed = c.Boolean(nullable: false),
+                        TwoFactorEnabled = c.Boolean(nullable: false),
+                        LockoutEndDateUtc = c.DateTime(),
+                        LockoutEnabled = c.Boolean(nullable: false),
+                        AccessFailedCount = c.Int(nullable: false),
+                        UserName = c.String(nullable: false, maxLength: 256),
+                        Company_ID = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Companies", t => t.Company_ID)
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex")
+                .Index(t => t.Company_ID);
+            
+            CreateTable(
+                "dbo.AspNetUserClaims",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        ClaimType = c.String(),
+                        ClaimValue = c.String(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.AspNetUserLogins",
+                c => new
+                    {
+                        LoginProvider = c.String(nullable: false, maxLength: 128),
+                        ProviderKey = c.String(nullable: false, maxLength: 128),
+                        UserId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.Oems",
@@ -202,6 +286,16 @@
                 .Index(t => t.User_Id);
             
             CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
                 "dbo.VehiAssureQuestionaireCustomFields",
                 c => new
                     {
@@ -304,6 +398,7 @@
             DropForeignKey("dbo.VehiAssureQuestions", "VehiAssureQuestionGroup_ID", "dbo.VehiAssureQuestionGroups");
             DropForeignKey("dbo.VehiAssureQuestionGroups", "VehiAssureQuestionaire_ID", "dbo.VehiAssureQuestionaires");
             DropForeignKey("dbo.VehiAssureQuestionaireCustomFields", "VehiAssureQuestionaireID", "dbo.VehiAssureQuestionaires");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Notifications", "User_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.CaseNotifications", "Company_ID", "dbo.Companies");
             DropForeignKey("dbo.AppVulnerabilities", "ECUApp_ID", "dbo.ECUApps");
@@ -311,14 +406,25 @@
             DropForeignKey("dbo.ECUApps", "Supplier_ID", "dbo.Suppliers");
             DropForeignKey("dbo.ECUApps", "Oem_ID", "dbo.Oems");
             DropForeignKey("dbo.ECUApps", "Company_ID", "dbo.Companies");
+            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUsers", "Company_ID", "dbo.Companies");
+            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.ECUApps", "Category_ID", "dbo.Categories");
             DropIndex("dbo.VehiAssureQuestions", new[] { "VehiAssureQuestionGroup_ID" });
             DropIndex("dbo.VehiAssureQuestionOptions", new[] { "VehiAssureQuestion_ID" });
             DropIndex("dbo.VehiAssureQuestionGroups", new[] { "VehiAssureQuestionaire_ID" });
             DropIndex("dbo.VehiAssureQuestionaireCustomFields", new[] { "VehiAssureQuestionaireID" });
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Notifications", new[] { "User_Id" });
             DropIndex("dbo.CaseNotifications", new[] { "Company_ID" });
             DropIndex("dbo.AppVulnerabilities", new[] { "ECUApp_ID" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", new[] { "Company_ID" });
+            DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.ECUApps", new[] { "Supplier_ID" });
             DropIndex("dbo.ECUApps", new[] { "Oem_ID" });
             DropIndex("dbo.ECUApps", new[] { "Company_ID" });
@@ -329,12 +435,18 @@
             DropTable("dbo.VehiAssureQuestionGroups");
             DropTable("dbo.VehiAssureQuestionaires");
             DropTable("dbo.VehiAssureQuestionaireCustomFields");
+            DropTable("dbo.AspNetRoles");
             DropTable("dbo.Notifications");
             DropTable("dbo.KnowledgeCenters");
             DropTable("dbo.CaseNotifications");
             DropTable("dbo.AppVulnerabilities");
             DropTable("dbo.Suppliers");
             DropTable("dbo.Oems");
+            DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.AspNetUserLogins");
+            DropTable("dbo.AspNetUserClaims");
+            DropTable("dbo.AspNetUsers");
+            DropTable("dbo.Companies");
             DropTable("dbo.Categories");
             DropTable("dbo.ECUApps");
             DropTable("dbo.AppBreaches");

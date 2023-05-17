@@ -72,23 +72,19 @@ namespace AdminPortal.Models
         [StringLength(250)]
         public string Vulnerabilities { set; get; }
 
-        public virtual Company Company { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual Category Category { get; set; }
-        public virtual Oem Oem { get; set; }
     }
 
     public class AppVulnerability : BaseFields
     {
-        public string Description { set; get; }
-        [StringLength(250)]
         public string Name { set; get; }
+        [StringLength(250)]
+        public string Description { set; get; }
         [StringLength(250)]
         public string HackType { set; get; }
         [StringLength(250)]
-        public string CompanyImpacted { set; get; }
-        [StringLength(250)]
-        public string CompanyImpactedType { set; get; }
+        public string OemImpacted { set; get; }
         [StringLength(250)]
         public string Access { set; get; }
         [StringLength(250)]
@@ -104,7 +100,7 @@ namespace AdminPortal.Models
         [StringLength(250)]
         public string Reference { set; get; }
         [StringLength(250)]
-        public string VideoLink { set; get; }
+        public string Link { set; get; }
         public virtual ECUApp ECUApp { get; set; }
     }
     public class AppBreach :BaseFields

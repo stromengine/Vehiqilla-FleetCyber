@@ -7,13 +7,13 @@ namespace AdminPortal.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class companyUserRemoved : IMigrationMetadata
+    public sealed partial class Intial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(companyUserRemoved));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Intial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202305081636360_companyUserRemoved"; }
+            get { return "202305171519392_Intial"; }
         }
         
         string IMigrationMetadata.Source
