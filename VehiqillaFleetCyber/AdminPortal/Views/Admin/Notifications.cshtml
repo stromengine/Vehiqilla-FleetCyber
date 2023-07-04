@@ -1,0 +1,286 @@
+﻿
+@{
+    ViewBag.Title = "Notifications";
+}
+@using AdminPortal.Models
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="data" role="tabpanel">
+                        <table class="datatables-basic table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Heading</th>
+                                    <th>Description</th>
+                                    <th>User</th>
+                                    @*<th>Action</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                }
+                                @foreach (var m in Model)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@m.Heading</td>
+                                        <td>@m.Description</td>
+                                        <td>@m.User.Name</td>
+                                        @*<td><button onclick="EditPage(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button><button onclick="Delete(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-danger ms-2"><i class="fa fa-trash"></i></button></td>*@
+                                    </tr>
+
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="form" role="tabpanel">
+                        <!-- Basic Layout & Basic with Icons -->
+                        <div class="row" id="app">
+                            <!-- Basic Layout -->
+                            <div class="col-xxl">
+                                <div class="card mb-4">
+                                    <div class="card-body dual-list">
+                                        <div class="row">
+                                            <div class="demo-inline-spacing mt-3">
+                                                <div class="list-group">
+                                                    <label class="list-group-item g-0"  style="padding: 0;">
+                                                       <input class="form-control" v-model="search" placeholder="search"/>
+                                                    </label>
+                                                    <label class="list-group-item items" v-for="(user,i) in filteredList" :key="i">
+                                                        <input v-on:click="AddRemove(user.Name,user.Email,$event)" class="form-check-input me-1" type="checkbox" value="">
+                                                        {{user.Name}}
+                                                    </label>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-4">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>To </label>
+                                                    <p style="border: 1px solid lightgray;border-radius: 5px;padding: 10px;background-color: lightgray;min-height:45px;" id="sendTo">
+                                                        <span v-for="(message,i) in messageTo" :key="i">
+                                                            {{message}}
+                                                        </span>
+
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Subject</label>
+                                                    <input type="text" id="Subject" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Message</label>
+                                                    <textarea class="form-control" id="Message" style="min-height:200px"> </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button v-on:click="sendMessage()" class="btn btn-success  float-end mt-2"><i class="fas fa-check"></i>&nbsp;Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        var dt;
+        dt = $('.datatables-basic').DataTable(options);
+
+    </script>
+    <script src="~/Content/bundles/izitoast/js/iziToast.min.js"></script>
+    <!-- Page Specific JS File -->
+    <script src="~/Content/bundles/sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript">
+
+        var vueContent = new Vue({
+            el: '#app',
+
+            data: {
+                users: [],
+                messageTo: [],
+                fCheck: true,
+                cCheck: true,
+                search:""
+
+            },
+            computed: {
+                filteredList() {
+                    return this.users.filter(post => {
+                        return post.Name.toLowerCase().includes(this.search.toLowerCase())
+                    })
+                }
+            },
+            mounted: function () {
+                var me = this;
+                axios.get('/get/companyusers').then(function (response) {
+                    me.users = response.data;
+                });
+            },
+            methods: {
+                AddRemove(name, email, e) {
+                    console.log(e.srcElement.checked);
+                    let x = name + ' <' + email + '>; ';
+                    if (this.messageTo.includes(x)) {
+                        let index = this.messageTo.indexOf(x);
+                        if (index !== -1 && !e.srcElement.checked) {
+                            this.messageTo.splice(index, 1);
+                        }
+                    }
+                    else {
+                        this.messageTo.push(x);
+                    }
+
+                },
+                AllCorporateUsers() {
+                    var me = this;
+                    if (me.cCheck) {
+                        $(me.corporateUsers).each(function (key, value) {
+                            let x = value.FirstName + ' ' + value.LastName + ' <' + value.Email + '>; '
+                            if (!me.messageTo.includes(x)) {
+                                me.messageTo.push(x);
+                            }
+                        });
+                        me.cCheck = false;
+                    }
+                    else {
+                        $(me.corporateUsers).each(function (key, value) {
+                            let x = value.FirstName + ' ' + value.LastName + ' <' + value.Email + '>; '
+                            let index = me.messageTo.indexOf(x);
+                            if (index !== -1) {
+                                me.messageTo.splice(index, 1);
+                            }
+                        });
+                        me.cCheck = true;
+                    }
+                },
+                AllFleetUsers() {
+                    var me = this;
+                    if (me.fCheck) {
+                        $(me.fleetOwners).each(function (key, value) {
+                            let x = value.FirstName + ' ' + value.LastName + ' <' + value.Email + '>; '
+                            if (!me.messageTo.includes(x)) {
+                                me.messageTo.push(x);
+                            }
+                        });
+                        me.fCheck = false;
+                    }
+                    else {
+                        $(me.fleetOwners).each(function (key, value) {
+                            let x = value.FirstName + ' ' + value.LastName + ' <' + value.Email + '>; '
+                            let index = me.messageTo.indexOf(x);
+                            if (index !== -1) {
+                                me.messageTo.splice(index, 1);
+                            }
+                        });
+                        me.fCheck = true;
+                    }
+                },
+                sendMessage() { //to save in database
+                    var me = this;
+                    var Subject = $('#Subject').val();
+                    var Message = $('#Message').val();
+                    if (Subject != '' && Message != '' && me.messageTo != []) {
+                        axios.post('/Save/notification', {
+                            Emails: JSON.stringify(me.messageTo),
+                            Heading: Subject,
+                            Description: Message
+                        }, {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }).then(response => {
+                            toastr.success("Record has been updated.");
+                            $('#Subject').val('');
+                            $('#Message').val('');
+                            window.location.reload();
+                        }).catch(error => {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An Error has occured please contact System Administrator.',
+                                icon: 'error',
+                                showConfirmButton: false
+                            })
+                        })
+                    }
+                    else {
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An Error has occured please contact System Administrator.',
+                            icon: 'error',
+                            showConfirmButton: false
+                        })
+                    }
+
+                }
+            }
+        })
+
+    </script>
+
+    <script>
+
+
+
+        //$(function () {
+
+        //    $('body').on('click', '.list-group .list-group-item', function () {
+        //        $(this).toggleClass('active');
+        //    });
+
+        //    $('.dual-list .selector').click(function () {
+        //        var $checkBox = $(this);
+        //        if (!$checkBox.hasClass('selected')) {
+        //            $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
+        //            $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+        //        } else {
+        //            $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
+        //            $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+        //        }
+        //    });
+        
+
+        //});
+
+    </script>
+}

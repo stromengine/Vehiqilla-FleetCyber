@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewBag.Title = "Cases";
+}
+
+@using CompanyPortal.Models
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="data" role="tabpanel">
+                        <table class="datatables-basic table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        #
+                                    </th>
+                                    <th>ID</th>
+                                    <th>Subject</th>
+                                    <th>Summary</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
+                                    <th>Date Created</th>
+                                    <th>Resolution Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                }
+                                @foreach (var m in Model)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@m.Subject</td>
+                                        <td>@m.Details</td>
+                                        <td>@m.Summary</td>
+                                        <td>@m.Status</td>
+                                        <td>@m.Category</td>
+                                        <td>@m.Priority</td>
+                                        <td>@m.DateCreated</td>
+                                        <td>@m.ResolutionDate</td>
+                                        <td><a href="Preview?ID=@m.ID" style="padding: 5px;" class="btn btn-xs btn-primary"><i class="fa fa-eye"></i></a></td>
+                                    </tr>
+
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="form" role="tabpanel">
+                        <!-- Basic Layout & Basic with Icons -->
+                        <div class="row" id="app">
+                            <!-- Basic Layout -->
+                            <div class="col-xxl">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <form method="post" action="Add" enctype="multipart/form-data">
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Name">Subject</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="Subject" class="form-control" id="Subject" required maxlength="250" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Details">Details</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="Details" class="form-control" id="Details" required maxlength="250" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Summary">Summary</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="Summary" class="form-control" id="Summary" required maxlength="250" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Category">Category</label>
+                                                <div class="col-sm-10">
+                                                    <select name="Category" id="Category" required="required" class="form-control">
+                                                        <option value="">Select Category</option>
+                                                        <option value="Request APP/ECU">Request APP/ECU</option>
+                                                        <option value="Request Supplier">Request Supplier</option>
+                                                        <option value="Risk Score">Risk Score</option>
+                                                        <option value="Others">Others</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Priority">Priority</label>
+                                                <div class="col-sm-10">
+                                                    <select name="Priority" id="Priority" required="required" class="form-control">
+                                                        <option value="">Select Priority</option>
+                                                     
+                                                        <option value="Low">Low</option>
+                                                        <option value="Medium">Medium</option>
+                                                        <option value="High">High</option>
+                                                        <option value="Critical">Critical</option>
+                                                        <option value="Emergency">Emergency</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="myInput">Add Attachments (images only & max size 4 mb)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="file"  name="Attachments" multiple  id="myInput"  style="display:none" />
+                                                    <button id="myButton" type="button" class="btn btn-sm btn-outline-success ml-2">+ Add Files</button>
+                                                    <div id="myFiles"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end mt-4">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-success float-end"><i class="fa fa-save"></i> &nbsp;Save</button>
+                                                    <button type="button" onclick="window.location.reload()" class="btn btn-danger float-end mx-2"><i class="fa fa-cancel"></i> &nbsp;Cancel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        var dt;
+        dt = $('.datatables-basic').DataTable(options);
+
+    </script>
+        <script>
+            $(function () {
+                let inputFile = $('#myInput');
+            let button = $('#myButton');
+            let buttonSubmit = $('#mySubmitButton');
+            let filesContainer = $('#myFiles');
+            let files = [];
+
+            inputFile.change(function () {
+                let newFiles = [];
+            for (let index = 0; index < inputFile[0].files.length; index++) {
+                let file = inputFile[0].files[index];
+            newFiles.push(file);
+            files.push(file);
+                    }
+
+                    newFiles.forEach(file => {
+                let fileElement = $(`<span class="badge bg-primary m-1">${file.name}&nbsp&nbsp&nbsp&nbspx</span>`);
+            fileElement.data('fileData', file);
+            filesContainer.append(fileElement);
+
+            fileElement.click(function (event) {
+                let fileElement = $(event.target);
+            let indexToRemove = files.indexOf(fileElement.data('fileData'));
+            fileElement.remove();
+            files.splice(indexToRemove, 1);
+                        });
+                    });
+                });
+
+            button.click(function () {
+                inputFile.click();
+                });
+
+
+            });
+    </script>
+}

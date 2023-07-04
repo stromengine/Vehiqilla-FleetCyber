@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Apps";
+}
+
+@using CompanyPortal.Models
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="data" role="tabpanel">
+                        <table class="datatables-basic table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Supplier</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                }
+                                @foreach (var m in Model)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@m.Name</td>
+                                        <td>@m.Supplier.Name</td>
+                                        <td>@m.Category.Name</td>
+                                        <td>@m.Description</td>
+                                        <td><a href="/VehiAssure/App?ID=@m.ID" style="padding: 5px;" class="btn btn-xs btn-warning"><i class="fa fa-eye"></i></a></td>
+                                    </tr>
+
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+
+    <script>
+        var dt;
+        dt = $('.datatables-basic').DataTable(options);
+
+    </script>
+}

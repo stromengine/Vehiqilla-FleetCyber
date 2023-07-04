@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\VehiqillaFleetCyber",
+    "\\VehiqillaFleetCyber\\AdminPortal",
+    "\\VehiqillaFleetCyber\\AdminPortal\\Views",
+    "\\VehiqillaFleetCyber\\AdminPortal\\Views\\VehiAssure"
   ],
+  "SelectedNode": "\\VehiqillaFleetCyber\\AdminPortal\\Views\\VehiAssure\\AssessmentsWaitingForReview.cshtml",
   "PreviewInSolutionExplorer": false
 }

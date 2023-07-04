@@ -1,0 +1,285 @@
+﻿
+@{
+    ViewBag.Title = "Vehicle/ECU App Mapping";
+}
+
+@using CompanyPortal.Models
+<link rel="stylesheet" href="~/Content/vendor/libs/bs-stepper/bs-stepper.css" />
+
+<div id="app">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="nav-align-top nav-tabs-shadow mb-4">
+                    <ul class="nav nav-tabs " role="tablist">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                        </li>
+                        @*<li class="nav-item">
+                                <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                            </li>*@
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="data" role="tabpanel">
+                            <table class="datatables-basic table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Vehicle Identifier</th>
+                                        <th>Name</th>
+                                        <th>Fleet</th>
+                                        <th>Brand</th>
+                                        <th>Model</th>
+                                        <th>Year Manufactured</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int i = 1;
+                                    }
+                                    @foreach (var m in Model)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@m.VehicleIdentifier</td>
+                                            <td>@m.Name</td>
+                                            <td>@m.Fleet.Name</td>
+                                            <td>@m.Brand</td>
+                                            <td>@m.Model</td>
+                                            <td>@m.YearManufactured</td>
+                                            <td><button @@click="MapVehicles(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-warning"><i class="fa fa-map-marker"></i> Map ECU/APPS</button></td>
+                                        </tr>
+
+                                        i++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="createApp" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-upgrade-plan">
+            <div class="modal-content p-3 p-md-5">
+                <div class="modal-body p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center">
+                        <h3 class="mb-2">Select Apps</h3>
+                        <p>Mapped Apps with vehicles will show in Reports.</p>
+                      
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <small class="text-light fw-semibold">App List</small>
+                            <div class="demo-inline-spacing mt-3">
+                                <div class="list-group">
+                                    <label class="list-group-item" v-for="(item,k) in vehicles" :key="k">
+                                        <input @@click="MapApp(item.ID)" class="form-check-input me-1" type="checkbox" value="" :checked="item.MappedToVehicle">
+                                        {{item.Name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ Create App Modal -->
+</div>
+@section Scripts
+{
+    <script type="text/x-template" id="select2-template">
+        <select>
+            <slot></slot>
+        </select>
+    </script>
+
+
+    <script>
+
+        Vue.component('select2', {
+            props: ['options', 'value', 'change'],
+            template: '#select2-template',
+            mounted: function () {
+                var vm = this
+                $(this.$el)
+                    .val(this.value)
+                    // init select2
+                    .select2({ data: this.options })
+                    // emit event on change.
+                    .on('change', function () {
+                        vm.$emit('input', this.value)
+                    })
+            },
+            watch: {
+                value: function (value) {
+                    // update value
+                    $(this.$el).val(value)
+                },
+                options: function (options) {
+                    // update options
+                    $(this.$el).select2({ data: options })
+                }
+            },
+
+            destroyed: function () {
+                $(this.$el).off().select2('destroy')
+            }
+        });
+    </script>
+    <script>
+        var dt;
+        dt = $('.datatables-basic').DataTable(options);
+
+    </script>
+    <script>
+        function Delete(ID) {
+            Swal.fire({
+                showCancelButton: false,
+                title: 'Are you sure you want to delete this record?',
+                icon: 'error',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/delete/vehicle?id=' + ID,
+                        type: "GET",
+                        cache: false,
+                        success: function (o) {
+                            toastr.error("Record has been deleted.");
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 500);
+                        }
+                    }
+                    );
+
+
+                } else if (result.isDenied) {
+
+                }
+            })
+        }
+        function EditPage(ID) {
+            $.ajax({
+
+                url: '/get/vehicle?id=' + ID,
+                type: "GET",
+                cache: false,
+                success: function (o) {
+                    vueContent.vm = o;
+                    //try { vueContent.vm.POST_DTE = o.POST_DTE.split('T')[0]; }
+                    //catch {
+
+                    //}
+
+                    setTimeout(function () {
+                        $('select').not(".keepDisabled").each(function () {
+                            $(this).removeAttr("disabled");
+                        })
+                        $('input').each(function () {
+                            $(this).removeAttr("disabled", "disabled");
+                        })
+
+                        if (!$(".frm").hasClass("border-bottom"))
+                            $('.click').trigger("click");
+
+                        $('select').trigger("change");
+                    }, 500);
+
+                }
+            });
+        }
+
+        var vueContent = new Vue({
+            el: '#app',
+            data: {
+                vm: {
+                    ID: 0,
+                    Name: null,
+                    Fleet_ID: '',
+                    Category_ID: '',
+                },
+                vehicles: [],
+                vehicleID: null,
+            },
+            methods: {
+                handleSubmit() {
+                    axios.post('/save/vehicle', JSON.stringify(this.vm), {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.data > 0) {
+                            toastr.success("Record has been updated.");
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 500);
+
+                        }
+                        else if (response.data == 0) {
+                            toastr.success("Record has been updated.");
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 500);
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An Error has occured please contact System Administrator.',
+                                icon: 'error',
+                                showConfirmButton: false
+                            });
+                        }
+                    }).catch(error => {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An Error has occured please contact System Administrator.',
+                            icon: 'error',
+                            showConfirmButton: false
+                        })
+                    })
+                },
+                addItem() {
+                    this.vm.Users.push({ ID: 0, Email: null, Phone: null, Address: null, Name: null, UserName: null });
+                },
+                remove(index) {
+                    if (this.vm.Users.length == 1) {
+                        alert("Atleast one item is requried");
+                        return false;
+                    }
+                    let confirm = window.confirm("Are you sure you want to delete this item?");
+                    if (confirm) {
+                        this.vm.Users.splice(index, 1);
+                        toastr.error("User deleted!");
+                    }
+                },
+                LoadDropdowns() {
+                
+                },
+                MapVehicles(ID) {
+                    $('#createApp').modal("show");
+                    axios.get("/get/vehicleapps?id="+ID).then((res) => {
+                        this.vehicles = res.data;
+                    });
+                    this.vehicleID = ID;
+                },
+                MapApp(ID) {
+                    axios.get("/get/vehiclemap?vid=" + this.vehicleID + "&aid=" + ID).then((res) => {
+                        toastr.success("Mappings Updated.");
+                    });
+                }
+            },
+            beforeMount() {
+                this.LoadDropdowns()
+            },
+        });
+    </script>
+}

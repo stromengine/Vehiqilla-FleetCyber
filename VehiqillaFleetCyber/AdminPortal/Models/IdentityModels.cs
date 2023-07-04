@@ -22,6 +22,11 @@ namespace AdminPortal.Models
             return userIdentity;
         }
         public string Name { set; get; }
+        public string Code { set; get; }
+        public string Phone { set; get; }
+        public bool Active { set; get; }
+        public string Address { set; get; }
+        public DateTime DateCreated { set; get; }
         public virtual Company Company { set; get; }
     }
 
@@ -61,6 +66,13 @@ namespace AdminPortal.Models
         public DbSet<VehiAssureQuestionGroup> VehiAssureQuestionGroups { set; get; }
         public DbSet<VehiAssureQuestion> VehiAssureQuestions { set; get; }
         public DbSet<VehiAssureQuestionOption> VehiAssureQuestionOptions { set; get; }
+        public DbSet<VehiAssureAssessment> VehiAssureAssessments { set; get; }
+        public DbSet<VehiAssureInvite> VehiAssureInvites { set; get; }
+        public DbSet<VehiAssureAssessmentCustomField> VehiAssureAssessmentCustomFields { set; get; }
+        public DbSet<Content> Contents { set; get; }
+        public DbSet<CaseResponse> CaseResponses { set; get; }
+        public DbSet<Case> Cases { set; get; }
+        public DbSet<CaseAttachment> CaseAttachments { set; get; }
 
     }
     public class BaseFields

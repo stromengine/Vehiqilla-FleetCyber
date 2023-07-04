@@ -1,0 +1,170 @@
+﻿
+@{
+    ViewBag.Title = "App";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-xxl flex-grow-1 container-p-y" id="app">
+
+        <div class="row" v-if="appLoaded">
+            <div class="col-lg-8 col-md-6 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Assessment Details
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-striped font-bold table-hover">
+                            <colgroup>
+                                <col style="width:100px;">
+                                <col>
+                            </colgroup>
+                            <tr>
+                                <td>Category: </td>
+                                <td>{{apps[0].CategoryName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Supplier: </td>
+                                <td>{{apps[0].SupplierName}}</td>
+                            </tr>
+                            <tr>
+                                <td>APP/ECU: </td>
+                                <td>{{apps[0].Name}}</td>
+                            </tr>
+                            <tr>
+                                <td>AssessmentDate: </td>
+                                <td>{{convertTime(apps[0].AssessmentDate)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Score: </td>
+                                <td>{{apps[0].Score}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-12 supervisor">
+                <div class="card">
+                    <div class="card-header">
+                        Actions
+                    </div>
+                    <div class="card-body">
+                        <a onclick="javascript:void(0)" :data-link="'/VehiAssure/ApproveAssessmentAfterReview?UUID='+UUID" href="#" class="btn confirm btn-success">Accept</a>
+                        <a onclick="javascript:void(0)" :data-link="'/VehiAssure/DenyAssessmentAfterReview?UUID='+UUID" href="#" class="btn confirm btn-danger">Deny / Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <br />
+        <div class="row" v-if="groupsLoaded">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" id="filters">
+                <div class="card">
+                    <div class="body p-3">
+                        <div id="mail-nav">
+                            <h5 class="b-b p-10 text-strong">Categories</h5>
+                            <ul class="online-user" style="height: 20em; overflow: scroll; overflow-x: hidden;" id="online-offline">
+                                <li v-for="(group,i) in groups" :key="i">
+                                    <a href="javascript:;" v-on:click="LoadQuestions(group.id,group.name)">
+                                        {{group.name}}
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                <div class="card" style="min-height:500px;">
+                    <div class="card-header">
+                        <h4>{{groupName}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div v-for="(question,j) in questions" :key="j">
+                            <div class="form-group">
+                                <h5>
+                                    {{question.name}}
+                                </h5>
+                                <ul>
+                                    <li v-for="(option,k) in question.options" :key="k">
+                                        <b style="font-weight:bolder;" v-if="option.selected">{{option.name}} </b>  <i v-if="option.selected" style="    font-size: 20px;" class="fas fa-check-circle text-success" aria-hidden="true"></i>
+
+                                        <span v-else>{{option.name}}</span>
+                                    </li>
+                                </ul>
+
+                                <br>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts
+{
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+        <script>
+            const url = window.location.href;
+            const UUID = url.split("=")[1];//.replace(/\D/g, '');
+
+            var vueContent = new Vue({
+                el: '#app',
+
+                data: {
+                    UUID: UUID,
+                    groupsLoaded: false,
+                    appLoaded: false,
+                    groupId: '',
+                    selectedOptions: [],
+                    groupName: 'Click Group to Load Details',
+                    groups: [],
+                    questions: [],
+                    apps: [],
+                    categories: [],
+                },
+                methods: {
+                    convertTime: function (time) {
+                        var pattern = /Date\(([^)]+)\)/;
+                        var results = pattern.exec(time);
+                        var dt = new Date(parseFloat(results[1]));
+                        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                    },
+                    LoadQuestions(c, n) {
+                        this.groupName = n;
+                        this.questions = [];
+                        let me = this;
+                        axios.get('/VehiAssure/LoadQuestionsByUUID?UUID=' + UUID + '&GroupID=' + c).then(function (response) {
+                            $(response.data).each(function (key, value) {
+                                me.questions.push(value);
+                            });
+                        });
+                    },
+                },
+                mounted: function () {
+                    let me = this;
+                    axios.get('/VehiAssure/GetAppByUUID?UUID=' + UUID).then(function (response) {
+                        $(response.data).each(function (key, value) {
+                            me.apps.push(value);
+                        });
+                    }).then(response => {
+                        me.appLoaded = true;
+                    });
+                    axios.get('/VehiAssure/LoadQuestionaireByUUID?UUID=' + UUID).then(function (response) {
+                        $(response.data).each(function (key, value) {
+                            me.groups.push(value);
+                        });
+                    }).then(response => {
+                        me.groupsLoaded = true;
+                    });
+                }
+            })
+        </script>
+    }
+

@@ -290,6 +290,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CaseController.cs" />
+    <Compile Include="Controllers\CaseViewModel.cs" />
     <Compile Include="Controllers\Services\DropdownsController.cs" />
     <Compile Include="Controllers\Services\DeleteController.cs" />
     <Compile Include="Controllers\Services\GetController.cs" />
@@ -297,24 +299,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VehiAssureController.cs" />
     <Compile Include="Controllers\WebController.cs" />
     <Compile Include="Filters\ActionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305171519392_Intial.cs" />
-    <Compile Include="Migrations\202305171519392_Intial.designer.cs">
-      <DependentUpon>202305171519392_Intial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305171614423_RemovedColumnsFromApp.cs" />
-    <Compile Include="Migrations\202305171614423_RemovedColumnsFromApp.designer.cs">
-      <DependentUpon>202305171614423_RemovedColumnsFromApp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305171709085_AppVulnerabilityTable.cs" />
-    <Compile Include="Migrations\202305171709085_AppVulnerabilityTable.designer.cs">
-      <DependentUpon>202305171709085_AppVulnerabilityTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Helper\utility.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -331,6 +322,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\EmailTemplates\image-1.png" />
+    <Content Include="App_Data\EmailTemplates\image-2.png" />
+    <Content Include="App_Data\EmailTemplates\image-3.png" />
+    <Content Include="App_Data\EmailTemplates\Invite.html" />
+    <Content Include="App_Data\EmailTemplates\Reminder.html" />
     <Content Include="App_Data\Package.txt" />
     <Content Include="Content\css\demo.css" />
     <Content Include="Content\favicons\android-icon-144x144.png" />
@@ -359,9 +355,25 @@
     <Content Include="Content\favicons\ms-icon-150x150.png" />
     <Content Include="Content\favicons\ms-icon-310x310.png" />
     <Content Include="Content\favicons\ms-icon-70x70.png" />
+    <Content Include="Content\img\Breaches.jpg" />
+    <Content Include="Content\img\cars\1.png" />
+    <Content Include="Content\img\cars\2.png" />
+    <Content Include="Content\img\cars\3.png" />
+    <Content Include="Content\img\favicon.ico" />
+    <Content Include="Content\img\gauge\high.png" />
+    <Content Include="Content\img\gauge\low.png" />
+    <Content Include="Content\img\gauge\medium.png" />
+    <Content Include="Content\img\image-64.png" />
     <Content Include="Content\img\loading.gif" />
     <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\OverallRiskScore.png" />
+    <Content Include="Content\img\spinner-white.svg" />
+    <Content Include="Content\img\spinner.svg" />
+    <Content Include="Content\img\typing.svg" />
     <Content Include="Content\img\user.png" />
+    <Content Include="Content\img\userbig.png" />
+    <Content Include="Content\img\users\user.png" />
+    <Content Include="Content\img\Vulnerabilities.png" />
     <Content Include="Content\js\app-access-permission.js" />
     <Content Include="Content\js\app-access-roles.js" />
     <Content Include="Content\js\app-calendar-events.js" />
@@ -1002,6 +1014,8 @@
     <Content Include="Content\vendor\fonts\fontawesome.css" />
     <Content Include="Content\vendor\fonts\tabler-icons.css" />
     <Content Include="Content\vendor\fonts\tabler\tabler-icons.svg" />
+    <Content Include="Content\vendor\izitoast\css\iziToast.min.css" />
+    <Content Include="Content\vendor\izitoast\js\iziToast.min.js" />
     <Content Include="Content\vendor\js\bootstrap.js" />
     <Content Include="Content\vendor\js\dropdown-hover.js" />
     <Content Include="Content\vendor\js\helpers.js" />
@@ -1112,6 +1126,8 @@
     <Content Include="Content\vendor\libs\toastr\toastr.js" />
     <Content Include="Content\vendor\libs\typeahead-js\typeahead.css" />
     <Content Include="Content\vendor\libs\typeahead-js\typeahead.js" />
+    <Content Include="Content\vendor\pretty-checkbox\pretty-checkbox.min.css" />
+    <Content Include="Content\vendor\sweetalert\sweetalert.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\arrow-table.min.js" />
@@ -1266,6 +1282,28 @@
     <Content Include="Views\Admin\Breaches.cshtml" />
     <Content Include="Views\Admin\Vulnerabilities.cshtml" />
     <Content Include="Views\Admin\AppVulnerability.cshtml" />
+    <Content Include="Views\Admin\AppBreach.cshtml" />
+    <Content Include="Views\VehiAssure\Add.cshtml" />
+    <Content Include="Views\VehiAssure\Archived.cshtml" />
+    <Content Include="Views\VehiAssure\Index.cshtml" />
+    <Content Include="Views\VehiAssure\MinorEdits.cshtml" />
+    <Content Include="Views\VehiAssure\Invite.cshtml" />
+    <Content Include="Views\VehiAssure\Assessment.cshtml" />
+    <Content Include="Views\VehiAssure\InvalidToken.cshtml" />
+    <Content Include="Views\VehiAssure\ThankYou.cshtml" />
+    <Content Include="Views\VehiAssure\AssessmentsWaitingForReview.cshtml" />
+    <Content Include="Views\VehiAssure\AssessmentsWaiting.cshtml" />
+    <Content Include="Views\VehiAssure\EditAssessments.cshtml" />
+    <Content Include="Views\VehiAssure\Apps.cshtml" />
+    <Content Include="Views\VehiAssure\App.cshtml" />
+    <Content Include="Views\Admin\CompanyUser.cshtml" />
+    <Content Include="Views\Admin\Notifications.cshtml" />
+    <Content Include="Views\Admin\About.cshtml" />
+    <Content Include="Views\Admin\KnowledgeCenter.cshtml" />
+    <Content Include="Views\Case\Index.cshtml" />
+    <Content Include="Views\Case\Preview.cshtml" />
+    <None Include="Views\VehiAssure\DeleteAssessments.cshtml" />
+    <Content Include="Views\VehiAssure\EditAssessment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Uploads\Attachments\" />
@@ -1283,17 +1321,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305171519392_Intial.resx">
-      <DependentUpon>202305171519392_Intial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305171614423_RemovedColumnsFromApp.resx">
-      <DependentUpon>202305171614423_RemovedColumnsFromApp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305171709085_AppVulnerabilityTable.resx">
-      <DependentUpon>202305171709085_AppVulnerabilityTable.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

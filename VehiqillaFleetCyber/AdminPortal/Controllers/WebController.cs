@@ -13,6 +13,16 @@ namespace AdminPortal.Controllers
     [Authorize]
     public partial class WebController : ApiController
     {
-       
+        [HttpGet]
+        [Route("web/emailexists")]
+        public bool emailexists(string email,string id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                List<ApplicationUser> xx = db.Users.Where(x=>x.Email== email && x.Id!=id).ToList();
+                return xx.Count()>0 ? false : true;
+            }
+        }
+
     }
 }

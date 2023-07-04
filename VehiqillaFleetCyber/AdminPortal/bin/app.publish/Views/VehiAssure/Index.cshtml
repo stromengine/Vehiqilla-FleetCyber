@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Vehi-Assure Questionnaires";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        #
+                                    </th>
+                                    <th>Name</th>
+                                    <th>Due In Days</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tdata"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        function GenerateTable() {
+            $.ajax({
+
+                url: 'GetQuestionaires?Type=true',
+                type: "GET",
+                cache: false,
+                success: function (o) {
+                    var tdata = '';
+                    var i = 1;
+                    $(o).each(function (key, value) {
+                        tdata += '<tr>';
+                        tdata += '<td>' + i + '</td>';
+                        tdata += '<td>' + value.Name + '</td>';
+                        tdata += '<td>' + value.DueInDays + '</td>';
+                        if (value.Status == false) {
+                            tdata += '<td><input  onclick="QuestionaireStatus(' + value.ID + ')" id=' + value.ID + ' style="width:20px;margin-left:9px;"   class="status" type="checkbox"/></td>';
+                        }
+                        else {
+                            tdata += '<td><input  disabled  id=' + value.ID + ' style="width:20px;margin-left:9px;" checked class="status" type="checkbox"/></td>';
+                        }
+
+                        tdata += '<td><a href="/VehiAssure/MinorEdits/' + value.ID + '" class="btn btn-xs btn-warning waves-effect waves-light"><i class="fa fa-edit" aria-hidden="true"></i></a></td>';
+                        //<a onclick="javascript: void (0)" data-link="/Suppliers/Delete?ID=' + value.ID + '" href="#" class="btn deleteBtn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        tdata += '</tr>';
+                        i++;
+                    });
+                    $('#tdata').html(tdata);
+                    $('#table-1').DataTable(options);
+                   
+                }
+            });
+
+        }
+
+        function QuestionaireStatus(id) {
+            var s = 'no';
+             s = prompt("Only one questionnaire can be active at a time. Are you sure you want to disable the other one? Write Yes and Press OK.");
+            if (s!==null && s.toLowerCase() == 'yes') {
+                $.ajax({
+                    url: 'EnableQuestionaire?ID=' + id,
+                    type: "GET",
+                    cache: false,
+                    success: function (o) {
+                        var i = 1;
+                        var tdata = '';
+                        $('#table-1').dataTable().fnClearTable();
+                        $('#table-1').dataTable().fnDestroy();
+                        $(o).each(function (key, value) {
+                            tdata += '<tr>';
+                            tdata += '<td>' + i + '</td>';
+                            tdata += '<td>' + value.Name + '</td>';
+                            tdata += '<td>' + value.DueInDays + '</td>';
+                            if (value.Status == false) {
+                                tdata += '<td><input  onclick="QuestionaireStatus(' + value.ID + ')" id=' + value.ID + ' style="width:20px;margin-left:9px;"   class="status" type="checkbox"/></td>';
+                            }
+                            else {
+                                tdata += '<td><input disabled  id=' + value.ID + ' style="width:20px;margin-left:9px;" checked class="status" type="checkbox"/></td>';
+                            }
+
+                            tdata += '<td><a href="/VehiAssure/Add/' + value.ID + '" class="btn btn-primary"><i class="fa fa-edit" aria-hidden="true"></i></a></td>';
+                            //<a onclick="javascript: void (0)" data-link="/Suppliers/Delete?ID=' + value.ID + '" href="#" class="btn deleteBtn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            tdata += '</tr>';
+                            i++;
+                        });
+                        $('#tdata').html(tdata);
+                        $("#table-1").dataTable({
+                            dom: 'fBrtip',
+                            buttons: [
+                                'copy', 'csv', 'excel', 'pdf', 'print'
+                            ]
+                        });
+
+                        alert('Question enabled');
+                    }
+                });
+
+            }
+            else {
+                $('#' + id).prop('checked', false);;
+            }
+        }
+
+        $(document).ready(function () {
+            GenerateTable();
+        });
+    </script>
+}
+

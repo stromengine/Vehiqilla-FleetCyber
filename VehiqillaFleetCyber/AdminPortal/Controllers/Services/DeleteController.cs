@@ -79,5 +79,55 @@ namespace AdminPortal.Controllers.Services
             }
 
         }
+        [HttpGet]
+        [Route("delete/vulnerability")]
+        public bool vulnerability(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                AppVulnerability o = db.AppVulnerabilities.FirstOrDefault(x => x.ID == id);
+                db.AppVulnerabilities.Remove(o);
+                db.SaveChanges();
+                return true;
+            }
+
+        }
+        [HttpGet]
+        [Route("delete/breach")]
+        public bool breach(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                AppBreach o = db.AppBreachs.FirstOrDefault(x => x.ID == id);
+                db.AppBreachs.Remove(o);
+                db.SaveChanges();
+                return true;
+            }
+        }
+        [HttpGet]
+        [Route("delete/invite")]
+        public bool invite(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                VehiAssureInvite o = db.VehiAssureInvites.FirstOrDefault(x => x.ID == id);
+                db.VehiAssureInvites.Remove(o);
+                db.SaveChanges();
+                return true;
+            }
+        }
+        [HttpGet]
+        [Route("delete/KnowledgeCenter")]
+        public bool KnowledgeCenter(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                KnowledgeCenter o = db.KnowledgeCenters.FirstOrDefault(x => x.ID == id);
+                db.KnowledgeCenters.Remove(o);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
     }
 }

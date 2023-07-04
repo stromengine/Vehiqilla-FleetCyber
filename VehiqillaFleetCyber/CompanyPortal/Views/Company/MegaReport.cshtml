@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Mega Report";
+}
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="data" role="tabpanel">
+                        <div class="table-responsive text-nowrap">
+                            <table class="datatables-basic table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            #
+                                        </th>
+
+                                        <th>Fleet</th>
+                                        <th>Fleet Vehicle OEM</th>
+                                        <th>Fleet Vehicle Brand</th>
+                                        <th>Fleet Vehicle Model</th>
+                                        <th>Fleet Vehicle Year Manufactured</th>
+                                        <th>System ECU App</th>
+                                        <th>Category</th>
+                                        <th>System OEM</th>
+                                        <th>Supplier</th>
+                                        <th>Breaches</th>
+                                        <th>Vulnerabilities</th>
+                                        <th>Risk Level</th>
+                                        <th>Cyber Threat Intelligence</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tdata">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        function GenerateTable() {
+            $.ajax({
+
+                url: '/web/MegaReport',
+                type: "GET",
+                cache: false,
+                success: function (o) {
+                    var tdata = '';
+                    var i = 1;
+                    var color;
+                    $(o).each(function (key, value) {
+
+                        tdata += '<tr>';
+                        tdata += '<td>' + i + '</td>';
+                        tdata += '<td>' + value.Fleet + '</td>';
+                        tdata += '<td>' + value.Vehicle + '</td>';
+                        tdata += '<td>' + value.Brand + '</td>';
+                        tdata += '<td>' + value.Model + '</td>';
+                        tdata += '<td>' + value.YearManufactured + '</td>';
+                        tdata += '<td>' + value.AppName + '</td>';
+                        tdata += '<td>' + value.CategoryName + '</td>';
+                        tdata += '<td>' + value.OEM + '</td>';
+                        if (value.Score <= 50) {
+                            color = '<a href="/VehiAssured/App?ID=' + value.AppID + '"  class=""><img class="riskCar" src="/Content/img/cars/1.png"/></a>';
+                        }
+                        else if (value.Score > 50 && value.Score <= 75) {
+                            color = '<a href="/VehiAssured/App?ID=' + value.AppID + '"  class=""><img class="riskCar" src="/Content/img/cars/2.png"/></a>';
+                        }
+                        else if (value.Score > 75 && value.Score <= 100) {
+                            color = '<a href="/VehiAssured/App?ID=' + value.AppID + '"  class=""><img class="riskCar" src="/Content/img/cars/3.png"/></a>';
+                        }
+                        tdata += '<td>' + value.Supplier + '</td>';
+                        tdata += '<td>' + value.Breaches + '</td>';
+                        tdata += '<td>' + value.Vulnerabilities + '</td>';
+                        tdata += '<td>' + color + '</td>';
+                        tdata += '<td style="text-align:center"><a href="/VehiAssure/App?ID=' + value.AppID + '" class="btn  btn-xs btn-warning">Risks</a><br><a href="/Company/AppVulnerability?ID=' + value.AppID + '" class="btn btn-xs btn-warning">Vulnerabilities</a><br><a href="/Company/AppBreach?ID=' + value.AppID + '" class="btn  btn-xs btn-warning">Breaches</a></td>';
+                        tdata += '</tr>';
+                        i++;
+                    });
+                    $('#tdata').html(tdata);
+                    var dt;
+                    dt = $('.datatables-basic').DataTable(options);
+                }
+            });
+
+        }
+        $(document).ready(function () {
+            GenerateTable();
+        });
+    </script>
+}

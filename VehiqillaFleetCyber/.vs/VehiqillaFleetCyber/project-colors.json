@@ -15,7 +15,12 @@
       "ProjectGuid": "c0575c2c-b9ee-4bcb-a417-131029518a4c",
       "DisplayName": "Project Documentation",
       "ColorIndex": 1
+    },
+    "ac179b9d-099d-4ea3-badb-a6c5ba802370": {
+      "ProjectGuid": "ac179b9d-099d-4ea3-badb-a6c5ba802370",
+      "DisplayName": "CompanyPortal",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }

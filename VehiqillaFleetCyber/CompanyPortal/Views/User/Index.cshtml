@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model CompanyPortal.Models.UserViewModel
+
+<style>
+    .select2-container--default {
+        width: 100% !important;
+    }
+</style>
+
+
+<div id="frmBankReceipt" class="row">
+    <div class="col-lg-12">
+        <div class="ibox frm">
+            <div class="ibox-title">
+                <h5>Create/Edit @ViewBag.Title</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up click"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm("Save", null, FormMethod.Post, new { id = "xForm", @class = "", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <fieldset style="width: 100%; display: inline-block;">
+                                @*<legend>Change Password</legend>*@
+                                <div class="input-form">
+                                    @Html.HiddenFor(m => m.ID)
+                                    <div class="form-group row">
+                                        <label class="col-sm-3" style="padding-top: 5px">Current Password</label>
+                                        <div class="col-sm-7">
+                                            @Html.PasswordFor(m => m.CurrentPassword, new { @class = "form-control", pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{8,}$" })
+                                            @Html.ValidationMessageFor(m => m.CurrentPassword, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3" style="padding-top: 5px">New Password</label>
+                                        <div class="col-sm-7">
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{8,}$" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3" style="padding-top: 5px">Confirm Password</label>
+                                        <div class="col-sm-7">
+                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{8,}$" })
+                                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                            <div class="hr-line-dashed"></div>
+                            <div align="right">
+                                <a href="/Home/Index" style="max-height:60px;padding:3px;" class="btn btn-white btn-sm reset"><i class="fa fa-ban"></i>&nbsp;&nbsp;Cancel</a>
+                                @*<button type="submit" class="button"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>*@
+                                @*<button class="btn btn-white btn-sm reset" type="reset" onclick="ResetAll();">Cancel</button>*@
+                                <button class="btn btn-primary btn-sm" type="submit" onclick="$('.text-danger').show();">Save</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Content/kendoUI/js/kendo.all.js"></script>
+    <script>
+        $(document).ready(function () {
+
+
+
+            $("#xForm").submit(function (event) {
+                event.preventDefault();
+                if ($(this).valid()) {
+                    $.ajax({
+                        type: "POST",
+                        url: "Save",
+                        data: $('form').serialize(),
+                        dataType: "json",
+                        encode: true,
+                        success: function (o) {
+                            swal({
+                                title: "Success!",
+                                text: o,
+                                type: "success"
+                            });
+                            /*alert(o);*/
+                            $('input[type=password]').val('');
+                            //window.location.reload();
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
+}

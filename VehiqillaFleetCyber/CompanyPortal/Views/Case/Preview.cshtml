@@ -1,0 +1,388 @@
+﻿
+@{
+    ViewBag.Title = "Preview";
+}
+@using CompanyPortal.Models
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class=" col-sm-12 col-md-8">
+            <div class="card" id="sample-login">
+                <form>
+                    <div class="card-header">
+                        <h4>Case # <span id="caseID">@Model.ID.ToString("0000")</span></h4>
+                    </div>
+                    <div class="card-body pb-0">
+                        <div class="row p-0 m-0">
+                            <div class="col-sm-8 p-0 m-0">
+                                <p class=""><b>Subject: </b><span id="subject">@Model.Subject</span></p>
+                                <p class=""><b>Category: </b><span id="category">@Model.Category</span></p>
+                                <p class=""><b>Priority: </b><span id="Priority">@Model.Priority</span></p>
+                                @*<p class=""><b>Source: </b><span id="source">@Model.Source</span></p>*@
+                                @*<p class=""><b>Requested By: </b><span id="requestedBy">@Model.RequestedBy</span></p>*@
+                                @*<p class=""><b>Company: </b><span id="company">@Model.Company</span></p>*@
+                                <p class=""><b>Date: </b><span id="date">@Model.DateCreated</span></p>
+
+                            </div>
+                            <div class="col-sm-4 p-0 m-0" id="priority">
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 p-0 m-0">
+
+                            <p class=""><b>Summary: </b><span id="summary">@Model.Category</span></p>
+                            <p class=""><b>Attachments: </b><span id="attachments">@Model.Category</span></p>
+                            <p class=""><b>Details: </b><span id="details">@Model.Category</span></p>
+                        </div>
+
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="card" id="sample-login">
+                <form>
+                    <div class="card-header">
+                        <h4>Action</h4>
+                    </div>
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="switch switch-success">
+                                    <input type="checkbox" class="switch-input" checked="" id="status">
+                                    <span class="switch-toggle-slider" style="width:120px">
+                                        <span class="switch-on">
+                                            Open
+                                        </span>
+                                        <span class="switch-off">
+                                            Closed
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>Response</label>
+                                <div class="input-group">
+
+                                    <textarea id="response" style="min-height:200px" class="form-control" placeholder="Update user about case status here..."></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <button type="button" onclick=" SendResponse()" class="btn btn-primary float-right mb-4">Send</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Timeline Advanced-->
+        <div class="col-xl-6">
+            <div class="card">
+                <h5 class="card-header">Updates</h5>
+                <div class="card-body pb-0">
+                    <ul class="timeline mt-3 mb-0 activities">
+                        @*<li class="timeline-item timeline-item-primary pb-4 border-left-dashed">
+                                <span class="timeline-indicator timeline-indicator-primary">
+                                    <i class="ti ti-send"></i>
+                                </span>
+                                <div class="timeline-event">
+                                    <div class="timeline-header border-bottom mb-3">
+                                        <h6 class="mb-0">Get on the flight</h6>
+                                        <span class="text-muted">3rd October</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between flex-wrap mb-2">
+                                        <div>
+                                            <span>Charles de Gaulle Airport, Paris</span>
+                                            <i class="ti ti-arrow-right scaleX-n1-rtl mx-3"></i>
+                                            <span>Heathrow Airport, London</span>
+                                        </div>
+                                        <div>
+                                            <span>6:30 AM</span>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0)">
+                                        <i class="ti ti-link"></i>
+                                        bookingCard.pdf
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="timeline-item timeline-item-success pb-4 border-left-dashed">
+                                <span class="timeline-indicator timeline-indicator-success">
+                                    <i class="ti ti-brush"></i>
+                                </span>
+                                <div class="timeline-event">
+                                    <div class="timeline-header mb-sm-0 mb-3">
+                                        <h6 class="mb-0">Design Review</h6>
+                                        <span class="text-muted">4th October</span>
+                                    </div>
+                                    <p>
+                                        Weekly review of freshly prepared design for our new
+                                        application.
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                        <h6>New Application</h6>
+                                        <div class="d-flex">
+                                            <div class="avatar avatar-xs me-2">
+                                                <img src="../../assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
+                                            </div>
+                                            <div class="avatar avatar-xs">
+                                                <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>*@
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Timeline Advanced-->
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script>
+
+        function padToFour(number) {
+            if (number <= 9999) { number = ("000" + number).slice(-4); }
+            return number;
+        }
+        $(document).ready(function () {
+            if ("@Model.Status" == "Open") {
+                $('#status').prop('checked', true);
+            }
+            else {
+                $('#status').prop('checked', false);
+            }
+            id = document.URL;
+            id = id.split('ID=');
+            id = id[id.length - 1];
+
+            $.ajax({
+                url: 'GetResponses?CaseID=' + id,
+                type: "GET",
+                cache: false,
+                success: function (o) {
+                    var html = '';
+                    $(o).each(function (key, value) {
+                        let fromIcon = 'fa fa-envelope-open';
+                        if (value.MessageFrom == "Corporate User") {
+                            fromIcon = 'fa fa-reply';
+                            from = 'Corporate User';
+                        }
+                        html += '     <li class="timeline-item timeline-item-primary pb-4 border-left-dashed">';
+                        html += '         <span class="timeline-indicator timeline-indicator-primary">';
+                        html += '            <i class="ti ti-send"></i>';
+                        html += '        </span>';
+                        html += '       <div class="timeline-event">';
+                        html += '          <div class="timeline-header border-bottom mb-3">';
+                        html += '           <span class="text-muted">' + value.MessageFrom + '</span>';
+                        html += '       </div>';
+                        html += '       <div class="d-flex justify-content-between flex-wrap mb-2">';
+                        html += '           <div>';
+                        html += '               <span>' + value.Message + '</span>';
+                        html += '           </div>';
+                        html += '           <div>';
+                        html += '           </div>';
+                        html += '       </div>';
+                        html += '       <a href="javascript:void(0)">';
+                        html += '           <i class="ti ti-calendar"></i>';
+                        html += '           ' + ToJavaScriptDate(value.DateCreated) ;
+                        html += '       </a>';
+                        html += '   </div>';
+                        html += '   </li>';
+                        //html += '  <div class="activity">';
+                        //html += '    <div class="activity-icon bg-primary text-white">';
+                        //html += '        <i class="' + fromIcon + '"></i>';
+                        //html += '    </div>';
+                        //html += '    <div class="activity-detail">';
+                        //html += '         <div class="mb-2">';
+                        //html += '           <span class="text-job">' + ToJavaScriptDate(value.DateCreated) + '</span>';
+                        //html += '            <span class="bullet"></span>';
+                        //html += '             <a class="text-job" href="#">' + from + '</a>';
+                        //html += '         </div>';
+                        //html += '         <p>' + value.Message + '</p>';
+                        //html += '     </div>';
+                        //html += '  </div>';
+                    });
+                    $('.activities').html(html);
+                }
+            });
+            //$.ajax({
+
+            //    url: 'GetCase?ID=' + id,
+            //    type: "GET",
+            //    cache: false,
+            //    success: function (value) {
+            //        let priority, status;
+            //        switch (value.Priority) {
+            //            case "Low":
+            //                priority = '<center><b>Priority:</b> <figure style="font-size:15px" class="avatar shadow-lg bg-success mr-2 avatar-xl font-weight-bold" data-initial="Low"></figure></center>';
+            //                break;
+            //            case "Medium":
+            //                priority = '<center><b>Priority:</b> <figure style="font-size:15px" class="avatar shadow-lg bg-info mr-2 avatar-xl font-weight-bold" data-initial="Medium"></figure></center>';
+            //                break;
+            //            case "High":
+            //                priority = '<center><b>Priority:</b> <figure style="font-size:15px" class="avatar shadow-lg bg-primary mr-2 avatar-xl font-weight-bold" data-initial="High"></figure></center>';
+            //                break;
+            //            case "Critical":
+            //                priority = '<center><b>Priority:</b> <figure style="font-size:15px" class="avatar shadow-lg bg-warning mr-2 avatar-xl font-weight-bold" data-initial="Critical"></figure></center>';
+            //                break;
+            //            case "Emergency":
+            //                priority = '<center><b>Priority:</b> <figure style="font-size:15px" class="avatar shadow-lg bg-danger mr-2 avatar-xl font-weight-bold" data-initial="Emergency"></figure></center>';
+            //                break;
+            //            default:
+            //                priority = '<center><b>Priority:</b> <figure style="font-size:15px" class="avatar shadow-lg bg-success mr-2 avatar-xl font-weight-bold" data-initial="Unknown"></figure></center>';
+            //        }
+            //        switch (value.Status) {
+            //            case "Open":
+            //                status = '<i class="fas fa-circle col-green m-r-5"></i> Open';
+            //                break;
+            //            case "Close":
+            //                status = '<i class="fas fa-circle col-red m-r-5"></i> Closed';
+            //                break;
+            //            default:
+            //                status = '<i class="fas fa-circle col-red m-r-5"></i> Closed';
+            //        }
+
+            //        $("#caseID").html(padToFour(value.ID));
+            //        $("#priority").html(priority);
+            //        $("#subject").html(value.Subject);
+            //        $("#summary").html(value.Summary);
+            //        $("#details").html(value.Details);
+            //        $("#category").html(value.Category);
+            //        $("#source").html(value.Source);
+            //        $("#requestedBy").html(value.RequestedByName);
+            //        $("#date").html(ToJavaScriptDate(value.DateCreated));
+            //        $("#analysts").val(value.AssignedTo);
+            //        $("#company").html(value.Company);
+
+            //        if (value.Status == "Open") {
+            //            $('#status').prop('checked', true);
+            //        }
+            //        else {
+            //            $('#status').prop('checked', false);
+            //        }
+            //    }
+            //});
+
+            $.ajax({
+
+                url: 'GetAttachments?ID=' + id,
+                type: "GET",
+                cache: false,
+                success: function (o) {
+                    var html = '';
+                    $(o).each(function (key, value) {
+                        var ad = value.Address;
+                        var x = ad.split("Cases");
+                        x = x[1];
+                        x = "/Uploads/Cases" + x;
+
+                        html += '<a target="_blank" href=' + x + ' class="badge bg-primary m-1">' + value.FileName + '</a>';
+                    });
+                    $('#attachments').html(html);
+                }
+
+            });
+
+
+        });
+
+
+
+        function SendResponse() {
+            var message = $('#response').val();
+            if (message != "") {
+                $.ajax({
+                    url: 'Respond?CaseID=' + id + '&Message=' + message,
+                    type: "GET",
+                    cache: false,
+                    success: function (o) {
+                        let fromIcon = 'fa fa-reply';
+                        let from = 'Corporate User';
+                        let html = '';
+                        html += '     <li class="timeline-item timeline-item-primary pb-4 border-left-dashed">';
+                        html += '         <span class="timeline-indicator timeline-indicator-primary">';
+                        html += '            <i class="ti ti-send"></i>';
+                        html += '        </span>';
+                        html += '       <div class="timeline-event">';
+                        html += '          <div class="timeline-header border-bottom mb-3">';
+                        html += '           <span class="text-muted">' + o.MessageFrom + '</span>';
+                        html += '       </div>';
+                        html += '       <div class="d-flex justify-content-between flex-wrap mb-2">';
+                        html += '           <div>';
+                        html += '               <span>' + o.Message + '</span>';
+                        html += '           </div>';
+                        html += '           <div>';
+                        html += '           </div>';
+                        html += '       </div>';
+                        html += '       <a href="javascript:void(0)">';
+                        html += '           <i class="ti ti-calendar"></i>';
+                        html += '           ' + ToJavaScriptDate(o.DateCreated);
+                        html += '       </a>';
+                        html += '   </div>';
+                        html += '   </li>';
+
+                        $(".activities").prepend(html);
+                        $('#response').val('');
+                        toastr.success("Response sent.")
+
+
+                    }
+
+                });
+            }
+            else {
+                toastr.success("No Response Added.")
+
+            }
+
+        }
+        $("#status").click(function () {
+            var status = "Closed";
+            if (this.checked) {
+                status = "Open";
+            }
+            $.ajax({
+                url: 'SetStatus?CaseID=' + id + '&Status=' + status,
+                type: "GET",
+                cache: false,
+                success: function (o) {
+
+                    if (o.Message == "Open") {
+                      toastr.info("Case is open now.")
+                    }
+                    else {
+                        toastr.info("Case is closed now.")
+                    }
+
+                }
+
+            });
+
+        });
+
+    </script>
+}

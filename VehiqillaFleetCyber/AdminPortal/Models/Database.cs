@@ -43,6 +43,7 @@ namespace AdminPortal.Models
         public string Headoffice { set; get; }
         [StringLength(250)]
         public string Country { set; get; }
+        public string Logo { set; get; }
     }
     public class Oem :BaseFields
     {
@@ -148,8 +149,38 @@ namespace AdminPortal.Models
 
 
 
-    public class VehiAssureQuestionaire : BaseFields
+    public class VehiAssureAssessment
     {
+        [Key]
+        [Required]
+        public int ID { set; get; }
+        [StringLength(250)]
+        public string UUID { set; get; }
+        [Required]
+        public DateTime AssessmentDate { set; get; }
+        [Required]
+        [StringLength(250)]
+        public string Token { set; get; }
+        [Required]
+        public int SupplierID { set; get; }
+        [Required]
+        public int EcuAppID { set; get; }
+        [Required]
+        public int QuestionaireID { set; get; }
+        [Required]
+        public int QuestionID { set; get; }
+        [Required]
+        public int OptionID { set; get; }
+        [StringLength(250)]
+        public string Remarks { set; get; }
+        public bool Approved { set; get; }
+        public bool Reviewed { set; get; }
+    }
+    public class VehiAssureQuestionaire
+    {
+        [Key]
+        [Required]
+        public int ID { set; get; }
         [Required]
         public string Name { set; get; }
         [Required]
@@ -158,46 +189,148 @@ namespace AdminPortal.Models
         public int DueInDays { set; get; }
         [Required]
         public bool Status { set; get; }
+        [Required]
+        [StringLength(250)]
+        public string CreatedBy { set; get; }
+        [Required]
+        public DateTime DateCreated { set; get; }
+        [Required]
+        [StringLength(250)]
+        public string ModifiedBy { set; get; }
+        [Required]
+        public DateTime DateModified { set; get; }
     }
-    public class VehiAssureQuestionaireCustomField : BaseFields
+    public class VehiAssureQuestionaireCustomField
     {
+        [Key]
+        [Required]
+        public int ID { set; get; }
         [Required]
         public int VehiAssureQuestionaireID { set; get; }
         [Required]
         public string Field { set; get; }
-
-        public virtual VehiAssureQuestionaire VehiAssureQuestionaire { set; get; }
     }
-    public class VehiAssureQuestionGroup : BaseFields
+    public class VehiAssureQuestionGroup
     {
+        [Key]
+        [Required]
+        public int ID { set; get; }
+        public int VehiAssureQuestionaireID { set; get; }
         [Required]
         public string Name { set; get; }
         [Required]
         public int MaxScore { set; get; }
         [Required]
         public int Threshold { set; get; }
-        public virtual VehiAssureQuestionaire VehiAssureQuestionaire { set; get; }
 
     }
-    public class VehiAssureQuestion:BaseFields
+    public class VehiAssureQuestion
     {
+        [Key]
+        [Required]
+        public int ID { set; get; }
+        [Required]
+        public int VehiAssureQuestionGroupID { set; get; }
         [Required]
         public string Type { set; get; }
         [Required]
         public string Name { set; get; }
         [Required]
         public int Score { set; get; }
-        public virtual VehiAssureQuestionGroup VehiAssureQuestionGroup { set; get; }
 
     }
-    public class VehiAssureQuestionOption : BaseFields
+    public class VehiAssureQuestionOption
     {
-     
+        [Key]
+        [Required]
+        public int ID { set; get; }
+        [Required]
+        public int VehiAssureQuestionID { set; get; }
         [Required]
         public string Name { set; get; }
         [Required]
         public int Score { set; get; }
+    }
+    public class VehiAssureAssessmentCustomField
+    {
+        [Key]
+        [Required]
+        public int ID { set; get; }
+        [Required]
+        public DateTime AssessmentDate { set; get; }
+        [Required]
+        [StringLength(250)]
+        public string Token { set; get; }
+        [Required]
+        public int SupplierID { set; get; }
+        [Required]
+        public int EcuAppID { set; get; }
+        [Required]
+        public int FieldID { set; get; }
+        [Required]
+        [StringLength(250)]
+        public string Value { set; get; }
+        public string UUID { set; get; }
+    }
+    public class VehiAssureInvite : BaseFields
+    {
+        public string InviteStatus { set; get; }
+        public string Token { set; get; }
+        public DateTime DateRequested { set; get; }
+        public DateTime? RemindedOn { set; get; }
+        public virtual Supplier Supplier { set; get; }
+        public virtual ECUApp ECUApp { set; get; }
+    }
 
-        public virtual VehiAssureQuestion VehiAssureQuestion { set; get; }
+    public class Content :BaseFields
+    {
+
+        [StringLength(250)]
+        public string Type { set; get; }
+        public string Heading { set; get; }
+        public string Image { set; get; }
+        public string Text { set; get; }
+        public string File { set; get; }
+        public string Url { set; get; }
+        public string Name { set; get; }
+        public string Designation { set; get; }
+
+    }
+    public class Case
+    {
+        [Key]
+        public int ID { get; set; }
+        public string Subject { get; set; }
+        public string Details { get; set; }
+        public string Summary { get; set; }
+        public string Status { get; set; }
+        public string Category { get; set; }
+        public string AssignedTo { get; set; }
+        public string Source { get; set; }
+        public string Requestedby { get; set; }
+        public string Priority { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public DateTime? ResolutionDate { get; set; }
+    }
+    public class CaseResponse
+    {
+        [Key]
+        public int ID { get; set; }
+        public int? CaseID { get; set; }
+        public string Message { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string MessageFrom { get; set; }
+    }
+
+    public class CaseAttachment
+    {
+        [Key]
+        public int ID { get; set; }
+        public string Address { get; set; }
+        public string FileName { get; set; }
+        public string Type { get; set; }
+        public string UploadedBy { get; set; }
+        public int? TypeID { get; set; }
     }
 }

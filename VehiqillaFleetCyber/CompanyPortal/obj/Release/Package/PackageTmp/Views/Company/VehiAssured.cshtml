@@ -1,0 +1,325 @@
+﻿
+@{
+    ViewBag.Title = "Vehi Assured";
+}
+<style>
+    #online-offline {
+        height: 20em;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    .car {
+        font-size: 30px;
+        letter-spacing: 15px;
+    }
+
+    .fa-car-side {
+        transform: scale(1.9, 1.6);
+    }
+
+    .car:hover {
+        cursor: pointer
+    }
+
+    .btn-compose {
+        cursor: default !important
+    }
+    #mail-nav {
+        padding:10px;
+    }
+
+    #mail-nav .btn-compose {
+        margin: 15px;
+        min-width: 87%
+    }
+
+    #mail-nav a {
+        text-decoration: none
+    }
+
+    #mail-nav #mail-folders {
+        list-style-type: none;
+        padding: 0px 15px
+    }
+
+        #mail-nav #mail-folders > li {
+            margin: 2px 0
+        }
+
+            #mail-nav #mail-folders > li a:hover {
+                color: #fff;
+                background-color: #a8a9ab
+            }
+
+            #mail-nav #mail-folders > li.active > a {
+                color: #fff;
+                background-color: #a8a9ab
+            }
+
+                #mail-nav #mail-folders > li.active > a:hover {
+                    background-color: #a8a9ab
+                }
+
+    #mail-nav #mail-labels {
+        float: left;
+        width: 100%
+    }
+
+        #mail-nav #mail-labels .material-icons {
+            font-size: 16px;
+            height: 16px;
+            padding: 2px;
+            float: left
+        }
+
+    #mail-nav #online-offline .material-icons {
+        font-size: 8px;
+        height: 8px;
+        padding: 0px 5px 2px 0
+    }
+
+        #mail-nav #mail-labels, #mail-nav #online-offline {
+            list-style-type: none;
+            padding-left: 15px
+        }
+
+            #mail-nav #mail-labels li a:hover, #mail-nav #online-offline li a:hover {
+                background-color: #e6e6e6
+            }
+
+        #mail-nav li a {
+            color: #212529;
+            padding: 5px 10px;
+            display: block;
+            border-radius: 4px;
+            position: relative;
+            -webkit-transition: all 0.2s ease-out;
+            -moz-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out
+        }
+</style>
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row" id="app">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" id="filters">
+            <div class="card">
+                <div class="body">
+                    <div id="mail-nav">
+                        <button type="button" v-on:click="Reset()" class="btn btn-primary waves-effect btn-compose m-b-15">Reset Filters</button>
+                        <h5 class="b-b p-10 text-strong">Risk Level</h5>
+
+                        <center>
+                            <ul class="" id="mail-folders">
+
+                                <li>
+                                    <div class="btn-group mb-1 btn-group-sm btn-block" role="group" aria-label="Basic example">
+                                        <button style="    min-width: 70px;" v-on:click="FilterRisk(1)" type="button" class="btn risk btn-outline-danger"><i class="fas fa-car-side "></i></button>                          
+                                        <button style="    min-width: 70px;" v-on:click="FilterRisk(2)" type="button" class="btn risk btn-icon btn-outline-warning"> <i class="fas fa-car-side "></i></button>                  
+                                        <button style="    min-width: 70px;" v-on:click="FilterRisk(3)" type="button" class="btn risk btn-outline-success">   <i class="fas fa-car-side "></i></button>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </center>
+
+                        <h5 class="b-b p-10 text-strong">Categories</h5>
+                        <ul class="online-user" style="max-height: 400px !important;overflow: scroll !important;overflow-x: hidden !important;" id="online-offline">
+                            <li v-for="(category,i) in categories" :key="i">
+                                <a href="javascript:;" v-on:click="LoadAppsByCategories(category.ID)">
+                                    {{category.Name}}
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+            <div class="card">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form class="composeForm" style="    padding: 5px;">
+                            <div class="form-group" style="    margin: 0px;">
+                                <div class="input-group">
+                                    <input v-model="searchApp" type="text" class="form-control" placeholder="APP/ECU Name" aria-label="">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-icon icon-left btn-warning" style="width: 200px;" type="button"><i class="fas fa-search"></i>Search</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-xl-6 col-lg-6" v-for="(app,i) in filterSearch" :key="i">
+                    <div class="card">
+                        <div class="card-body card-type-3">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <img alt="image" style="width:100%" :src="pathToLogo(app.Logo)" class="rounded-circle author-box-picture">
+                                </div>
+                                <div class="col-sm-6">
+                                    <h4 class="text-muted mb-0">{{app.Name}}</h4>
+                                    <br />
+                                    <table>
+                                        <tr><td><b>Category:</b></td><td>{{app.CategoryName}}</td></tr>
+                                        <tr><td><b>Supplier:</b></td><td>{{app.SupplierName}}</td></tr>
+                                        <tr><td><b>Vulnerabilities:</b></td><td>0</td></tr>
+                                        <tr><td><b>Breaches:</b></td><td>0</td></tr>
+                                        <tr><td><a :href="'/VehiAssure/App?ID='+app.ID">View Details</a></td></tr>
+                                    </table>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div v-if="app.Score<51" style="color:white;font-size: 20px;font-weight: bolder;height:120px;width:120px;background-size: contain;background-repeat: no-repeat; background-image:url('/Content/img/cars/1.png')">
+                                        {{app.Score}}
+                                    </div>
+                                    <div v-if="app.Score>50 && app.Score<76" style="color:white;font-size: 20px;font-weight: bolder;height:120px;width:120px;background-size: contain;background-repeat: no-repeat; background-image:url('/Content/img/cars/2.png')">
+                                        {{app.Score}}
+                                    </div>
+                                    <div v-if="app.Score>75" style="color:white;display: flex;align-items: center;justify-content: center;font-size: 20px;font-weight: bolder;height:120px;width:120px;background-size: contain;background-repeat: no-repeat;; background-image:url('/Content/img/cars/3.png')">
+                                        {{app.Score}}
+                                    </div>
+                                    @*<div v-if="app.Score<51" style="width:75px;height:75px; background: linear-gradient(to right, #c52626 0%, #ff6e6e 100%) !important;" class="card-circle l-bg-red text-white">
+                                            {{app.Score}}
+                                        </div>
+                                        <div v-if="app.Score>50 && app.Score<76" style="width:75px;height:75px" class="card-circle l-bg-orange text-white">
+                                            {{app.Score}}
+                                        </div>
+                                        <div v-if="app.Score>75" style="width:75px;height:75px  ;background: linear-gradient( 135deg, #3fd600 0%, #00b358 100%) !important;" class="card-circle l-bg-green text-white">
+                                            {{app.Score}}
+                                        </div>*@
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+
+    <script>
+        $('body').on('click', '#online-offline>li', function () {
+            $('#online-offline>li').removeClass('bg-warning');
+            $(this).addClass('bg-warning');
+
+        });
+
+        var vueContent = new Vue({
+            el: '#app',
+
+            data: {
+                searchApp: '',
+                risk: 0,
+                risk2: 100,
+                categories: [{ ID: -1, Name: 'All Categories' }],
+                apps: []
+            },
+
+            computed: {
+                filterSearch() {
+                    return this.apps.filter(app => {
+                        return !this.searchApp || app.Name.toLowerCase().indexOf(this.searchApp.toLowerCase()) > -1
+                    }).filter(app => {
+                        return app.Score >= this.risk && app.Score <= this.risk2
+                    })
+                },
+            },
+            mounted: function () {
+                $('#online-offline>li').removeClass('bg-warning');
+                this.searchApp = '';
+                let me = this;
+                axios.get('/Company/CategoriesList').then(function (response) {
+                    $(response.data).each(function (key, value) {
+                        me.categories.push(value);
+                    });
+                }).then(response => {
+
+                });
+                axios.get('/Company/AppsList').then(function (response) {
+                    $(response.data).each(function (key, value) {
+                        me.apps.push(value);
+                    });
+                });
+            },
+            methods: {
+                pathToLogo(logo) {
+                    try {
+                        if (logo) {
+                            logo = logo.split("Suppliers").pop();
+                            logo = "/Uploads/Suppliers/" + logo;
+                        }
+                        return logo;
+                    }
+                    catch {
+                        return "";
+                    }
+
+                },
+                Reset() {
+                    $('li').removeClass('bg-warning');
+                    this.risk = 0;
+                    this.risk2 = 100;
+                    this.searchApp = '';
+                    this.apps = [];
+                    let me = this;
+                    axios.get('/Company/CategoriesList').then(function (response) {
+                        $(response.data).each(function (key, value) {
+                            me.categories.push(value);
+                        });
+                    }).then(response => {
+
+                    });
+                    axios.get('/Company/AppsList').then(function (response) {
+                        $(response.data).each(function (key, value) {
+                            me.apps.push(value);
+                        });
+                    });
+                },
+                FilterRisk(c) {
+                    console.log(c);
+                    if (c == 1) {
+                        this.risk = 0;
+                        this.risk2 = 50;
+                    }
+                    else if (c == 2) {
+                        this.risk = 51;
+                        this.risk2 = 75;
+                    }
+                    else if (c == 3) {
+                        this.risk = 76;
+                        this.risk2 = 100;
+                    }
+                },
+                LoadAppsByCategories(catid) {
+                    let me = this;
+
+
+                    axios.get('/Company/AppsByCategory?CatID=' + catid).then(function (response) {
+                        me.apps = [];
+                        $(response.data).each(function (key, value) {
+                            me.apps.push(value);
+                        });
+                    })
+
+                }
+            }
+        })
+    </script>
+}
+

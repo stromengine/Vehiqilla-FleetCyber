@@ -14,6 +14,20 @@ namespace AdminPortal.Controllers.Services
     public class DropdownsController : ApiController
     {
         [HttpGet]
+        [Route("dropdowns/companies")]
+        public List<NameValue> companies()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                List<NameValue> xx = db.Companies.Select(p => new NameValue()
+                {
+                    ID = p.ID,
+                    Name = p.Name
+                }).OrderBy(s => s.Name).ToList();
+                return xx;
+            }
+        }
+        [HttpGet]
         [Route("dropdowns/categories")]
         public List<NameValue> categories()
         {
@@ -34,6 +48,20 @@ namespace AdminPortal.Controllers.Services
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 List<NameValue> xx = db.Suppliers.Select(p => new NameValue()
+                {
+                    ID = p.ID,
+                    Name = p.Name
+                }).OrderBy(s => s.Name).ToList();
+                return xx;
+            }
+        }
+        [HttpGet]
+        [Route("dropdowns/apps")]
+        public List<NameValue> apps()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                List<NameValue> xx = db.ECUApps.Select(p => new NameValue()
                 {
                     ID = p.ID,
                     Name = p.Name

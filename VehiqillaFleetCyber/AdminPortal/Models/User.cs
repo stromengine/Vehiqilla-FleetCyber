@@ -23,4 +23,18 @@ namespace AdminPortal.Models
         [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class UserModel
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public int? Company_ID { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Address { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+    }
+
+
 }

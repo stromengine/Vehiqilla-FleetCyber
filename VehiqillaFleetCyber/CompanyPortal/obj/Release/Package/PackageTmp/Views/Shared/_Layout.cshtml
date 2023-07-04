@@ -1,0 +1,514 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed " dir="ltr" data-theme="theme-default" data-assets-path="~/Content/" data-template="vertical-menu-template">
+@using Microsoft.AspNet.Identity;
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>@ViewBag.Title</title>
+
+    
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
+    <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
+    <!-- Favicon -->
+    <link rel='shortcut icon' type='image/x-icon' href='/content/favicons/favicon.ico' />
+    <link rel="apple-touch-icon" sizes="57x57" href="/content/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/content/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/content/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/content/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/content/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/content/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/content/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/content/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/content/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/content/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/content/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/content/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/content/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/content/favicons/manifest.json">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/Content/vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="~/Content/vendor/fonts/tabler-icons.css" />
+    <link rel="stylesheet" href="~/Content/vendor/fonts/flag-icons.css" />
+
+    <!-- Core CSS -->
+    <link href="~/Content/vendor/css/rtl/core.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/vendor/css/rtl/theme-default.css" />
+    <link rel="stylesheet" href="~/Content/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="~/Content/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="~/Content/vendor/libs/typeahead-js/typeahead.css" />
+    <link rel="stylesheet" href="~/Content/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+    <link rel="stylesheet" href="~/Content/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+    <link rel="stylesheet" href="~/Content/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
+    <link rel="stylesheet" href="~/Content/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+    <link href="~/Content/vendor/libs/toastr/toastr.css" rel="stylesheet" />
+    <link href="~/Content/vendor/libs/sweetalert2/sweetalert2.css" rel="stylesheet" />
+
+    <!-- Page CSS -->
+    <!-- Helpers -->
+    <script src="~/Content/vendor/js/helpers.js"></script>
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="~/Content/js/config.js"></script>
+
+
+    <style>
+        .riskCar {
+            width: 50px !important;
+        }
+        .dataTables_filter {
+            float: left !important;
+        }
+
+        .dt-buttons {
+            float: right !important;
+        }
+        .loader {
+            top: 0;
+            left: 0;
+            position: fixed;
+            opacity: 1;
+            z-index: 10000000;
+            background: white;
+            height: 100%;
+            width: 100%;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loader" id="AjaxLoader" >
+        <img src="~/Content/img/loading.gif" style="position:absolute;top:40%;left:40%;opacity:1" />
+    </div>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar  ">
+        <div class="layout-container">
+
+            <!-- Menu -->
+
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
+                <div class="app-brand demo ">
+                    <a href="/Home/Index" class="app-brand-link">
+                        <img src="~/Content/img/logo.png" style="height: 51px" />
+                    </a>
+
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                        <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
+                        <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
+                    </a>
+                </div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+
+                    <li class="menu-item">
+                        <a href="/Company/Fleet" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Fleet">Fleets</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Company/Vehicle" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Vehicles">Vehicles</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Company/Suppliers" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Suppliers">Suppliers</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Company/Apps" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="App">App/ECU</div>
+                        </a>
+                    </li>
+                    @*<li class="menu-item">
+            <a href="/Company/Oems" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-link"></i>
+                <div data-i18n="OEMs">OEMs</div>
+            </a>
+        </li>*@
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-menu-2"></i>
+                            <div data-i18n="Vehi-Assure">Vehi-Assure</div>
+
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="/Company/VehiAssured" class="menu-link">
+                                    <div data-i18n="/Company/VehiAssured">Dashboard</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="/Company/Mapping" class="menu-link">
+                                    <div data-i18n="/Company/Mapping">Mapping</div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Company/AppRisks" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Risk">App/ECU Risks</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Company/Vulnerabilities" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Vulnerabilities">Vulnerabilities</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Company/Breaches" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Breaches">Breaches</div>
+                        </a>
+                    </li>
+
+
+                    <li class="menu-item">
+                        <a href="/Company/Notifications" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Notifications">Notifications</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Company/KnowledgeCenter" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Knowledge Center">Knowledge Center</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Case/Index" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Cases">Cases</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons ti ti-menu-2"></i>
+                            <div data-i18n="Vehi-Assure">Reports</div>
+
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="/Company/MegaReport" class="menu-link">
+                                    <div data-i18n="/Company/MegaReport">Mega Report</div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+
+
+
+            </aside>
+            <!-- / Menu -->
+            <!-- Layout container -->
+            <div class="layout-page">
+
+
+
+
+
+                <!-- Navbar -->
+
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+
+
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none ">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="ti ti-menu-2 ti-sm"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+                        <b>  Manage @ViewBag.Title</b>
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="~/Content/img/user.png" class="h-auto rounded-circle">
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="~/Content/img/user.png" class="h-auto rounded-circle">
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">@User.Identity.GetUserName()</span>
+                                                    @*<small class="text-muted">Company</small>*@
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="pages-profile-user.html">
+                                            <i class="ti ti-user-check me-2 ti-sm"></i>
+                                            <span class="align-middle">Change Password</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/Home/Logout" target="_blank">
+                                            <i class="ti ti-logout me-2 ti-sm"></i>
+                                            <span class="align-middle">Log Out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+
+
+
+                        </ul>
+                    </div>
+
+
+                    <!-- Search Small Screens -->
+                    <div class="navbar-search-wrapper search-input-wrapper  d-none">
+                        <input type="text" class="form-control search-input container-xxl border-0" placeholder="Search..." aria-label="Search...">
+                        <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
+                    </div>
+
+
+
+                </nav>
+
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+
+                    <!-- Content -->
+                    @RenderBody()
+
+                    <!-- / Content -->
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl">
+                            <div class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
+                                <div>
+                                    COPYRIGHTS ©
+                                    <script>
+                                        document.write(new Date().getFullYear())
+                                    </script> ALL RIGHTS RESERVED BY VEHIQILLA INC
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- / Footer -->
+
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+
+
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+
+        <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+        <div class="drag-target"></div>
+
+        <div class="modal fade" id="userwarningmodal" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Warning</h5>
+                   
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to proceed?
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" id='continueAction' class="btn  btn-success"><i class="fas fa-check" aria-hidden="true"></i> Yes</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-times" aria-hidden="true"></i> No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- / Layout wrapper -->
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="~/Content/vendor/libs/jquery/jquery.js"></script>
+    <script src="~/Content/vendor/libs/popper/popper.js"></script>
+    <script src="~/Content/vendor/js/bootstrap.js"></script>
+    <script src="~/Content/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/Content/vendor/libs/node-waves/node-waves.js"></script>
+
+    <script src="~/Content/vendor/libs/hammer/hammer.js"></script>
+    <script src="~/Content/vendor/libs/i18n/i18n.js"></script>
+    <script src="~/Content/vendor/libs/typeahead-js/typeahead.js"></script>
+
+    <script src="~/Content/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+    <!-- Vendors JS -->
+    <script src="~/Content/vendor/libs/toastr/toastr.js"></script>
+    <script src="~/Content/vendor/libs/sweetalert2/sweetalert2.js"></script>
+    <script src="~/Content/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+
+    <!-- Vendors JS -->
+    <!-- Main JS -->
+    <script src="~/Content/js/main.js"></script>
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/axios.min.js"></script>
+
+    <script>
+        function ToJavaScriptDate(value) {
+
+            if (value != "" && value != null) {
+                var pattern = /Date\(([^)]+)\)/;
+                var results = pattern.exec(value);
+                var dt = new Date(parseFloat(results[1]));
+                return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+            }
+            else {
+                return "";
+            }
+
+        }
+        var options = {
+            dom: 'fBrtip',
+            buttons: [
+                {
+                    extend: "collection",
+                    className: "btn btn-label-primary dropdown-toggle me-2",
+                    text: '<i class="ti ti-file-export me-sm-1"></i> <span class="d-none d-sm-inline-block">Export</span>',
+                    buttons: [
+                        {
+                            extend: "print",
+                            text: '<i class="ti ti-printer me-1" ></i>Print',
+                            className: "dropdown-item",
+                            customize: function (e) {
+                                $(e.document.body).css("color", config.colors.headingColor).css("border-color", config.colors.borderColor).css("background-color", config.colors.bodyBg),
+                                    $(e.document.body).find("table").addClass("compact").css("color", "inherit").css("border-color", "inherit").css("background-color", "inherit");
+                            },
+                        },
+                        {
+                            extend: "csv",
+                            text: '<i class="ti ti-file-text me-1" ></i>Csv',
+                            className: "dropdown-item",
+
+                        },
+                        {
+                            extend: "excel",
+                            text: '<i class="ti ti-file-spreadsheet me-1"></i>Excel',
+                            className: "dropdown-item",
+
+                        },
+                        {
+                            extend: "pdf",
+                            text: '<i class="ti ti-file-description me-1"></i>Pdf',
+                            className: "dropdown-item",
+
+                        },
+                        {
+                            extend: "copy",
+                            text: '<i class="ti ti-copy me-1" ></i>Copy',
+                            className: "dropdown-item",
+
+                        },
+                    ],
+                },
+
+            ],
+        }
+    </script>
+    <!-- Page JS -->
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+        $(document)
+            .ajaxStart(function () {
+                $('#AjaxLoader').show();
+            })
+            .ajaxStop(function () {
+                $('#AjaxLoader').hide();
+            });
+
+        $("body").on("click", ".confirm", function () {
+            link = $(this).data("link");
+            $("#userwarningmodal").modal("show");
+            console.log("ss");
+        });
+        $("#continueAction").click(function () {
+            $.get(link, function (data) {
+                var id = link.split("=")[1];
+
+                $("#userwarningmodal").modal("hide");
+                //Show Push Notification Here
+
+                if (data.RedirectUrl) {
+                    window.location.href = data.RedirectUrl;
+                }
+                $(".switch" + id).addClass("d-none");
+                $(".progress" + id).removeClass("d-none");
+
+                setTimeout(function () {
+                    $(".progress" + id).addClass("d-none");
+                    if (!link.includes('Deny')) {
+                        $(".result" + id).removeClass("d-none");
+                    }
+                    else {
+                        $(".denied" + id).removeClass("d-none");
+                    }
+
+                }, 1000);
+
+
+            });
+        });
+
+        // jQuery
+        $(document).ready(function () {
+            $("#AjaxLoader").fadeOut(1000); // Hide the loader once the page has finished loading
+        });
+    </script>
+
+</body>
+
+</html>
+
+<!-- beautify ignore:end -->

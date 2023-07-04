@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "About";
+}
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row" id="app">
+        <div class="col-xl-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane  active"  role="tabpanel">
+                        <!-- Basic Layout & Basic with Icons -->
+                        <div class="row" id="">
+                            <!-- Basic Layout -->
+                            <div class="col-xxl">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <form @@submit.prevent="handleSubmit" encytpe="multipart/form-data">
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Text">Text</label>
+                                                <div class="col-sm-10">
+                                                    <textarea style="min-height:400px" type="text" v-model="vm.text" class="form-control" id="Text" required maxlength="4000" > </textarea>
+                                                </div>
+                                            </div>
+                                          
+                                            <div class="row justify-content-end mt-4">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-success float-end"><i class="fa fa-save"></i> &nbsp;Save</button>
+                                                    <button type="button" onclick="window.location.reload()" class="btn btn-danger float-end mx-2"><i class="fa fa-cancel"></i> &nbsp;Cancel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/x-template" id="select2-template">
+        <select>
+            <slot></slot>
+        </select>
+    </script>
+
+
+    <script>
+
+        Vue.component('select2', {
+            props: ['options', 'value', 'change'],
+            template: '#select2-template',
+            mounted: function () {
+                var vm = this
+                $(this.$el)
+                    .val(this.value)
+                    // init select2
+                    .select2({ data: this.options })
+                    // emit event on change.
+                    .on('change', function () {
+                        vm.$emit('input', this.value)
+                    })
+            },
+            watch: {
+                value: function (value) {
+                    // update value
+                    $(this.$el).val(value)
+                },
+                options: function (options) {
+                    // update options
+                    $(this.$el).select2({ data: options })
+                }
+            },
+
+            destroyed: function () {
+                $(this.$el).off().select2('destroy')
+            }
+        });
+    </script>
+    <script>
+        var dt;
+        dt = $('.datatables-basic').DataTable(options);
+
+    </script>
+    <script>
+      
+
+        var vueContent = new Vue({
+            el: '#app',
+            data: {
+                vm: {
+                    ID: 0,
+                    text: null,
+                },
+            },
+            methods: {
+                handleSubmit() {
+                    axios.post('/save/about', JSON.stringify(this.vm), {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.data > 0) {
+                            toastr.success("Record has been updated.");
+                            setTimeout(function () {
+                            }, 500);
+
+                        }
+                        else if (response.data == 0) {
+                            toastr.success("Record has been updated.");
+                            setTimeout(function () {
+                            }, 500);
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An Error has occured please contact System Administrator.',
+                                icon: 'error',
+                                showConfirmButton: false
+                            });
+                        }
+                    }).catch(error => {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An Error has occured please contact System Administrator.',
+                            icon: 'error',
+                            showConfirmButton: false
+                        })
+                    })
+                },
+          
+            },
+            beforeMount() {
+                axios.get("/get/about").then((res) => {
+                    this.vm.text = res.data;
+                });
+            },
+        });
+    </script>
+}

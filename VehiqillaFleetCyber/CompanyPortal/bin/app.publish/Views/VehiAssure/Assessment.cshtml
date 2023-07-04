@@ -1,0 +1,323 @@
+﻿
+@{
+    Layout = null;
+}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<style>
+    body {
+        margin-top: 40px;
+    }
+
+    .stepwizard-step p {
+        margin-top: 10px;
+    }
+
+    .stepwizard-row {
+        display: table-row;
+    }
+
+    .stepwizard {
+        display: table;
+        width: 100%;
+        position: relative;
+    }
+
+    .stepwizard-step button[disabled] {
+        opacity: 1 !important;
+        filter: alpha(opacity=100) !important;
+    }
+
+    .stepwizard-row:before {
+        top: 14px;
+        bottom: 0;
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: 1px;
+        background-color: #ccc;
+        z-order: 0;
+    }
+
+    .stepwizard-step {
+        display: table-cell;
+        text-align: center;
+        position: relative;
+    }
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+</style>
+<html>
+<body>
+
+
+    <div class="container" id="app">
+        <center>
+            <h1 id="Name">Vehi-Assure Assessment</h1>
+            <br />
+            <br />
+        </center>
+
+        <div class="stepwizard">
+            <div class="stepwizard-row setup-panel">
+                <div class="stepwizard-step">
+                    <a href="#Start" type="button" class="btn btn-primary btn-circle">0</a>
+                    <p>Introduction</p>
+                </div>
+                <div class="stepwizard-step" v-for="(group,i) in groups" :key="i">
+                    <a v-bind:href='"#step-"+i' disabled type="button" class="btn btn-default btn-circle">{{i+1}}</a>
+                    <p>{{group.name}}</p>
+                </div>
+
+                <div class="stepwizard-step">
+                    <a href="#Finish" type="button" class="btn btn-default btn-circle" disabled="disabled">x</a>
+                    <p>Finish</p>
+                </div>
+            </div>
+        </div>
+        <form role="form" action="Assessment" method="post">
+            <div class="row setup-content" id="Start">
+                <div class="col-xs-12">
+                    <div class="col-md-12">
+                        <div class="form-group" id="fields">
+                            <center>
+                                <h2>Welcome</h2>
+                                <h4 id="Instructions">Loading ...</h4>
+                                <input name="QuestionaireId" id="QuestionaireId" type="hidden" />
+                                <input name="token" id="token" type="hidden" />
+                            </center>
+                            <br />
+                            <br />
+                            <br />
+                            <h4>Please fill in the following information to continue.</h4>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row setup-content" v-for="(group,i) in groups" :key="i" :id="'step-'+i">
+                <div class="col-xs-12">
+                    <div class="col-md-12">
+                        <h3 class="area">{{group.name}}</h3>
+                        <div v-for="(question,j) in group.questions" :key="j">
+                            <div v-if="question.type!='Multi-Select'" class="form-group">
+                                <label class="control-label">
+                                    {{question.name}}
+                                </label>
+                                <div v-for="(option,k) in question.options" :key="k">
+                                    <br>
+                                    <input :checked="k===0" class="form-check-input" type="radio" :value="option.score" :name="'question-'+question.id+'['+option.id+']'" :id="'question-'+question.id+'#'+option.id">
+                                    <label class="form-check-label" :for="'question-'+question.id+'#'+option.id">
+                                        {{option.name}}
+                                    </label>
+                                    <br>
+                                </div>
+                                <br />
+                                <label class="control-label">
+                                    Remarks
+                                </label>
+                                <input class="form-control" type="text" :name="'remarks-'+question.id">
+                                <br />
+                            </div>
+                            <div v-if="question.type=='Multi-Select'" class="form-group">
+                                <label class="control-label">
+                                    {{question.name}}
+                                </label>
+                                <div v-for="(option,k) in question.options" :key="k">
+                                    <br>
+                                    <input class="form-check-input" type="checkbox" :value="option.score" :name="'question-'+question.id+'['+option.id+']'" :id="'question-'+question.id+'#'+option.id">
+                                    <label class="form-check-label" :for="'question-'+question.id+'#'+option.id">
+                                        {{option.name}}
+                                    </label>
+                                    <br>
+                                </div>
+                                <br />
+                                <label class="control-label">
+                                    Remarks
+                                </label>
+                                <input class="form-control" type="text" :name="'remarks-'+question.id">
+                                <br />
+                            </div>
+                        </div>
+                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row setup-content" id="Finish">
+                <div class="col-xs-12">
+                    <div class="col-md-12">
+                        <div class="form-group" id="fields">
+                            <br />  <br />
+                                    <center>
+                                        <h2>Thank You!</h2>
+                                        <h4 style="line-height:33px;">Thank you for filling out the assessment.  <br /> Please click submit to save the assessment or go back to review it.</h4>
+                                        <br />
+                                        <br />
+                                        <button type="submit" class="btn btn-success nextBtn btn-lg">Submit</button>
+                                    </center>
+                        </div>
+                 
+                      
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+   
+    $(document).ready(function () {
+     
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var token = url.searchParams.get("Token");
+        $('#token').val(token);
+        $.ajax({
+
+            url: 'GetQuestionaireData',
+            type: "GET",
+            cache: false,
+            success: function (o) {
+                $('#Instructions').html(o.Instructions);
+                $('#Name').html(o.Name);
+                $('#QuestionaireId').val(o.ID);
+                $.ajax({
+                    url: 'GetRequiredFields?ID=' + o.ID,
+                    type: "GET",
+                    cache: false,
+                    success: function (o) {
+                        var html = '';
+                        $(o).each(function (key, value) {
+                            html += '<div class="form-group"><label class="control-label" for=' + value.ID + '>' + value.Field + '</label >';
+                            html += '<input required="required" class="form-check-input form-control" type="text" name="fields-' + value.ID + '" id="' + value.ID + '"></div>';
+                        })
+                        $('#fields').append(html);
+                    }
+                });
+
+            }
+        });
+
+
+
+    });
+    var vueContent2 = new Vue({
+        el: '#app',
+
+        data: {
+            groups: [],
+            xgroups: []
+        },
+        mounted: function () {
+            let me = this;
+            axios.get('/VehiAssure/LoadQuestionaire').then(function (response) {
+                $(response.data).each(function (key, value) {
+                    me.groups.push(value);
+                    me.xgroups.push(value);
+                });
+            }).then(response => {
+
+                //Wizard Code Start Here
+                var navListItems = $('div.setup-panel div a'),
+                    allWells = $('.setup-content'),
+                    allNextBtn = $('.nextBtn');
+
+                allWells.hide();
+
+                $('body').on('click', 'div.setup-panel div a', (function (e) {
+                    e.preventDefault();
+                    var $target = $($(this).attr('href')),
+                        $item = $(this);
+
+                    if (!$item.hasClass('disabled')) {
+                        navListItems.removeClass('btn-primary').addClass('btn-default');
+                        $item.addClass('btn-primary');
+                        allWells.hide();
+                        $target.show();
+                        $target.find('input:eq(0)').focus();
+                    }
+                }));
+                $('body').on('click', '.nextBtn', function () {
+                    var curStep = $(this).closest(".setup-content"),
+                        curStepBtn = curStep.attr("id"),
+                        nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+                        curInputs = curStep.find("input[type='radio'],input[type='url'],input[type='text']"),
+                        isValid = true;
+                    $(".form-group").removeClass("has-error");
+                    for (var i = 0; i < curInputs.length; i++) {
+                        if (!curInputs[i].validity.valid) {
+                            isValid = false;
+                            $(curInputs[i]).closest(".form-group").addClass("has-error");
+                        }
+                    }
+
+                    if (isValid)
+                        nextStepWizard.removeAttr('disabled').trigger('click');
+                });
+
+                $('div.setup-panel div a.btn-primary').trigger('click');
+                //Wizard Code Ends Here
+               // $('input[type=radio]').prop('checked', false);
+             //   $('input[type=radio]:first').prop('checked', true)
+          
+                $('body').on('click', 'input[type=radio]',(function (event) {
+                    var id = $(this).attr('id');
+                    var id = id.split("#");
+                    $('[id^='+id[0]+']').prop('checked', false);
+                    $(this).prop('checked', true);
+
+                    //event.preventDefault();
+                }));
+            });
+        },
+        methods: {
+
+            saveQuestions() { //to save in database
+                axios.post('/VehiAssure/SaveQuestionaire', {
+                    ID: $('#QuestionaireId').val(),
+                    Groups: this.groups //JSON.stringify()
+                }).then(response => {
+                    iziToast.success({
+                        title: 'Success!',
+                        message: 'Fields Saved.',
+                        position: 'topRight'
+                    });
+
+                }).catch(error => {
+
+                    iziToast.error({
+                        title: 'Error!',
+                        message: 'Fields Not Saved.',
+                        position: 'topRight'
+                    });
+                })
+            }
+        }
+    })
+</script>
+</html>

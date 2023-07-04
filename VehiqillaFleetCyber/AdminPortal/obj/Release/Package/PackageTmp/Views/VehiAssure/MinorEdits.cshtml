@@ -1,0 +1,432 @@
+﻿
+@{
+    ViewBag.Title = "Minor Edits";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model AdminPortal.Models.VehiAssureQuestionaireViewModel
+<link rel="stylesheet" href="~/Content/vendor/pretty-checkbox/pretty-checkbox.min.css">
+<link rel="stylesheet" href="~/Content/vendor/izitoast/css/iziToast.min.css">
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-lg-12">
+
+            <ul class="nav  nav-tabs " id="myTab3" role="tablist">
+                <li class="nav-item">
+                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#t1" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Details </button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#t2" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Required Information</button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#t3" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-question-mark ti-xs me-1"></i> Questions</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent2">
+                <div class="tab-pane active show" id="t1" role="tabpanel" aria-labelledby="t1">
+                    @using (Html.BeginForm("MinorEdits", null, FormMethod.Post, new { id = "Form", @class = "", enctype = "multipart/form-data" }))
+                    {
+                        @Html.HiddenFor(d => d.ID)
+                        <div class="col-sm-12 mb-2">
+                            @Html.LabelFor(d => d.Name, new { @class = "" }) <span class="required">*</span>
+                            @Html.TextBoxFor(d => d.Name, new { @class = "form-control", required = "required", name = "Name", @placeholder = "" })
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            @Html.LabelFor(d => d.Instructions, new { @class = "" }) <span class="required">*</span>
+                            @Html.TextAreaFor(d => d.Instructions, new { @class = "form-control", style = "    height: 275px!important;", required = "required", name = "Instructions", @placeholder = "" })
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            @Html.LabelFor(d => d.DueInDays, new { @class = "" }) <span class="required">*</span>
+                            @Html.TextBoxFor(d => d.DueInDays, new { @class = "form-control", value = 14, type = "number", required = "required", name = "DueInDays", @placeholder = "" })
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <button type="submit" class="btn btn-primary float-end">Save</button>
+
+                        </div>
+                    }
+                </div>
+                <div class="tab-pane fade pt-5" id="t2" role="tabpanel" aria-labelledby="t2">
+                    <div id="CustomFields">
+                        <div class="row mb-2" v-for="(input,k) in inputs" :key="k">
+                            <div class="col-sm-8">
+                                    <input type="text" class="form-control" placeholder="Enter Field Name" name="field[]" v-model="input.field">
+                            </div>
+                            <div class="col-sm-4 d-none">
+                                <button type="button" class="btn  btn-danger" @@click="remove(k)" v-show="k || ( !k && inputs.length > 1)">
+                                    <i class="fas fa-minus-circle"></i>
+                                </button>
+                                <button type="button" class="btn btn-success" @@click="add(k)" v-show="k == inputs.length-1">
+                                    <i class="fas fa-plus-circle"></i>
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <button type="button" @@click="saveFields" class="btn btn-primary float-end">
+                            Save
+                        </button>
+                    </div>
+                </div>
+                <div class="tab-pane   fade" id="t3" role="tabpanel" aria-labelledby="t3">
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="Questionaire">
+                            <div class="card-body">
+                                <div class="mb-2" v-for="(group,k) in groups" :key="k">
+                                    <div class="row mb-2">
+                                        <div class="col-sm-4">
+                                                <label class="" for="">Group  {{k+1}}</label>
+                                                <input required="required" type="text" class="form-control" placeholder="Enter Group Name" name="group[]" v-model="group.name">
+                                        </div>
+                                        <div class="col-sm-3">
+                                         
+                                                <label class="" for="">Group Threshold</label>
+                                                <input required="required" type="text" class="form-control" placeholder="Enter Threshold" name="threshold[]" v-model="group.threshold">
+                                        </div>
+                                        <div class="col-sm-3">
+                                                <label class="" for="">Max Score</label>
+                                                <input required="required" type="text" class="form-control" placeholder="Enter Score" name="maxScore[]" v-model="group.maxScore">
+                                        </div>
+                                        <div class="col-sm-2  d-none">
+                                            <button type="button" class="btn  btn-danger" @@click="remove(k)" v-show="k || ( !k && groups.length > 1)">
+                                                <i class="fas fa-minus-circle"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-success" @@click="add(k)" v-show="k == groups.length-1">
+                                                <i class="fas fa-plus-circle"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-primary mb-2" data-bs-toggle="collapse" :href="'#collapse'+k" role="button" aria-expanded="false" :aria-controls="'#collapse'+k">
+                                        Show/Hide Questions
+                                    </a>
+                                    <div class="p-3 border rounded border-success p-4 collapse" :id="'collapse'+k">
+                                        <div v-for="(question,i) in group.questions" :key="i">
+
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label class="font-bold" for="">Question: {{i+1}}</label>
+                                                    <input required="required" type="text" class="form-control" placeholder="Enter Question" name="questions[]" v-model="question.name">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label class="font-bold" for="">Type</label>
+                                                    <select required="required" disabled class="form-control" name="type[]" @@change="setOptions(question)" v-model="question.type">
+                                                        <option selected value="Any">Any</option>
+                                                        <option value="Yes/No">Yes/No</option>
+                                                        <option value="Multi-Select">Multi-Select</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label class="font-bold" for="">Total</label>
+
+                                                    <input type="number" class="form-control" name="questionScore[]" v-model="question.questionScore">
+                                                </div>
+                                                <div class="col-sm-2  d-none">
+                                                    <button type="button" class="btn  btn-danger" @@click="removeQuestion(group,i)" v-show="i || ( !i && group.questions.length > 1)">
+                                                        <i class="fas fa-minus-circle"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-success" @@click="addQuestion(group)" v-show="i == group.questions.length-1">
+                                                        <i class="fas fa-plus-circle"></i>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                            <div class="row mx-1  pt-2" v-for="(option,i) in question.options" :key="i">
+
+                                                <div class="col-sm-6">
+                                                    <label class="font-bold" for="">Option: {{i+1}}</label>
+                                                    <input :readonly="question.type=='Yes/No'" required="required" type="text" class="form-control" placeholder="" name="option[]" v-model="option.name">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label v-if="question.type=='Multi-Select'" class="" for="">Score</label>
+                                                    <label v-else class="custom-switch mt-5">
+                                                        <input type="checkbox" name="score[]" v-model="option.score" class="custom-switch-input">
+                                                        <span class="custom-switch-indicator"></span>
+                                                        <span class="custom-switch-description">Correct</span>
+                                                    </label>
+                                                    <input v-if="question.type=='Multi-Select'" required="required" type="text" class="form-control" placeholder="" name="score[]" v-model="option.score">
+
+                                                </div>
+                                                <div class="col-sm-4 pt-5 pl-4  d-none" v-if="question.type!='Yes/No' " _>
+                                                    <button type="button" class="btn  btn-danger btn-sm" @@click="removeOption(question,i)" v-show="i || ( !i && question.options.length > 1)">
+                                                        <i class="fas fa-minus-circle"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-success btn-sm" @@click="addOption(question)" v-show="i == question.options.length-1">
+                                                        <i class="fas fa-plus-circle"></i>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                            <br />
+                                            <hr style="border-radius:100%; border-top:3px solid rgba(0,0,0,0.22)" />
+                                            <br />
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <button type="button" @@click="validateQuestionaire" class="btn btn-primary float-end">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section Scripts
+{
+
+        <script src="~/Content/vendor/izitoast/js/iziToast.min.js"></script>
+        <!-- Page Specific JS File -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="~/Content/vendor/sweetalert/sweetalert.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                let id = $('#ID').val();
+                if (id == 0) {
+                    $('#tab2').attr('href', "javascript: void(0);");
+                    $('#tab2').removeAttr("data-toggle");
+                    $('#tab3').attr('href', "javascript: void(0);");
+                    $('#tab3').removeAttr("data-toggle");
+                }
+            });
+            var vueContent = new Vue({
+                el: '#CustomFields',
+
+                data: {
+                    inputs: []
+
+                },
+                mounted: function () {
+                    var me = this;
+                    let id = $('#ID').val();
+                    if (id != 0) {
+                        axios.get('/VehiAssure/LoadCustomFields?ID=' + id).then(function (response) {
+                            $(response.data).each(function (key, value) {
+                                me.inputs.push({
+                                    field: value.Field,
+                                    id: value.ID,
+                                });
+                            });
+                            if (!response.data[0]) {
+                                me.inputs.push({
+                                    field: ''
+                                });
+                            }
+                            // me.skip += 1;
+                        });
+                    } else {
+                        me.inputs.push({
+                            field: ''
+                        });
+
+                    }
+
+                },
+                methods: {
+                    add() {
+                        this.inputs.push({
+                            field: ''
+                        })
+
+                    },
+
+                    remove(index) {
+                        this.inputs.splice(index, 1)
+                    },
+
+                    saveFields() { //to save in database
+                        axios.post('/VehiAssure/SaveMinorEditsCustomFields', {
+                            ID: $('#ID').val(),
+                            Field: this.inputs //JSON.stringify()
+                        }).then(response => {
+                            iziToast.success({
+                                title: 'Success!',
+                                message: 'Fields Saved.',
+                                position: 'topRight'
+                            });
+
+                        }).catch(error => {
+
+                            iziToast.error({
+                                title: 'Error!',
+                                message: 'Fields Not Saved.',
+                                position: 'topRight'
+                            });
+                        })
+                    }
+                }
+            })
+            var vueContent2 = new Vue({
+                el: '#Questionaire',
+
+                data: {
+                    groups: []
+                },
+                mounted: function () {
+                    var me = this;
+                    let id = $('#ID').val();
+                    if (id != 0) {
+                        axios.get('/VehiAssure/LoadQuestionaireByID?ID=' + id).then(function (response) {
+                            $(response.data).each(function (key, value) {
+                                me.groups.push(value);
+                            });
+
+                            if (!response.data[0]) {
+                                me.groups.push({ name: '', threshold: 0, questions: [{ name: '', type: '', options: [{ name: '', score: 0 }] }] });
+
+                            }
+                        });
+                    } else {
+                        me.groups.push({ name: '', threshold: 0, questions: [{ name: '', type: '', options: [{ name: '', score: 0 }] }] });
+
+                    }
+
+                },
+
+                methods: {
+                    total: function (q, values) {
+                        return values.reduce((acc, option) => {
+                            q.questionScore = acc + parseInt(option.score);
+                            return acc + parseInt(option.score);
+                        }, 0);
+                    },
+                    add() {
+                        this.groups.push({ name: '', threshold: 0, questions: [{ name: '', type: '', options: [{ name: '', score: 0 }] }] })
+                    },
+
+                    remove(index) {
+                        let confirm = window.confirm("Are you sure you want to delete this group?");
+                        if (confirm) {
+                            this.groups.splice(index, 1)
+                        }
+
+                    },
+                    addQuestion(group) {
+                        group.questions.push({ name: '', threshold: 0, options: [{ name: '', score: 0 }] })
+                    },
+
+                    removeQuestion(group, index) {
+                        let confirm = window.confirm("Are you sure you want to delete this question?");
+                        if (confirm) {
+                            group.questions.splice(index, 1)
+                        }
+
+                    },
+                    addOption(question) {
+                        question.options.push({ name: '', threshold: 0 })
+                    },
+                    setOptions(question) {
+                        if (question.type == "Yes/No") {
+                            question.options = [];
+                            question.options.push({ name: "Yes", score: question.questionScore });
+                            question.options.push({ name: "No", score: 0 });
+                        }
+                    },
+                    removeOption(question, index) {
+                        let confirm = window.confirm("Are you sure you want to delete this option?");
+                        if (confirm) {
+                            question.options.splice(index, 1)
+                        }
+
+                    },
+
+                    validateQuestionaire() {
+                        let arr = this.groups;
+                        var error = false;
+                        var groupTotal = 0;
+                        var groupIndex = 0;
+                        var questionError = '';
+                        var errorIndex = 1;
+                        $(arr).each(function (key, value) {
+                            var questionTotal = 0;
+                            groupIndex++;
+                            groupTotal += parseInt(value.maxScore);
+                            var questionIndex = 0;
+                            $(value.questions).each(function (key, v) {
+                                questionIndex++;
+                                questionTotal += parseInt(v.questionScore);
+                                if (v.type == 'Multi-Select') {
+
+                                    var optionTotal = 0;
+                                    $(v.options).each(function (key, r) {
+                                        optionTotal += parseInt(r.score);
+                                    });
+
+                                    if (optionTotal != parseInt(v.questionScore))//Check that mcq option total matches question total
+                                    {
+                                        error = true;
+                                        questionError += errorIndex + '. Options Total Mismatch: Group: <b>' + groupIndex + '</b> Question: <b>' + questionIndex + '</b> <br>';
+                                        errorIndex++;
+                                    }
+                                }
+
+                            });
+                            if (questionTotal != parseInt(value.maxScore))
+                            {
+                                error = true;
+                                questionError += errorIndex + '. Total of questions Score should be equal to group Max Score in Group: <b>' + groupIndex + '</b> <br>';
+                                errorIndex++;
+                            }
+                            if (parseInt(value.threshold) >= parseInt(value.maxScore))
+                            {
+                                error = true;
+                                questionError += errorIndex + '. Threshold should be less than Max Score in: Group: <b>' + groupIndex + '</b> <br>';
+                                errorIndex++;
+                            }
+                        });
+
+                        if (groupTotal != 100) {
+                            error = true;
+                            questionError += errorIndex + '. Total of Max Scores in groups must be <b>100</b>, Current Total is: <b>' + groupTotal + '</b> <br>';
+                            errorIndex++;
+                        }
+
+                        if (error == true) {
+                          //  swal('Validation Failed', questionError, 'error');
+                            iziToast.error({
+                                title: 'Error!',
+                                message: questionError,
+                                timeout: 10000,
+                                position: 'topRight'
+                            });
+                        }
+                        if (error == false) {
+                            this.saveQuestions();
+                        }
+
+
+                    },
+                    saveQuestions() { //to save in database
+                        axios.post('/VehiAssure/SaveMinorEdits', {
+                            ID: $('#ID').val(),
+                            Groups: this.groups //JSON.stringify()
+                        }).then(response => {
+                            swal('Validated Successfully!', 'Questionnaire Saved', 'success');
+                            //iziToast.success({
+                            //    title: 'Success!',
+                            //    message: 'Fields Saved.',
+                            //    position: 'topRight'
+                            //});
+
+                        }).catch(error => {
+                            swal('Failed!', 'Please contact Administrator', 'error');
+                            //iziToast.error({
+                            //    title: 'Error!',
+                            //    message: 'Fields Not Saved.',
+                            //    position: 'topRight'
+                            //});
+                        })
+                    }
+                }
+            })
+
+
+        </script>
+
+    }

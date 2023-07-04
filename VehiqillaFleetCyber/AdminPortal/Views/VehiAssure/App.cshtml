@@ -1,0 +1,371 @@
+﻿
+@{
+    ViewBag.Title = "App";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-xxl flex-grow-1 container-p-y" id="app">
+    <div v-if="appLoaded">
+        <div class="row">
+            <div class="col-xs-6 col-sm-12 col-md-12 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>APP/ECU Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-8">
+
+                                <h4 class="text-muted mb-0">{{apps[0].Name}}</h4>
+                                <br />
+                                <table>
+                                    <tr><td><b>Category:</b></td><td>{{apps[0].CategoryName}}</td></tr>
+                                    <tr><td><b>Supplier:</b></td><td>{{apps[0].SupplierName}}</td></tr>
+                                    <tr><td><b>Date Created:</b></td><td>{{convertTime(apps[0].DateCreated)}}</td></tr>
+                                    <tr><td><b>Last Assessment:</b></td><td>{{convertTime(apps[0].AssessmentDate)}}</td></tr>
+                                </table>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <img alt="image" style="width:100px" :src="pathImage(apps[0].Logo)" class="rounded-circle author-box-picture pull-right">
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <b>Description:</b>
+                                <p>
+                                    {{apps[0].Description}}
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-12 col-md-12 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Score History</h4>
+                    </div>
+                    <div class="card-body">
+                        <highcharts style="height:220px;" :options="options" ref="highcharts"></highcharts>
+                        @*<div class="mb-4 mt-4">
+                                <div class="text-small float-right font-weight-bold text-muted">558</div>
+                                <div class="font-weight-bold mb-1">Google</div>
+                                <div class="progress" data-height="4" data-toggle="tooltip" title="58%">
+                                    <div class="progress-bar bg-success" data-width="58%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="text-small float-right font-weight-bold text-muted">338</div>
+                                <div class="font-weight-bold mb-1">Facebook</div>
+                                <div class="progress" data-height="4" data-toggle="tooltip" title="44%">
+                                    <div class="progress-bar bg-purple" data-width="44%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="text-small float-right font-weight-bold text-muted">238</div>
+                                <div class="font-weight-bold mb-1">Bing</div>
+                                <div class="progress" data-height="4" data-toggle="tooltip" title="32%">
+                                    <div class="progress-bar bg-orange" data-width="32%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="text-small float-right font-weight-bold text-muted">190</div>
+                                <div class="font-weight-bold mb-1">Yahoo</div>
+                                <div class="progress" data-height="4" data-toggle="tooltip" title="22%">
+                                    <div class="progress-bar bg-cyan" data-width="22%"></div>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <img src="~/Content/img/OverallRiskScore.png" style=" width: 64px; float: left" />
+                            </div>
+                            <div class="col-sm-8 pt-4">
+                                <i class="fa fa-arrow-circle-up text-success"></i> {{apps[0].Score}}
+                                <span class="text-muted">Overall Risk Score</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <img src="~/Content/img/Vulnerabilities.png" style=" width: 64px; float: left" />
+
+                            </div>
+                            <div class="col-sm-8 pt-4">
+                                <i class="fa fa-arrow-circle-up text-success"></i> {{apps[0].Vulnerabilities}}
+                                <span class="text-muted">Vulnerabilities</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <img src="~/Content/img/Breaches.jpg" style="    width:64px; float:left" />
+
+                            </div>
+                            <div class="col-sm-8 pt-4">
+                                <i class="fa fa-arrow-circle-up text-success"></i> {{apps[0].Breaches}}
+                                <span class="text-muted">Breaches</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 ">
+                <div class="card   p-0   mr-1">
+
+                    <div class="card-body p-1">
+                        <img v-if="apps[0].Score>75 && apps[0].Score<101" style="height: 103px; width: 100%;" src="~/Content/img/gauge/low.png" />
+                        <img v-if="apps[0].Score>49 && apps[0].Score<76" style="height: 103px; width: 100%;" src="~/Content/img/gauge/medium.png" />
+                        <img v-if="apps[0].Score>-1 && apps[0].Score<50" style="height: 103px; width: 100%;" src="~/Content/img/gauge/high.png" />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br />
+        <div class="row" v-if="groupsLoaded">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" id="filters">
+                <div class="card">
+                    <div class="body  p-4">
+                        <div id="mail-nav">
+                            <h5 class=" text-strong">Groups</h5>
+                            <ul class="online-user" id="online-offline">
+                                <li v-for="(group,i) in groups" :key="i">
+                                    <a href="javascript:;" v-on:click="LoadQuestions(group.id,group.name,group.maxScore)">
+                                        {{group.name}}
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>{{groupName}} - Score: {{ObtainedScore}}/{{GroupScore}}</h4>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="progress mb-3">
+
+                            <div class="progress-bar bg-success" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                        </div>
+                        <div v-for="(question,j) in questions" :key="j">
+                            <div class="form-group">
+                                <h5>
+                                    {{question.name}}
+                                </h5>
+                                <ul>
+                                    <li v-for="(option,k) in question.options" :key="k">
+                                        <b style="font-weight:bolder;" v-if="option.selected">{{option.name}} </b>  <i v-if="option.selected" style="    font-size: 20px;" class="fas fa-check-circle text-success" aria-hidden="true"></i>
+
+                                        <span v-else>{{option.name}}</span>
+                                    </li>
+                                </ul>
+
+                                <br>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    @*<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@6/highcharts.js"></script>
+    <!-- vue-highcharts should be load after Highcharts -->
+    <script src="https://cdn.jsdelivr.net/npm/vue-highcharts@0.1/dist/vue-highcharts.min.js"></script>
+
+    <script>
+        const url = window.location.href;
+        const AppID = url.split("=")[1].replace(/\D/g, '');
+        var options = {
+            chart: {
+                type: 'areaspline',
+                animation: {
+                    duration: 1000
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: ""
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                ]
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#039b7d'
+                }]
+            },
+            legend: {
+                enabled: false
+            },
+
+            tooltip: {
+                valueSuffix: ''
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+                name: 'Score',
+                color: '#039b7d',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            }]
+        };
+
+        var vueContent = new Vue({
+            el: '#app',
+
+            data: {
+                groupsLoaded: false,
+                appLoaded: false,
+                groupId: '',
+                selectedOptions: [],
+                groupName: 'Click Group to Load Details',
+                groups: [],
+                questions: [],
+                apps: [],
+                chartData: [],
+                categories: [],
+                options: options,
+                progressValue: 0,
+                GroupScore: 0,
+                ObtainedScore: 0
+            },
+            methods: {
+                pathImage: function (path) {
+                    try {
+                        path = path.split("Suppliers").pop();
+                        path = "/Uploads/Suppliers/" + path;
+                        return path;
+                    }
+                    catch {
+                        return "";
+                    }
+
+                },
+                convertTime: function (time) {
+                    var pattern = /Date\(([^)]+)\)/;
+                    var results = pattern.exec(time);
+                    var dt = new Date(parseFloat(results[1]));
+                    return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                },
+                updateChart: function () {
+                    var chart = this.$refs.highcharts.chart;
+                    chart.series[0].setData(this.chartData, true);
+                    chart.xAxis[0].setCategories(this.categories, true, true);
+                },
+                LoadQuestions(c, n, maxScore) {
+                    this.GroupScore = parseInt(maxScore);
+                    this.ObtainedScore = 0;
+
+                    this.groupName = n;
+                    this.questions = [];
+                    let me = this;
+                    axios.get('/VehiAssure/LoadQuestions?AppID=' + AppID + '&GroupID=' + c).then(function (response) {
+                        $(response.data).each(function (key, value) {
+                            $(value.options).each(function (key, value) {
+                                me.ObtainedScore += value.selected == true ? parseInt(value.score) : 0;
+                            });
+
+                            me.questions.push(value);
+                        });
+                    }).then(function () {
+                        me.progressValue = (me.ObtainedScore / me.GroupScore) * 100;
+                        me.progressValue = parseInt(me.progressValue);
+                        $('.progress-bar').css('width', me.progressValue + '%').attr('aria-valuenow', me.progressValue);
+                        if (me.progressValue >= 90) {
+                            $(".progress-bar").removeClass("bg-danger").removeClass("bg-warning").addClass("bg-success");
+                        }
+                        else if (me.progressValue >= 50 && me.progressValue < 75) {
+                            $(".progress-bar").removeClass("bg-success").removeClass("bg-danger").addClass("bg-warning");
+                        }
+                        else if (me.progressValue >= -1 && me.progressValue < 50) {
+                            $(".progress-bar").removeClass("bg-success").removeClass("bg-warning").addClass("bg-danger");
+                        }
+                    });
+
+                },
+
+            },
+            mounted: function () {
+                let me = this;
+                axios.get('/VehiAssure/GetApp?ID=' + AppID).then(function (response) {
+                    $(response.data).each(function (key, value) {
+                        me.apps.push(value);
+                    });
+                }).then(response => {
+                    me.appLoaded = true;
+                    axios.get('/VehiAssure/GetChart?ID=' + AppID).then(function (response) {
+                        $(response.data).each(function (key, value) {
+                            me.categories.push(me.convertTime(value.AssessmentDate));
+                            me.chartData.push(value.Score);
+                        });
+                    }).then(response => {
+                        me.updateChart();
+                    });
+                });
+                axios.get('/VehiAssure/LoadQuestionaireByAppID?AppID=' + AppID).then(function (response) {
+                    $(response.data).each(function (key, value) {
+                        me.groups.push(value);
+                    });
+                }).then(response => {
+                    me.groupsLoaded = true;
+                });
+
+
+            },
+
+        })
+
+    </script>
+}
+
