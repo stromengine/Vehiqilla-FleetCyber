@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Projects\Vehiqilla-FleetC\VehiqillaFleetCyber\AdminPortal\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2023-07-04T18:20:08.0716963Z;</History>
+    <History>True|2023-07-05T11:49:52.4857380Z;True|2023-07-04T23:20:08.0716963+05:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -30,10 +30,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/03/2023 03:51:34</publishTime>
     </File>
     <File Include="bin/AdminPortal.dll">
-      <publishTime>07/04/2023 23:20:05</publishTime>
+      <publishTime>07/05/2023 16:49:51</publishTime>
     </File>
     <File Include="bin/AdminPortal.pdb">
-      <publishTime>07/04/2023 23:20:05</publishTime>
+      <publishTime>07/05/2023 16:49:51</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>09/11/2013 04:29:20</publishTime>
@@ -3171,7 +3171,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/03/2023 03:51:34</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/04/2023 22:43:14</publishTime>
+      <publishTime>07/04/2023 23:44:55</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>05/03/2023 03:51:34</publishTime>
@@ -3199,6 +3199,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/VehiAssure/AssessmentsWaitingForReview.cshtml">
       <publishTime>06/10/2023 21:57:50</publishTime>
+    </File>
+    <File Include="Views/VehiAssure/DeleteAssessments.cshtml">
+      <publishTime>06/10/2023 22:41:58</publishTime>
     </File>
     <File Include="Views/VehiAssure/EditAssessment.cshtml">
       <publishTime>06/11/2023 16:23:59</publishTime>

@@ -1124,54 +1124,54 @@ namespace VehiQilla.Controllers
             }
             return Json(xx, JsonRequestBehavior.AllowGet);
         }
-        [HttpGet]
-        public ActionResult LoadQuestionaire(int AppID)
-        {
+        //[HttpGet]
+        //public ActionResult LoadQuestionaireByAppId(int AppID)
+        //{
 
-            List<Group> Groups = new List<Group>();
+        //    List<Group> Groups = new List<Group>();
 
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                VehiAssureAssessment qx = db.VehiAssureAssessments.OrderByDescending(t => t.AssessmentDate).FirstOrDefault();
-                int ID = qx.QuestionaireID;
-                List<VehiAssureQuestionGroup> VehiAssureQuestionGroups = db.VehiAssureQuestionGroups.Where(x => x.VehiAssureQuestionaireID == ID).ToList();
+        //    using (ApplicationDbContext db = new ApplicationDbContext())
+        //    {
+        //        VehiAssureAssessment qx = db.VehiAssureAssessments.OrderByDescending(t => t.AssessmentDate).FirstOrDefault();
+        //        int ID = qx.QuestionaireID;
+        //        List<VehiAssureQuestionGroup> VehiAssureQuestionGroups = db.VehiAssureQuestionGroups.Where(x => x.VehiAssureQuestionaireID == ID).ToList();
 
-                foreach (VehiAssureQuestionGroup VehiAssureQuestionGroup in VehiAssureQuestionGroups)
-                {
-                    List<Question> Questions = new List<Question>();
-                    Group Group = new Group();
-                    Group.id = VehiAssureQuestionGroup.ID;
-                    Group.name = VehiAssureQuestionGroup.Name;
-                    Group.threshold = VehiAssureQuestionGroup.Threshold;
-                    Group.maxScore = VehiAssureQuestionGroup.MaxScore;
-                    List<VehiAssureQuestion> VehiAssureQuestions = db.VehiAssureQuestions.Where(x => x.VehiAssureQuestionGroupID == VehiAssureQuestionGroup.ID).ToList();
-                    foreach (VehiAssureQuestion VehiAssureQuestion in VehiAssureQuestions)
-                    {
-                        Question Question = new Question();
-                        Question.id = VehiAssureQuestion.ID;
-                        Question.name = VehiAssureQuestion.Name;
-                        Question.type = VehiAssureQuestion.Type;
-                        List<Option> Options = new List<Option>();
-                        List<VehiAssureQuestionOption> VehiAssureQuestionOptions = db.VehiAssureQuestionOptions.Where(x => x.VehiAssureQuestionID == VehiAssureQuestion.ID).ToList();
-                        foreach (VehiAssureQuestionOption VehiAssureQuestionOption in VehiAssureQuestionOptions)
-                        {
-                            Option Option = new Option();
-                            Option.id = VehiAssureQuestionOption.ID;
-                            Option.name = VehiAssureQuestionOption.Name;
-                            Option.score = VehiAssureQuestionOption.Score;
-                            Options.Add(Option);
-                        }
-                        Question.options = Options;
-                        Questions.Add(Question);
+        //        foreach (VehiAssureQuestionGroup VehiAssureQuestionGroup in VehiAssureQuestionGroups)
+        //        {
+        //            List<Question> Questions = new List<Question>();
+        //            Group Group = new Group();
+        //            Group.id = VehiAssureQuestionGroup.ID;
+        //            Group.name = VehiAssureQuestionGroup.Name;
+        //            Group.threshold = VehiAssureQuestionGroup.Threshold;
+        //            Group.maxScore = VehiAssureQuestionGroup.MaxScore;
+        //            List<VehiAssureQuestion> VehiAssureQuestions = db.VehiAssureQuestions.Where(x => x.VehiAssureQuestionGroupID == VehiAssureQuestionGroup.ID).ToList();
+        //            foreach (VehiAssureQuestion VehiAssureQuestion in VehiAssureQuestions)
+        //            {
+        //                Question Question = new Question();
+        //                Question.id = VehiAssureQuestion.ID;
+        //                Question.name = VehiAssureQuestion.Name;
+        //                Question.type = VehiAssureQuestion.Type;
+        //                List<Option> Options = new List<Option>();
+        //                List<VehiAssureQuestionOption> VehiAssureQuestionOptions = db.VehiAssureQuestionOptions.Where(x => x.VehiAssureQuestionID == VehiAssureQuestion.ID).ToList();
+        //                foreach (VehiAssureQuestionOption VehiAssureQuestionOption in VehiAssureQuestionOptions)
+        //                {
+        //                    Option Option = new Option();
+        //                    Option.id = VehiAssureQuestionOption.ID;
+        //                    Option.name = VehiAssureQuestionOption.Name;
+        //                    Option.score = VehiAssureQuestionOption.Score;
+        //                    Options.Add(Option);
+        //                }
+        //                Question.options = Options;
+        //                Questions.Add(Question);
 
-                    }
-                    Group.questions = Questions;
-                    Groups.Add(Group);
-                }
-            }
+        //            }
+        //            Group.questions = Questions;
+        //            Groups.Add(Group);
+        //        }
+        //    }
 
-            return Json(Groups, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(Groups, JsonRequestBehavior.AllowGet);
+        //}
         public class Chart
         {
             public DateTime AssessmentDate { set; get; }
