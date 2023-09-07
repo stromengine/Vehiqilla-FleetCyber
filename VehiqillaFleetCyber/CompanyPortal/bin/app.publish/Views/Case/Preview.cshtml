@@ -295,12 +295,8 @@
                 success: function (o) {
                     var html = '';
                     $(o).each(function (key, value) {
-                        var ad = value.Address;
-                        var x = ad.split("Cases");
-                        x = x[1];
-                        x = "/Uploads/Cases" + x;
-
-                        html += '<a target="_blank" href=' + x + ' class="badge bg-primary m-1">' + value.FileName + '</a>';
+                    
+                        html += '<a target="_blank" href="' + value.AbsolutePath + '" class="badge bg-primary m-1">' + value.FileName + '</a>';
                     });
                     $('#attachments').html(html);
                 }

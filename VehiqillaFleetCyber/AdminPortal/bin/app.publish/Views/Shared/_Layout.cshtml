@@ -90,15 +90,18 @@
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
-                <div class="app-brand demo ">
-                    <a href="/Home/Index" class="app-brand-link">
-                        <img src="~/Content/img/logo.png" style="height: 51px" />
-                    </a>
+                <div class="app-brand demo " style="display: block">
+                    <center>
+                        <a href="/Home/Index" class="app-brand-link" style="display: block">
+                            <img src="~/Content/img/Vehi-Fleet-Risk.png" style="height: 66px" />
+                        </a>
 
-                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                    </center>
+                 
+                    @*<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
                         <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
                         <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
-                    </a>
+                    </a>*@
                 </div>
 
                 <div class="menu-inner-shadow"></div>
@@ -124,6 +127,12 @@
                         </a>
                     </li>
                     <li class="menu-item">
+                        <a href="/Admin/CyberRiskTypes" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="CyberRiskTypes">Findings</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
                         <a href="/Admin/Suppliers" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-link"></i>
                             <div data-i18n="Suppliers">Suppliers</div>
@@ -138,7 +147,7 @@
                     <li class="menu-item">
                         <a href="/Admin/Apps" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-link"></i>
-                            <div data-i18n="App/ECU">App/ECU</div>
+                            <div data-i18n="VehiSW.">VehiSW.</div>
                         </a>
                     </li>
                     <li class="menu-item">
@@ -156,7 +165,7 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-menu-2"></i>
-                            <div data-i18n="Vehi-Assure">Vehi-Assure</div>
+                            <div data-i18n="Vehi-Assure">VAQ.</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
@@ -189,7 +198,7 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-menu-2"></i>
-                            <div data-i18n="App/Ecu Risk">App/Ecu Risk</div>
+                            <div data-i18n="VehiSW. Risk">VehiSW. Risk</div>
 
                         </a>
                         <ul class="menu-sub">
@@ -219,7 +228,7 @@
                     <li class="menu-item">
                         <a href="/Admin/About" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-link"></i>
-                            <div data-i18n="About">About</div>
+                            <div data-i18n="About">About Vehiqilla</div>
                         </a>
                     </li>
                     <li class="menu-item">
@@ -261,7 +270,7 @@
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
-                        <b>  Manage @ViewBag.Title</b>
+                        <b>Manage @ViewBag.Title</b>
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- User -->
@@ -291,16 +300,22 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="pages-profile-user.html">
+                                        <a class="dropdown-item" href="/User/Index">
                                             <i class="ti ti-user-check me-2 ti-sm"></i>
                                             <span class="align-middle">Change Password</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/Home/About">
+                                            <i class="ti ti-book me-2 ti-sm"></i>
+                                            <span class="align-middle">About</span>
                                         </a>
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="/Home/Logout" target="_blank">
+                                        <a class="dropdown-item" href="/Home/Logout" >
                                             <i class="ti ti-logout me-2 ti-sm"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>

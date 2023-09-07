@@ -22,6 +22,10 @@ namespace CompanyPortal.Models
         public string Email { set; get; }
         public string Url { set; get; }
 
+        public int? License { set; get; }
+        public int? Vehicles { set; get; }
+        public int? Fleets { set; get; }
+
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
     }
@@ -125,6 +129,7 @@ namespace CompanyPortal.Models
         public string Heading { set; get; }
         [Required]
         public string Description { set; get; }
+        public string AbsolutePath { set; get; }
         public string FilePath { set; get; }
 
     }
@@ -369,6 +374,7 @@ namespace CompanyPortal.Models
     {
         [Key]
         public int ID { get; set; }
+        public string AbsolutePath { get; set; }
         public string Address { get; set; }
         public string FileName { get; set; }
         public string Type { get; set; }
@@ -376,5 +382,24 @@ namespace CompanyPortal.Models
         public int? TypeID { get; set; }
     }
     #endregion
+    public class CyberRiskType : BaseFields
+    {
+        [StringLength(250)]
+        public string Name { set; get; }
+    }
+
+    public class Finding :BaseFields
+    {
+        public string Name { get; set; }
+        public int FleetID { get; set; }
+        public int VehicleID { get; set; }
+        public string Details { get; set; }
+        public int CyberRiskTypeID { get; set; }
+        public string RiskImpact { get; set; }
+        public string RiskLikelyhood { get; set; }
+        public string FindingRiskScore { get; set; }
+        public string Recomendations { get; set; }
+        public string Owner { get; set; }
+    }
 
 }

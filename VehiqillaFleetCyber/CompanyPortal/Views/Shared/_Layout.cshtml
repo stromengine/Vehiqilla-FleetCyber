@@ -96,15 +96,18 @@
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
-                <div class="app-brand demo ">
-                    <a href="/Home/Index" class="app-brand-link">
-                        <img src="~/Content/img/logo.png" style="height: 51px" />
-                    </a>
+                <div class="app-brand demo " style="display: block">
+                    <center>
+                        <a href="/Home/Index" class="app-brand-link" style="display: block">
+                            <img src="~/Content/img/Vehi-Fleet-Risk.png" style="height: 66px" />
+                        </a>
 
-                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-                        <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
-                        <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
-                    </a>
+                    </center>
+
+                    @*<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
+                <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
+            </a>*@
                 </div>
 
                 <div class="menu-inner-shadow"></div>
@@ -124,15 +127,32 @@
                         </a>
                     </li>
                     <li class="menu-item">
+                        <a href="/Company/Findings" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Findings">Findings</div>
+                        </a>
+                    <li class="menu-item">
                         <a href="/Company/Suppliers" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-link"></i>
-                            <div data-i18n="Suppliers">Suppliers</div>
+                            <div data-i18n="Suppliers">VehiSW Suppliers</div>
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="/Company/Apps" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-link"></i>
-                            <div data-i18n="App">App/ECU</div>
+                            <div data-i18n="App">VehiSW.</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Company/Vulnerabilities" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Vulnerabilities">Vulnerabilities</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/Company/Breaches" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Breaches">Breaches</div>
                         </a>
                     </li>
                     @*<li class="menu-item">
@@ -141,6 +161,13 @@
                 <div data-i18n="OEMs">OEMs</div>
             </a>
         </li>*@
+                    <li class="menu-item">
+                        <a href="/Company/AppRisks" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-link"></i>
+                            <div data-i18n="Risk">VehiSW. Risks</div>
+                        </a>
+                    </li>
+
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons ti ti-menu-2"></i>
@@ -161,24 +188,7 @@
 
                         </ul>
                     </li>
-                    <li class="menu-item">
-                        <a href="/Company/AppRisks" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-link"></i>
-                            <div data-i18n="Risk">App/ECU Risks</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/Company/Vulnerabilities" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-link"></i>
-                            <div data-i18n="Vulnerabilities">Vulnerabilities</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="/Company/Breaches" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-link"></i>
-                            <div data-i18n="Breaches">Breaches</div>
-                        </a>
-                    </li>
+
 
 
                     <li class="menu-item">
@@ -272,9 +282,15 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="pages-profile-user.html">
+                                        <a class="dropdown-item" href="/User/Index">
                                             <i class="ti ti-user-check me-2 ti-sm"></i>
                                             <span class="align-middle">Change Password</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/Company/About">
+                                            <i class="ti ti-book me-2 ti-sm"></i>
+                                            <span class="align-middle">About</span>
                                         </a>
                                     </li>
                                     <li>

@@ -101,7 +101,9 @@
 
 
     <script>
-
+        $(document).on('hide.bs.modal', '#createApp', function () {
+            window.location.reload();
+        });
         Vue.component('select2', {
             props: ['options', 'value', 'change'],
             template: '#select2-template',
@@ -157,6 +159,9 @@
                             setTimeout(function () {
                                 window.location.reload()
                             }, 500);
+                        },
+                        error: function (o) {
+                            toastr.error("Record has not been deleted because dependent data is present.");
                         }
                     }
                     );

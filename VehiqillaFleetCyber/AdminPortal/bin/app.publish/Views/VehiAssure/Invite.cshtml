@@ -24,13 +24,45 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Supplier</th>
-                                    <th>App/ECU</th>
+                                    <th>VehiSW.</th>
                                     <th>Invite Status</th>
                                     <th>Date Created</th>
+                                    <th>Reminded On</th>
+                                    <th>Send Reminder</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+
+                                <script>
+                                    
+                                    // To calculate the time difference of two dates
+                                    var Difference_In_Time = date2.getTime() - date1.getTime();
+                                    var Difference_In_Time2 = date2.getTime() - date3.getTime();
+
+                                    // To calculate the no. of days between two dates
+                                    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+                                    var Difference_In_Days2 = Difference_In_Time2 / (1000 * 3600 * 24);
+                                    tdata += '<tr>';
+                                    tdata += '<td>' + i + '</td>';
+                                    tdata += '<td>' + value.SupplierName + '</td>';
+                                    tdata += '<td>' + value.EcuAppName + '</td>';
+                                    tdata += '<td>' + value.InviteStatus + '</td>';
+                                    tdata += '<td>' + ToJavaScriptDate(value.DateModified) + '</td>';
+                                    let remind = value.RemindedOn == null ? "-" : ToJavaScriptDate(value.RemindedOn);
+                                    tdata += '<td>' + remind + '</td>';
+                                    let classSwitch = "switch" + value.ID;
+                                    let progressSwitch = "progress" + value.ID;
+                                    let resultSwitch = "result" + value.ID;
+                                    tdata += '<td style="min-width:150px" class="checkRole supervisor analyst">';
+                                    //tdata += '<a onclick="javascript:void(0)" data-link="/VehiAssure/Delete?ID=' + value.ID + '" href="#" class="' + classSwitch + ' btn btn-icon confirm btn-danger ml-2"><i class="fa fa-trash" aria-hidden="true" ></i></a>';
+                                    //tdata += '<a href="#" class="btn btn-warning btn-progress d-none ' + progressSwitch + '">Progress</a>';
+                                    //tdata += '<a href="#" class="btn btn-success ' + resultSwitch + ' d-none">Request Sent</a>';
+                                    if (Difference_In_Days > 14 && (Difference_In_Days2 > 14 || value.RemindedOn == null) && value.InviteStatus == "Pending") {
+                                        tdata += '<a onclick="javascript:void(0)" data-link="/VehiAssure/SendReminder?ID=' + value.ID + '" href="#" class="btn btn-icon confirm btn-warning ml-2"><i class="fas fa-redo"></i></a>';
+                                    }
+                                </script>
+
                                 @{
                                     int i = 1;
                                 }
@@ -42,6 +74,31 @@
                                         <td>@m.ECUApp.Name</td>
                                         <td>@m.InviteStatus</td>
                                         <td>@m.DateCreated</td>
+                                        <td>@m.RemindedOn</td>
+                                        @{ 
+                                            double daysSinceReminder = 0;
+                                            var date1 = m.DateCreated;
+                                            var date3 = m.RemindedOn;
+                                            var daysSinceInvitation = (DateTime.Now - m.DateCreated).TotalDays;
+
+                                            if (m.RemindedOn != null)
+                                            {
+                                                daysSinceReminder = (DateTime.Now - m.RemindedOn).TotalDays;
+                                            }
+                                        }
+                                    <td>
+
+                                        @if (m.InviteStatus == "Pending" && (daysSinceInvitation > 14 && daysSinceReminder == 0))
+                                        {
+                                            <button type="button" onclick="resend(@m.ID)" class="btn btn-warning btn-xs">Resend Invite</button>
+
+                                        }
+                                        @*else if (daysSinceReminder > 14 && m.InviteStatus == "Pending")
+                                        {
+                                            <button type="button" onclick="resend(m.ID)" class="btn btn-warning btn-xs">Resend Invite</button>
+                                        }*@
+
+                                    </td>
                                         <td><button onclick="Delete(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-danger ms-2"><i class="fa fa-trash"></i></button></td>
                                     </tr>
                                     i++;
@@ -112,7 +169,11 @@
                                                             <td>Description</td>
                                                             <td>{{app.Description}}</td>
                                                         </tr>
-
+                                                        <tr>
+                                                            <td style="text-align:center" colspan="2">
+                                                            <img :src="app.FilePath" style="max-width:150px"  alt="no image found"/>
+                                                            </td>
+                                                        </tr>
                                                     </table>
                                                 </div>
                                             </div>
@@ -185,6 +246,38 @@
 
     </script>
     <script>
+          function resend(ID) {
+            Swal.fire({
+                showCancelButton: false,
+                title: 'Are you sure you want to resend this invite?',
+                icon: 'info',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/VehiAssure/SendReminder?ID=' + ID,
+                        type: "GET",
+                        cache: false,
+                        success: function (o) {
+                            toastr.success("Invite sent.");
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 500);
+                        },
+                        error: function (o) {
+                            toastr.error("Something went wrong.");
+                        }
+                    }
+                    );
+
+
+                } else if (result.isDenied) {
+
+                }
+            })
+        }
         function Delete(ID) {
             Swal.fire({
                 showCancelButton: false,
@@ -204,6 +297,9 @@
                             setTimeout(function () {
                                 window.location.reload()
                             }, 500);
+                        },
+                        error: function (o) {
+                            toastr.error("Record has not been deleted because dependent data is present.");
                         }
                     }
                     );
@@ -264,6 +360,9 @@
                     var me = this;
                     axios.get("/get/supplier?id=" + this.vm.SupplierID).then((res) => {
                         me.supplier = res.data;
+                    });
+                    axios.get("/dropdowns/appsbysupplier?id=" + me.vm.SupplierID).then((res) => {
+                        this.apps = res.data;
                     });
                 },
                 'vm.AppID': function () {
@@ -328,9 +427,7 @@
                     axios.get("/dropdowns/suppliers").then((res) => {
                         this.suppliers = res.data;
                     });
-                    axios.get("/dropdowns/apps").then((res) => {
-                        this.apps = res.data;
-                    });
+                 
                 }
             },
             beforeMount() {

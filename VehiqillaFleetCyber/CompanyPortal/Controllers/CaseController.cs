@@ -50,6 +50,7 @@ namespace CompanyPortal.Controllers
                     o.Summary = vm.Summary;
                     o.Category = vm.Category;
                     o.Priority = vm.Priority;
+                    o.Status = "Open";
                     o.DateCreated = DateTime.Now;
                     o.Requestedby = User.Identity.GetUserId();
                     db.Cases.Add(o);
@@ -59,16 +60,21 @@ namespace CompanyPortal.Controllers
                     {
                         CaseAttachment x = new CaseAttachment();
                         x.FileName = Path.GetFileName(f.FileName);
-                        x.Address = Guid.NewGuid() + Path.GetExtension(x.FileName);
-                        string directoryPath = Server.MapPath("~/Uploads/Cases");
+                        string fname = Guid.NewGuid() + Path.GetExtension(x.FileName);
+                        x.Address = fname;
+                        string directoryPath = Server.MapPath("~/App_Data/Uploads/Cases");
                         Directory.CreateDirectory(directoryPath); // Create the directory if it doesn't exist
                         x.Address = Path.Combine(directoryPath, x.Address);
                         x.UploadedBy = User.Identity.GetUserId();
                         x.Type = "Cases";
                         x.TypeID = o.ID;
+                        string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority +
+Request.ApplicationPath.TrimEnd('/') + "/";
+                        x.AbsolutePath = baseUrl + "/App_Data/Uploads/Cases/" + fname;
                         f.SaveAs(x.Address);
                         db.CaseAttachments.Add(x);
                         db.SaveChanges();
+
                         //utility.SendNotificationByRole(User.Identity.GetUserId(), "Corporate User - Supervisor", "New Case Opened By Fleet User", User.Identity.GetUserName() + " opened new case with  \"Case #" + o.ID.ToString("D4") + "\". Please review and assign analysts.");
                     }
                 }

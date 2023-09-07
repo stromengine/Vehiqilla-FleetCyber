@@ -50,6 +50,32 @@ namespace CompanyPortal.Controllers.Services
 
         }
         [HttpGet]
+        [Route("get/finding")]
+        public FindingViewModel finding(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext("CompanyConnection"))
+            {
+                FindingViewModel o = db.Findings.Include("Fleet").Where(x => x.ID == id).Select(c => new FindingViewModel
+                {
+                    ID = c.ID,
+                    Name = c.Name,
+                    FleetID = c.FleetID,
+                    VehicleID = c.VehicleID,
+                    Details = c.Details,
+                    CyberRiskTypeID = c.CyberRiskTypeID,
+                    RiskImpact = c.RiskImpact,
+                    RiskLikelyhood = c.RiskLikelyhood,
+                    FindingRiskScore = c.FindingRiskScore,
+                    Recomendations = c.Recomendations,
+                    Owner = c.Owner,
+
+                }).FirstOrDefault();
+                return o;
+            }
+        }
+
+
+        [HttpGet]
         [Route("get/companyuser")]
         public UserModel companyuser(string id)
         {
@@ -247,7 +273,7 @@ namespace CompanyPortal.Controllers.Services
             List<AppViewModel> o;
             List<int> vs;
 
-         
+
             List<int> map;
             using (ApplicationDbContext db = new ApplicationDbContext("CompanyConnection"))
             {
@@ -277,15 +303,15 @@ namespace CompanyPortal.Controllers.Services
 
 
             return o;
-        }   
+        }
         [HttpGet]
         [Route("get/vehiclemap")]
-        public bool vehicleapps(int aid,int vid)
+        public bool vehicleapps(int aid, int vid)
         {
             using (ApplicationDbContext db = new ApplicationDbContext("CompanyConnection"))
             {
                 AppVehicleMap o = db.AppVehicleMaps.FirstOrDefault(x => x.App_ID == aid && x.Vehicle_ID == vid);
-                if(o == null)
+                if (o == null)
                 {
                     o = new AppVehicleMap();
                     o.App_ID = aid;
@@ -299,7 +325,7 @@ namespace CompanyPortal.Controllers.Services
                     db.SaveChanges();
                 }
             }
-         
+
             return true;
         }
     }

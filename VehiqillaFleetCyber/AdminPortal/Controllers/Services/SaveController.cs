@@ -24,6 +24,12 @@ namespace AdminPortal.Controllers.Services
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 Company o = db.Companies.FirstOrDefault(x => x.ID == c.ID);
+                bool Duplicate = db.Companies.Any(x=> x.ID!=c.ID && (x.Name==c.Name  || x.Url==c.Url));
+                if (Duplicate)
+                {
+                    return -1;
+                }
+
                 bool newrecord = false;
                 if (o == null)
                 {
@@ -41,7 +47,22 @@ namespace AdminPortal.Controllers.Services
             }
         
         }
-     
+        [HttpGet]
+        [Route("save/setlicense")]
+        public int setlicense(int ID, int fleet, int vehicle,int companyID)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Company o = db.Companies.FirstOrDefault(x => x.ID == companyID);
+                o.Vehicles = vehicle;
+                o.Fleets = fleet;
+                o.License = ID;
+                db.SaveChanges();
+               
+                return 1;
+            }
+
+        }
         [HttpPost]
         [Route("save/category")]
         public int category(CategoryViewModel c)
@@ -49,6 +70,14 @@ namespace AdminPortal.Controllers.Services
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 Category o = db.Categories.FirstOrDefault(x => x.ID == c.ID);
+
+                bool Duplicate = db.Categories.Any(x => x.ID != c.ID && (x.Name == c.Name));
+                if (Duplicate)
+                {
+                    return -1;
+                }
+
+
                 bool newrecord = false;
                 if (o == null)
                 {
@@ -65,7 +94,36 @@ namespace AdminPortal.Controllers.Services
             }
 
         }
+        [HttpPost]
+        [Route("save/CyberRiskType")]
+        public int CyberRiskType(CyberRiskTypeViewModel c)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                CyberRiskType o = db.CyberRiskTypes.FirstOrDefault(x => x.ID == c.ID);
 
+                bool Duplicate = db.CyberRiskTypes.Any(x => x.ID != c.ID && (x.Name == c.Name));
+                if (Duplicate)
+                {
+                    return -1;
+                }
+
+                bool newrecord = false;
+                if (o == null)
+                {
+                    o = new CyberRiskType();
+                    newrecord = true;
+                }
+                o.Name = c.Name;
+                if (newrecord)
+                {
+                    db.CyberRiskTypes.Add(o);
+                }
+                int count = db.SaveChanges();
+                return count;
+            }
+
+        }
         [HttpPost]
         [Route("save/supplier")]
         public int supplier(SupplierViewModel c)
@@ -73,6 +131,13 @@ namespace AdminPortal.Controllers.Services
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 Supplier o = db.Suppliers.FirstOrDefault(x => x.ID == c.ID);
+
+                bool Duplicate = db.Suppliers.Any(x => x.ID != c.ID && (x.Name == c.Name));
+                if (Duplicate)
+                {
+                    return -1;
+                }
+
                 bool newrecord = false;
                 if (o == null)
                 {

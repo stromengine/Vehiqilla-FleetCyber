@@ -28,6 +28,8 @@ namespace AdminPortal.Models
         public string Address { set; get; }
         public DateTime DateCreated { set; get; }
         public virtual Company Company { set; get; }
+        [ForeignKey("Company")] 
+        public int? Company_ID { get; set; }
     }
 
     public class DbContextConfiguration : DbConfiguration
@@ -53,6 +55,7 @@ namespace AdminPortal.Models
         }
         public DbSet<Company> Companies { set; get; }
         public DbSet<Category> Categories { set; get; }
+        public DbSet<CyberRiskType> CyberRiskTypes { set; get; }
         public DbSet<Supplier> Suppliers { set; get; }
         public DbSet<Oem> Oems { set; get; }
         public DbSet<ECUApp> ECUApps { set; get; }

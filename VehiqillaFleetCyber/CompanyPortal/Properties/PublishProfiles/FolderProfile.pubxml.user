@@ -5,6 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Projects\Vehiqilla-FleetC\VehiqillaFleetCyber\CompanyPortal\bin\app.publish\</_PublishTargetUrl>
+    <History>True|2023-09-07T08:20:36.4418836Z;True|2023-09-07T13:20:13.9651495+05:00;True|2023-09-07T13:20:09.9786918+05:00;True|2023-09-04T13:16:11.8165420+05:00;True|2023-08-20T16:24:02.2203763+05:00;False|2023-08-20T16:23:56.7612475+05:00;True|2023-08-20T16:22:53.8288680+05:00;True|2023-08-13T13:34:17.6819369+05:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -20,19 +21,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/28/2023 12:11:15</publishTime>
     </File>
     <File Include="App_Data/EmailTemplates/Invite.html">
-      <publishTime>05/28/2023 12:11:15</publishTime>
+      <publishTime>08/20/2023 00:23:13</publishTime>
     </File>
     <File Include="App_Data/EmailTemplates/Reminder.html">
-      <publishTime>05/28/2023 12:11:15</publishTime>
+      <publishTime>08/20/2023 00:23:13</publishTime>
     </File>
     <File Include="App_Data/Package.txt">
       <publishTime>05/03/2023 03:51:34</publishTime>
     </File>
     <File Include="bin/AdminPortal.dll">
-      <publishTime>07/04/2023 23:19:59</publishTime>
+      <publishTime>09/07/2023 13:20:35</publishTime>
     </File>
     <File Include="bin/AdminPortal.pdb">
-      <publishTime>07/04/2023 23:19:59</publishTime>
+      <publishTime>09/07/2023 13:20:35</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>09/11/2013 04:29:20</publishTime>
@@ -510,6 +511,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Content/img/users/user.png">
       <publishTime>06/10/2023 23:29:33</publishTime>
+    </File>
+    <File Include="Content/img/Vehi-Fleet-Risk.png">
+      <publishTime>08/26/2023 00:03:15</publishTime>
     </File>
     <File Include="Content/img/Vulnerabilities.png">
       <publishTime>06/10/2023 23:29:33</publishTime>
@@ -3089,7 +3093,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/03/2023 03:51:34</publishTime>
     </File>
     <File Include="Views/Account/Login.cshtml">
-      <publishTime>07/04/2023 11:23:52</publishTime>
+      <publishTime>08/17/2023 17:15:00</publishTime>
     </File>
     <File Include="Views/Account/Register.cshtml">
       <publishTime>06/17/2023 22:35:06</publishTime>
@@ -3110,73 +3114,79 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/17/2023 22:35:06</publishTime>
     </File>
     <File Include="Views/Case/Index.cshtml">
-      <publishTime>07/04/2023 22:34:59</publishTime>
+      <publishTime>08/20/2023 00:41:00</publishTime>
     </File>
     <File Include="Views/Case/Preview.cshtml">
-      <publishTime>07/04/2023 22:46:40</publishTime>
+      <publishTime>09/03/2023 20:25:06</publishTime>
     </File>
     <File Include="Views/Company/About.cshtml">
-      <publishTime>06/17/2023 20:51:56</publishTime>
+      <publishTime>08/26/2023 00:09:18</publishTime>
     </File>
     <File Include="Views/Company/AppBreach.cshtml">
-      <publishTime>06/20/2023 20:54:16</publishTime>
+      <publishTime>08/20/2023 00:37:40</publishTime>
     </File>
     <File Include="Views/Company/AppRisks.cshtml">
-      <publishTime>06/20/2023 21:48:52</publishTime>
+      <publishTime>08/26/2023 00:13:54</publishTime>
     </File>
     <File Include="Views/Company/Apps.cshtml">
-      <publishTime>06/18/2023 21:27:27</publishTime>
+      <publishTime>08/20/2023 00:35:48</publishTime>
     </File>
     <File Include="Views/Company/AppVulnerability.cshtml">
-      <publishTime>06/20/2023 20:54:02</publishTime>
+      <publishTime>08/26/2023 00:12:07</publishTime>
     </File>
     <File Include="Views/Company/Breaches.cshtml">
-      <publishTime>06/17/2023 22:35:06</publishTime>
+      <publishTime>08/20/2023 00:37:16</publishTime>
     </File>
     <File Include="Views/Company/Categories.cshtml">
-      <publishTime>06/17/2023 22:35:06</publishTime>
+      <publishTime>08/13/2023 10:00:20</publishTime>
     </File>
     <File Include="Views/Company/Company.cshtml">
-      <publishTime>06/17/2023 22:35:06</publishTime>
+      <publishTime>08/13/2023 10:00:24</publishTime>
     </File>
     <File Include="Views/Company/CompanyUser.cshtml">
-      <publishTime>06/17/2023 22:35:06</publishTime>
+      <publishTime>08/13/2023 10:00:29</publishTime>
+    </File>
+    <File Include="Views/Company/Finding.cshtml">
+      <publishTime>09/03/2023 23:24:22</publishTime>
+    </File>
+    <File Include="Views/Company/Findings.cshtml">
+      <publishTime>09/03/2023 23:14:57</publishTime>
     </File>
     <File Include="Views/Company/Fleet.cshtml">
-      <publishTime>06/18/2023 16:56:32</publishTime>
+      <publishTime>09/03/2023 21:05:08</publishTime>
     </File>
     <File Include="Views/Company/KnowledgeCenter.cshtml">
-      <publishTime>06/20/2023 20:52:43</publishTime>
+      <publishTime>08/20/2023 16:18:25</publishTime>
     </File>
     <File Include="Views/Company/Mapping.cshtml">
-      <publishTime>06/21/2023 22:58:26</publishTime>
+      <publishTime>09/06/2023 00:05:13</publishTime>
     </File>
     <File Include="Views/Company/MegaReport.cshtml">
       <publishTime>06/22/2023 19:42:02</publishTime>
     </File>
     <File Include="Views/Company/Notifications.cshtml">
-      <publishTime>06/17/2023 22:35:06</publishTime>
+      <publishTime>08/26/2023 00:16:36</publishTime>
     </File>
     <File Include="Views/Company/Suppliers.cshtml">
-      <publishTime>06/18/2023 21:28:24</publishTime>
+      <publishTime>08/20/2023 00:34:55</publishTime>
     </File>
     <File Include="Views/Company/VehiAssured.cshtml">
-      <publishTime>06/21/2023 19:04:46</publishTime>
+      <publishTime>09/06/2023 00:07:11</publishTime>
     </File>
     <File Include="Views/Company/Vehicle.cshtml">
-      <publishTime>06/18/2023 19:45:08</publishTime>
+      <publishTime>09/03/2023 21:05:24</publishTime>
     </File>
     <File Include="Views/Company/Vulnerabilities.cshtml">
-      <publishTime>06/17/2023 22:35:06</publishTime>
+      <publishTime>08/26/2023 00:12:57</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
-      <publishTime>05/03/2023 03:51:34</publishTime>
+      <publishTime>08/12/2023 22:29:08</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
       <publishTime>05/03/2023 03:51:34</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>05/17/2023 21:44:36</publishTime>
+      <publishTime>08/26/2023 00:04:44</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>05/03/2023 03:51:34</publishTime>
@@ -3185,19 +3195,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/03/2023 03:51:34</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/04/2023 17:48:45</publishTime>
+      <publishTime>09/03/2023 00:23:14</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>05/03/2023 03:51:34</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
-      <publishTime>06/17/2023 22:35:06</publishTime>
+      <publishTime>08/13/2023 00:25:41</publishTime>
     </File>
     <File Include="Views/VehiAssure/Add.cshtml">
       <publishTime>06/17/2023 22:35:06</publishTime>
     </File>
     <File Include="Views/VehiAssure/App.cshtml">
-      <publishTime>06/11/2023 00:41:28</publishTime>
+      <publishTime>09/05/2023 23:49:31</publishTime>
     </File>
     <File Include="Views/VehiAssure/Apps.cshtml">
       <publishTime>06/17/2023 22:35:06</publishTime>
@@ -3209,16 +3219,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/28/2023 20:30:08</publishTime>
     </File>
     <File Include="Views/VehiAssure/AssessmentsWaiting.cshtml">
-      <publishTime>06/10/2023 21:02:37</publishTime>
+      <publishTime>08/20/2023 00:23:13</publishTime>
     </File>
     <File Include="Views/VehiAssure/AssessmentsWaitingForReview.cshtml">
-      <publishTime>06/10/2023 21:57:50</publishTime>
+      <publishTime>08/20/2023 00:23:13</publishTime>
     </File>
     <File Include="Views/VehiAssure/EditAssessment.cshtml">
       <publishTime>06/11/2023 16:23:59</publishTime>
     </File>
     <File Include="Views/VehiAssure/EditAssessments.cshtml">
-      <publishTime>06/11/2023 16:24:30</publishTime>
+      <publishTime>08/20/2023 00:23:13</publishTime>
     </File>
     <File Include="Views/VehiAssure/Index.cshtml">
       <publishTime>05/27/2023 21:58:50</publishTime>
@@ -3227,7 +3237,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/06/2023 20:57:49</publishTime>
     </File>
     <File Include="Views/VehiAssure/Invite.cshtml">
-      <publishTime>06/17/2023 22:35:06</publishTime>
+      <publishTime>08/20/2023 00:23:13</publishTime>
     </File>
     <File Include="Views/VehiAssure/MinorEdits.cshtml">
       <publishTime>06/17/2023 22:35:06</publishTime>
@@ -3242,7 +3252,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/03/2023 03:51:34</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/04/2023 22:53:40</publishTime>
+      <publishTime>09/04/2023 13:16:10</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -1,87 +1,80 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Password";
 }
-
 @model AdminPortal.Models.UserViewModel
 
-<style>
-    .select2-container--default {
-        width: 100% !important;
-    }
-</style>
 
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="form" role="tabpanel">
+                        <!-- Basic Layout & Basic with Icons -->
+                        <div class="row" id="app">
+                            <!-- Basic Layout -->
+                            <div class="col-xxl">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("Save", null, FormMethod.Post, new { id = "xForm", @class = "", enctype = "multipart/form-data" }))
+                                        {
+                                            @Html.HiddenFor(m => m.ID)
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Name">Current Password</label>
+                                                <div class="col-sm-10">
+                                                    @Html.PasswordFor(m => m.CurrentPassword, new { @class = "form-control", pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{8,}$" })
+                                                    @Html.ValidationMessageFor(m => m.CurrentPassword, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Name">New Password</label>
+                                                <div class="col-sm-10">
+                                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{8,}$" })
+                                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="Name">Confirm Password</label>
+                                                <div class="col-sm-10">
+                                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{8,}$" })
+                                                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
 
-<div id="frmBankReceipt" class="row">
-    <div class="col-lg-12">
-        <div class="ibox frm">
-            <div class="ibox-title">
-                <h5>Create/Edit @ViewBag.Title</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up click"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="ibox-content">
-                @using (Html.BeginForm("Save", null, FormMethod.Post, new { id = "xForm", @class = "", enctype = "multipart/form-data" }))
-                {
-                    <div class="form-group row">
-                        <div class="col-sm-6">
-                            <fieldset style="width: 100%; display: inline-block;">
-                                @*<legend>Change Password</legend>*@
-                                <div class="input-form">
-                                    @Html.HiddenFor(m => m.ID)
-                                    <div class="form-group row">
-                                        <label class="col-sm-3" style="padding-top: 5px">Current Password</label>
-                                        <div class="col-sm-7">
-                                            @Html.PasswordFor(m => m.CurrentPassword, new { @class = "form-control", pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{8,}$" })
-                                            @Html.ValidationMessageFor(m => m.CurrentPassword, "", new { @class = "text-danger" })
-                                        </div>
+                                            <div class="row justify-content-end mt-4">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-success float-end"><i class="fa fa-save"></i> &nbsp;Save</button>
+                                                    <button type="button" onclick="window.location.reload()" class="btn btn-danger float-end mx-2"><i class="fa fa-cancel"></i> &nbsp;Cancel</button>
+                                                </div>
+                                            </div>
+                                        }
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3" style="padding-top: 5px">New Password</label>
-                                        <div class="col-sm-7">
-                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{8,}$" })
-                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-3" style="padding-top: 5px">Confirm Password</label>
-                                        <div class="col-sm-7">
-                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$#!%*?&]{8,}$" })
-                                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
                                 </div>
-                            </fieldset>
-                            <div class="hr-line-dashed"></div>
-                            <div align="right">
-                                <a href="/Home/Index" style="max-height:60px;padding:3px;" class="btn btn-white btn-sm reset"><i class="fa fa-ban"></i>&nbsp;&nbsp;Cancel</a>
-                                @*<button type="submit" class="button"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</button>*@
-                                @*<button class="btn btn-white btn-sm reset" type="reset" onclick="ResetAll();">Cancel</button>*@
-                                <button class="btn btn-primary btn-sm" type="submit" onclick="$('.text-danger').show();">Save</button>
                             </div>
+
                         </div>
 
                     </div>
 
-                }
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+
 @section Scripts
 {
-    <script src="~/Content/kendoUI/js/kendo.all.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+
     <script>
         $(document).ready(function () {
-
-
-
             $("#xForm").submit(function (event) {
                 event.preventDefault();
                 if ($(this).valid()) {
@@ -92,12 +85,7 @@
                         dataType: "json",
                         encode: true,
                         success: function (o) {
-                            swal({
-                                title: "Success!",
-                                text: o,
-                                type: "success"
-                            });
-                            /*alert(o);*/
+                            toastr.success(o);
                             $('input[type=password]').val('');
                             //window.location.reload();
                         }

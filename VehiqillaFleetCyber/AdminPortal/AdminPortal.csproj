@@ -292,6 +292,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CaseController.cs" />
     <Compile Include="Controllers\CaseViewModel.cs" />
+    <Compile Include="Controllers\EmailVerificationController.cs" />
     <Compile Include="Controllers\Services\DropdownsController.cs" />
     <Compile Include="Controllers\Services\DeleteController.cs" />
     <Compile Include="Controllers\Services\GetController.cs" />
@@ -373,6 +374,7 @@
     <Content Include="Content\img\user.png" />
     <Content Include="Content\img\userbig.png" />
     <Content Include="Content\img\users\user.png" />
+    <Content Include="Content\img\Vehi-Fleet-Risk.png" />
     <Content Include="Content\img\Vulnerabilities.png" />
     <Content Include="Content\js\app-access-permission.js" />
     <Content Include="Content\js\app-access-roles.js" />
@@ -1302,6 +1304,8 @@
     <Content Include="Views\Admin\KnowledgeCenter.cshtml" />
     <Content Include="Views\Case\Index.cshtml" />
     <Content Include="Views\Case\Preview.cshtml" />
+    <Content Include="Views\EmailVerification\Index.cshtml" />
+    <Content Include="Views\Admin\CyberRiskTypes.cshtml" />
     <None Include="Views\VehiAssure\DeleteAssessments.cshtml" />
     <Content Include="Views\VehiAssure\EditAssessment.cshtml" />
   </ItemGroup>

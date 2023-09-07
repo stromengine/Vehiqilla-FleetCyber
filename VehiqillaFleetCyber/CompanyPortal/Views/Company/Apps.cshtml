@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Apps";
+    ViewBag.Title = "VehiSW";
 }
 
 @using CompanyPortal.Models
@@ -11,7 +11,7 @@
             <div class="nav-align-top nav-tabs-shadow mb-4">
                 <ul class="nav nav-tabs " role="tablist">
                     <li class="nav-item">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> VehiSW. </button>
                     </li>
                     @*<li class="nav-item">
                         <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
@@ -201,6 +201,9 @@
                             setTimeout(function () {
                                 window.location.reload()
                             }, 500);
+                        },
+                        error: function (o) {
+                            toastr.error("Record has not been deleted because dependent data is present.");
                         }
                     }
                     );

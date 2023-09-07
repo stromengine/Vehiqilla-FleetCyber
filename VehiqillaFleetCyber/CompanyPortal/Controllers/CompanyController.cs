@@ -70,7 +70,22 @@ namespace CompanyPortal.Controllers
                 return View(list);
             }
         }
-
+        public ActionResult Findings()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext("CompanyConnection"))
+            {
+                var list = db.Database.SqlQuery<FindingViewModel>("GetFindings").ToList();
+                return View(list);
+            }
+        }
+        public ActionResult Finding(int ID)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext("CompanyConnection"))
+            {
+                var list = db.Database.SqlQuery<FindingViewModel>("GetFindings").ToList().Where(x => x.ID == ID).First();
+                return View(list);
+            }
+        }
         [HttpPost]
         public async Task<int> CompanyUser(UserModel model)
         {
@@ -156,10 +171,15 @@ namespace CompanyPortal.Controllers
         }
         public ActionResult Apps()
         {
+            List<int> xx = new List<int>();
+            using (ApplicationDbContext db = new ApplicationDbContext("CompanyConnection"))
+            {
+                xx = db.AccessLists.Where(x=>x.Type=="Supplier").Select(p => p.ItemID).ToList();
+            }
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
 
-                var list = db.ECUApps.Include("Supplier").Include("Category").Where(x => x.IsDeleted == false).Select(q => new AppViewModel
+                var list = db.ECUApps.Include("Supplier").Include("Category").Where(x => x.IsDeleted == false && xx.Contains(x.Supplier.ID)).Select(q => new AppViewModel
                 {
                     Name = q.Name,
                     Supplier = q.Supplier,
@@ -206,7 +226,7 @@ namespace CompanyPortal.Controllers
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 ViewBag.Title = db.ECUApps.FirstOrDefault(x => x.ID == ID).Name + " Vulnerabilities";
-                var list = db.AppVulnerabilities.Include("ECUApp").Where(x => x.IsDeleted == false).OrderByDescending(p => p.ID).ToList();
+                var list = db.AppVulnerabilities.Include("ECUApp").Where(x => x.IsDeleted == false && x.ECUApp.ID == ID).OrderByDescending(p => p.ID).ToList();
                 return View(list);
             }
         }
@@ -215,7 +235,7 @@ namespace CompanyPortal.Controllers
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 ViewBag.Title = db.ECUApps.FirstOrDefault(x => x.ID == ID).Name + " Breaches";
-                var list = db.AppBreachs.Include("ECUApp").Where(x => x.IsDeleted == false).OrderByDescending(p => p.ID).ToList();
+                var list = db.AppBreachs.Include("ECUApp").Where(x => x.IsDeleted == false && x.ECUApp.ID == ID).OrderByDescending(p => p.ID).ToList();
                 return View(list);
             }
         }
@@ -223,7 +243,9 @@ namespace CompanyPortal.Controllers
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var list = db.Notifications.Include("User").Where(x => x.IsDeleted == false).OrderByDescending(p => p.ID).ToList();
+                string id = User.Identity.GetUserId();
+                ApplicationUser user = db.Users.FirstOrDefault(x => x.Id == id);
+                var list = db.Notifications.Include("User").Where(x => x.IsDeleted == false && x.User.Id == user.Id).OrderByDescending(p => p.ID).ToList();
                 return View(list);
             }
         }
@@ -297,6 +319,7 @@ namespace CompanyPortal.Controllers
             public string OemName { set; get; }
             public string SupplierName { set; get; }
             public string Logo { set; get; }
+            public string FilePath { set; get; }
             public string CategoryName { set; get; }
             public string CreatedBy { set; get; }
             public DateTime DateModified { set; get; }

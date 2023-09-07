@@ -27,6 +27,35 @@ namespace VehiQilla.Controllers
                 return View(list);
             }
         }
+
+        [HttpGet]
+        public ActionResult SendReminder(int ID)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+
+                VehiAssureInvite o = db.VehiAssureInvites.FirstOrDefault(d => d.ID == ID);
+                Supplier s = db.Suppliers.FirstOrDefault(d => d.ID == o.Supplier.ID);
+                ECUApp a = db.ECUApps.FirstOrDefault(d => d.ID == o.ECUApp.ID);
+                VehiAssureQuestionaire xr = db.VehiAssureQuestionaires.FirstOrDefault(d => d.Status == true);
+                string link = ConfigurationManager.AppSettings["baseUrl"] + "VehiAssure/Assessment?Token=" + o.Token;
+                string image1 = ConfigurationManager.AppSettings["baseUrl"] + "/App_Data/EmailTemplates/image-1.png";
+                string image2 = ConfigurationManager.AppSettings["baseUrl"] + "/App_Data/EmailTemplates/image-2.png";
+                string FilePath = Path.Combine(Server.MapPath("~/App_Data/EmailTemplates/"), "Reminder.html");
+                StreamReader str = new StreamReader(FilePath);
+                string MailText = str.ReadToEnd();
+                str.Close();
+                MailText = MailText.Replace("[[link]]", link);
+                MailText = MailText.Replace("[[image1]]", image1);
+                MailText = MailText.Replace("[[image2]]", image2);
+                MailText = MailText.Replace("[[remaining]]", xr.DueInDays.ToString());
+                var status = utility.Email("Vehi Assure Reminder", s.ContactDetail, MailText);
+                o.RemindedOn = DateTime.UtcNow;
+                db.SaveChanges();
+            }
+            return Json(new { Message = "Success", RedirectUrl = "/VehiAssure/Invites" }, JsonRequestBehavior.AllowGet);
+
+        }
         public ActionResult App()
         {
             return View();
@@ -72,8 +101,8 @@ namespace VehiQilla.Controllers
                     Supplier s = db.Suppliers.FirstOrDefault(d => d.ID == o.Supplier.ID);
                     ECUApp a = db.ECUApps.FirstOrDefault(d => d.ID == o.ECUApp.ID);
                     string link = ConfigurationManager.AppSettings["baseUrl"] + "VehiAssure/Assessment?Token=" + o.Token;
-                    string image1 = ConfigurationManager.AppSettings["baseUrl"] + "EmailTemplates/image-1.png";
-                    string image2 = ConfigurationManager.AppSettings["baseUrl"] + "EmailTemplates/image-3.png";
+                    string image1 = ConfigurationManager.AppSettings["baseUrl"] + "/App_Data/EmailTemplates/image-1.png";
+                    string image2 = ConfigurationManager.AppSettings["baseUrl"] + "/App_Data/EmailTemplates/image-3.png";
                     string FilePath = Path.Combine(Server.MapPath("~/App_Data/EmailTemplates/"), "Invite.html");
                     StreamReader str = new StreamReader(FilePath);
                     string MailText = str.ReadToEnd();
@@ -755,7 +784,7 @@ namespace VehiQilla.Controllers
                 VehiAssureQuestionaire q = db.VehiAssureQuestionaires.FirstOrDefault(x => x.Status == true);
 
 
-                if (d == null || d.DateCreated.AddDays(q.DueInDays) < DateTime.Now)
+                if (d == null) // || d.DateCreated.AddDays(q.DueInDays) < DateTime.Now
                 {
                     return RedirectToAction("InvalidToken", "VehiAssure");
                 }
@@ -831,6 +860,9 @@ namespace VehiQilla.Controllers
                     }
 
                 }
+
+                invite.InviteStatus = "Completed";
+                db.SaveChanges();
             }
 
             return RedirectToAction("ThankYou", "VehiAssure");

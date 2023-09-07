@@ -372,6 +372,7 @@
     <Content Include="Content\img\user.png" />
     <Content Include="Content\img\userbig.png" />
     <Content Include="Content\img\users\user.png" />
+    <Content Include="Content\img\Vehi-Fleet-Risk.png" />
     <Content Include="Content\img\Vulnerabilities.png" />
     <Content Include="Content\js\app-access-permission.js" />
     <Content Include="Content\js\app-access-roles.js" />
@@ -1306,6 +1307,8 @@
     <Content Include="Views\Company\MegaReport.cshtml" />
     <Content Include="Views\Case\Index.cshtml" />
     <Content Include="Views\Case\Preview.cshtml" />
+    <Content Include="Views\Company\Findings.cshtml" />
+    <Content Include="Views\Company\Finding.cshtml" />
     <None Include="Views\VehiAssure\DeleteAssessments.cshtml" />
     <Content Include="Views\VehiAssure\EditAssessment.cshtml" />
   </ItemGroup>

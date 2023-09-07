@@ -28,12 +28,40 @@ namespace CompanyPortal.Controllers.Services
             }
         }
         [HttpGet]
+        [Route("dropdowns/vehicles")]
+        public List<NameValue> vehicles(int ID)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext("CompanyConnection"))
+            {
+                List<NameValue> xx = db.Vehicles.Where(x=>x.Fleet == db.Fleets.FirstOrDefault(f => f.ID == ID)).Select(p => new NameValue()
+                {
+                    ID = p.ID,
+                    Name = p.Name
+                }).OrderBy(s => s.Name).ToList();
+                return xx;
+            }
+        }
+        [HttpGet]
         [Route("dropdowns/categories")]
         public List<NameValue> categories()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 List<NameValue> xx = db.Categories.Select(p => new NameValue()
+                {
+                    ID = p.ID,
+                    Name = p.Name
+                }).OrderBy(s => s.Name).ToList();
+                return xx;
+            }
+        }
+        [HttpGet]
+        [Route("dropdowns/cyberrisktypes")]
+        public List<NameValue> cyberrisktypes()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                List<NameValue> xx = db.CyberRiskTypes.Select(p => new NameValue()
                 {
                     ID = p.ID,
                     Name = p.Name

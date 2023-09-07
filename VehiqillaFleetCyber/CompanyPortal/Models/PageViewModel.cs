@@ -44,6 +44,24 @@ namespace CompanyPortal.Models
 
     }
     [NotMapped]
+    public class FindingViewModel : Finding
+    {
+        public string Fleet { get; set; }
+        public string Vehicle { get; set; }
+        public string FindingNo { get; set; }
+        public string CyberRiskType
+        {
+            get
+            {
+                using(ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    return db.CyberRiskTypes.Where(x=>x.ID==CyberRiskTypeID).Select(p=>p.Name).First();
+                }
+            }
+        }
+
+    }
+    [NotMapped]
     public class CategoryViewModel : Category
     {
 
@@ -122,6 +140,8 @@ namespace CompanyPortal.Models
         public string CategoryName { set; get; }
         public string SupplierName { set; get; }
         public string Logo { set; get; }
+        public string FilePath { set; get; }
+        public string Description { set; get; }
         public int Score { set; get; }
         public int Breaches { set; get; }
         public int Vulnerabilities { set; get; }

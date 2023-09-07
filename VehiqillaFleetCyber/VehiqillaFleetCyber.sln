@@ -6,6 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Documentation", "Project Documentation", "{C0575C2C-B9EE-4BCB-A417-131029518A4C}"
 	ProjectSection(SolutionItems) = preProject
 		C:\Users\pc\Downloads\Vehi-FleetCyber 05-04-2023.docx = C:\Users\pc\Downloads\Vehi-FleetCyber 05-04-2023.docx
+		C:\Users\pc\Downloads\Vehi-FleetRisk QA 22-08-2023.xlsx = C:\Users\pc\Downloads\Vehi-FleetRisk QA 22-08-2023.xlsx
+		C:\Users\pc\Downloads\Vehi-FleetRisk QA 24-07-2023.xlsx = C:\Users\pc\Downloads\Vehi-FleetRisk QA 24-07-2023.xlsx
+		C:\Users\pc\Downloads\Vehi-FleetRisk-AdminPortal-Internal-QA-20230721.docx = C:\Users\pc\Downloads\Vehi-FleetRisk-AdminPortal-Internal-QA-20230721.docx
+		C:\Users\pc\Downloads\Vehi-FleetRisk-CompanyPortal-Internal-QA-20230724.docx = C:\Users\pc\Downloads\Vehi-FleetRisk-CompanyPortal-Internal-QA-20230724.docx
+		C:\Users\pc\Downloads\VFR CR001 20230724 (1).docx = C:\Users\pc\Downloads\VFR CR001 20230724 (1).docx
+		C:\Users\pc\Downloads\VFR CR002 20230725.docx = C:\Users\pc\Downloads\VFR CR002 20230725.docx
+		C:\Users\pc\Desktop\vfr-credentials.txt = C:\Users\pc\Desktop\vfr-credentials.txt
 		C:\Users\pc\Downloads\Compressed\Vuexy.zip = C:\Users\pc\Downloads\Compressed\Vuexy.zip
 	EndProjectSection
 EndProject

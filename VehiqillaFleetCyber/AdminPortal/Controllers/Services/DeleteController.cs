@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -21,12 +22,24 @@ namespace AdminPortal.Controllers.Services
             {
                 Company o = db.Companies.FirstOrDefault(x => x.ID == id);
                 db.Companies.Remove(o);
-                db.SaveChanges();   
+                db.SaveChanges();
                 return true;
             }
-        
-        }
 
+        }
+        [HttpGet]
+        [Route("delete/companyuser")]
+        public bool companyuser(string id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ApplicationUser o = db.Users.FirstOrDefault(x => x.Id == id);
+                db.Users.Remove(o);
+                db.SaveChanges();
+                return true;
+            }
+
+        }
         [HttpGet]
         [Route("delete/category")]
         public bool category(int id)
@@ -35,6 +48,19 @@ namespace AdminPortal.Controllers.Services
             {
                 Category o = db.Categories.FirstOrDefault(x => x.ID == id);
                 db.Categories.Remove(o);
+                db.SaveChanges();
+                return true;
+            }
+
+        }
+        [HttpGet]
+        [Route("delete/CyberRiskType")]
+        public bool CyberRiskType(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                CyberRiskType o = db.CyberRiskTypes.FirstOrDefault(x => x.ID == id);
+                db.CyberRiskTypes.Remove(o);
                 db.SaveChanges();
                 return true;
             }
@@ -122,7 +148,15 @@ namespace AdminPortal.Controllers.Services
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
+
                 KnowledgeCenter o = db.KnowledgeCenters.FirstOrDefault(x => x.ID == id);
+
+                if (o.FilePath != null)
+                {
+                    FileInfo fi2 = new FileInfo(System.Web.Hosting.HostingEnvironment.MapPath(o.FilePath));
+                    fi2.Delete();
+                }
+
                 db.KnowledgeCenters.Remove(o);
                 db.SaveChanges();
                 return true;

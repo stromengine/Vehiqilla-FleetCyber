@@ -8,10 +8,10 @@
             <div class="nav-align-top nav-tabs-shadow mb-4">
                 <ul class="nav nav-tabs " role="tablist">
                     <li class="nav-item">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Current Breaches  </button>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Add New Breach</button>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -34,7 +34,7 @@
                                                 <tbody>
                                                     <tr><td colspan="2">    Sr # @i <button onclick="EditPage(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button><button onclick="Delete(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-danger ms-2"><i class="fa fa-trash"></i></button></td></tr>
                                                     <tr><td><b>Name:</b></td><td>   @m.Name</td></tr>
-                                                    <tr><td><b>APP/ECU Name: </b></td><td> @m.ECUApp.Name</td></tr>
+                                                    <tr><td><b>VehiSW. Name: </b></td><td> @m.ECUApp.Name</td></tr>
                                                     <tr><td><b>Description:</b></td><td> @m.Description</td></tr>
                                                     <tr><td><b>News Source: </b></td><td>  @m.NewsSource</td></tr>
                                                     <tr><td><b>Vulnerability Exploited: </b></td><td> @m.VulnerabilityExploited</td></tr>
@@ -174,6 +174,9 @@
                             setTimeout(function () {
                                 window.location.reload()
                             }, 500);
+                        },
+                        error: function (o) {
+                            toastr.error("Record has not been deleted because dependent data is present.");
                         }
                     }
                     );

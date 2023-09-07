@@ -21,11 +21,19 @@ namespace AdminPortal.Models
         public string Country { set; get; }
         public string Email { set; get; }
         public string Url { set; get; }
+        public int? License { set; get; }
+        public int? Vehicles { set; get; }
+        public int? Fleets { set; get; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; } 
      
     }
     public class Category : BaseFields
+    {
+        [StringLength(250)]
+        public string Name { set; get; }
+    }  
+    public class CyberRiskType : BaseFields
     {
         [StringLength(250)]
         public string Name { set; get; }
@@ -72,6 +80,8 @@ namespace AdminPortal.Models
         public string Breaches { set; get; }
         [StringLength(250)]
         public string Vulnerabilities { set; get; }
+        public string FilePath { set; get; }
+        
 
         public virtual Supplier Supplier { get; set; }
         public virtual Category Category { get; set; }
@@ -126,6 +136,7 @@ namespace AdminPortal.Models
         [Required]
         public string Description { set; get; }
         public string FilePath { set; get; }
+        public string AbsolutePath { set; get; }
 
     }
     public class Notification : BaseFields
@@ -327,6 +338,7 @@ namespace AdminPortal.Models
     {
         [Key]
         public int ID { get; set; }
+        public string AbsolutePath { get; set; }
         public string Address { get; set; }
         public string FileName { get; set; }
         public string Type { get; set; }

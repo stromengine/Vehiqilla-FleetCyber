@@ -9,7 +9,7 @@
             <div class="col-xs-6 col-sm-12 col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4>APP/ECU Details</h4>
+                        <h4>VehiSW. Details</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -25,7 +25,8 @@
                                 </table>
                             </div>
                             <div class="col-sm-4 ">
-                                <img alt="image" style="width:100px" :src="pathImage(apps[0].Logo)" class="rounded-circle author-box-picture pull-right">
+                                <img :src="apps[0].FilePath"  style="max-width:100px" alt="no image found"  class="rounded-circle author-box-picture pull-right" />
+                                @*<img alt="image" style="width:100px" :src="pathImage(apps[0].Logo)">*@
                             </div>
                         </div>
                         <div class="row">
@@ -281,6 +282,11 @@
                 ObtainedScore: 0
             },
             methods: {
+
+                getImgUrl: function (d) {
+                    console.log(d);
+
+                },
                 pathImage: function (path) {
                     try {
                         path = path.split("Suppliers").pop();

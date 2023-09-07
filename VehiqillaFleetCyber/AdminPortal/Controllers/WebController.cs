@@ -24,5 +24,18 @@ namespace AdminPortal.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("web/verifyemail")]
+        public bool verifyemail(string id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ApplicationUser o = db.Users.FirstOrDefault(x => x.Id == id);
+                o.EmailConfirmed = true;
+                db.SaveChanges();
+                return true;
+            }
+        }
     }
 }

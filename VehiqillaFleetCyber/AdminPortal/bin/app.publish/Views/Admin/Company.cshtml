@@ -4,16 +4,16 @@
 }
 @using AdminPortal.Models
 
-<div class="container-xxl flex-grow-1 container-p-y">
+<div class="container-xxl flex-grow-1 container-p-y" id="app">
     <div class="row">
         <div class="col-xl-12">
             <div class="nav-align-top nav-tabs-shadow mb-4">
                 <ul class="nav nav-tabs " role="tablist">
                     <li class="nav-item">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Companies List </button>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Add Company</button>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -24,6 +24,9 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Url</th>
+                                    <th>Fleets Allowed</th>
+                                    <th>Vehicles Allowed</th>
+                                    <th>Licensing</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -37,7 +40,10 @@
                                         <td>@i</td>
                                         <td>@m.Name</td>
                                         <td>@m.Url</td>
-                                        <td><button onclick="EditPage(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button><button onclick="Delete(@m.ID)"  style="padding: 5px;" class="btn btn-xs btn-danger ms-2"><i class="fa fa-trash"></i></button></td>
+                                        <td>@m.Fleets</td>
+                                        <td>@m.Vehicles</td>
+                                        <td><button @@click="limits(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-primary">Limits</button></td>
+                                        <td><button onclick="EditPage(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button><button onclick="Delete(@m.ID)" style="padding: 5px;" class="btn btn-xs btn-danger ms-2"><i class="fa fa-trash"></i></button></td>
                                     </tr>
 
                                     i++;
@@ -47,7 +53,7 @@
                     </div>
                     <div class="tab-pane fade" id="form" role="tabpanel">
                         <!-- Basic Layout & Basic with Icons -->
-                        <div class="row" id="app">
+                        <div class="row" >
                             <!-- Basic Layout -->
                             <div class="col-xxl">
                                 <div class="card mb-4">
@@ -86,6 +92,71 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="createApp" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-simple modal-upgrade-plan">
+            <div class="modal-content p-3 p-md-5">
+                <div class="modal-body p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center">
+                        <h3 class="mb-2">Select License</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="demo-inline-spacing mt-3">
+                              <table class="table table-bordered">
+                                  <thead>
+                                      <tr>
+                                          <th></th>
+                                          <th>Fleets</th>
+                                          <th>Vehicles</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td style="max-width:30px"><input @@click="SetLimit(1,1,20)" type="radio" value="1" v-model="license" /></td>
+                                          <td>1</td>
+                                          <td>20</td>
+                                      </tr>
+                                      <tr>
+                                          <td style="max-width:30px"><input type="radio" @@click="SetLimit(2,1,100)" value="2" v-model="license" /></td>
+                                          <td>1</td>
+                                          <td>100</td>
+                                      </tr>
+                                      <tr>
+                                          <td style="max-width:30px"><input type="radio" @@click="SetLimit(3,2,200)" value="3" v-model="license" /></td>
+                                          <td>2</td>
+                                          <td>200</td>
+                                      </tr>
+                                      <tr>
+                                          <td style="max-width:30px"><input type="radio" @@click="SetLimit(4,3,500)" value="4" v-model="license" /></td>
+                                          <td>3</td>
+                                          <td>500</td>
+                                      </tr>
+                                      <tr>
+                                          <td style="max-width:30px"><input type="radio" @@click="SetLimit(5,4,500)" value="5" v-model="license" /></td>
+                                          <td>4</td>
+                                          <td>500</td>
+                                      </tr>
+                                      <tr>
+                                          <td style="max-width:30px"><input type="radio" @@click="SetLimit(6,5,1000)" value="6" v-model="license" /></td>
+                                          <td>5</td>
+                                          <td>1000</td>
+                                      </tr>
+                                      <tr>
+                                          <td style="max-width:30px"><input type="radio" value="7" @@click="SetLimit(7,100000,vehicles)" v-model="license" /></td>
+                                          <td>Enterprise</td>
+                                          <td><input type="number"  @@keyup="SetLimit(7,100000,vehicles)" min="0" max="1000000" v-if="license==7" v-model="vehicles" class="form-control form-control-sm" /></td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ Create App Modal -->
 </div>
 
 
@@ -116,6 +187,9 @@
                             setTimeout(function () {
                                 window.location.reload()
                             }, 500);
+                        },
+                        error: function (o) {
+                            toastr.error("Record has not been deleted because dependent data is present.");
                         }
                     }
                     );
@@ -160,6 +234,9 @@
         var vueContent = new Vue({
             el: '#app',
             data: {
+                license: 0,
+                vehicles: 0,
+                CompanyID: 0,
                 vm: {
                     ID: 0,
                     Name: null,
@@ -173,7 +250,11 @@
                             'Content-Type': 'application/json'
                         }
                     }).then(response => {
-                        if (response.data > 0) {
+                        console.log(response.data);
+                        if (response.data ==-1) {
+                            toastr.error("Duplicate company name or url is not allowed.");
+                        }
+                       else if (response.data > 0) {
                             toastr.success("Record has been updated.");
                             setTimeout(function () {
                                 window.location.reload()
@@ -205,6 +286,22 @@
                 },
                 addItem() {
                     this.vm.Users.push({ ID: 0, Email: null, Phone: null, Address: null, Name: null, UserName: null });
+                },
+                limits(ID) {
+                    var me = this;
+                    me.CompanyID = ID;
+                    $('#createApp').modal("show");
+                    axios.get("/get/company?id=" + ID).then((res) => {
+                        me.vehicles = res.data.Vehicles;
+                        me.license = res.data.License;
+                    });
+                 //   this.vehicleID = ID;
+                },
+                SetLimit(ID,fleet,vehicle) {
+                    axios.get("/save/setlicense?ID=" + ID + "&fleet=" + fleet + "&vehicle=" + vehicle + "&companyID=" + this.CompanyID).then((res) => {
+                        toastr.success("License Updated.");
+                        window.location.reload();
+                    });
                 },
                 remove(index) {
                     if (this.vm.Users.length == 1) {

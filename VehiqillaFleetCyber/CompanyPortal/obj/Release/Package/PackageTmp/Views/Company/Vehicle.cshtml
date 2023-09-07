@@ -11,10 +11,10 @@
             <div class="nav-align-top nav-tabs-shadow mb-4">
                 <ul class="nav nav-tabs " role="tablist">
                     <li class="nav-item">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Vehicles </button>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Add Vehicle</button>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -69,7 +69,7 @@
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="Category">Category</label>
+                                                <label class="col-sm-2 col-form-label" for="Category">Fleet</label>
                                                 <div class="col-sm-10">
                                                     <select v-model="vm.Fleet_ID" id="Fleet_ID" required="required" class="form-control">
                                                         <option value="">Select Fleet</option>
@@ -189,6 +189,9 @@
                             setTimeout(function () {
                                 window.location.reload()
                             }, 500);
+                        },
+                        error: function (o) {
+                            toastr.error("Record has not been deleted because dependent data is present.");
                         }
                     }
                     );
@@ -249,7 +252,15 @@
                             'Content-Type': 'application/json'
                         }
                     }).then(response => {
-                        if (response.data > 0) {
+                        if (response.data == -2) {
+                            toastr.error("Maximum number of vehicles reached.");
+                        }
+
+                        else    if (response.data == -1) {
+                            toastr.error("Duplicate vehicle is not allowed.");
+                        }
+
+                        else if (response.data > 0) {
                             toastr.success("Record has been updated.");
                             setTimeout(function () {
                                 window.location.reload()

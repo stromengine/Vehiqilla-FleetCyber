@@ -25,6 +25,9 @@ namespace AdminPortal.Controllers.Services
                     ID = p.ID,
                     Name = p.Name,
                     Url = p.Url,
+                    License = p.License,
+                    Fleets = p.Fleets,
+                    Vehicles = p.Vehicles,
                 }).FirstOrDefault();
                 return o;
             }
@@ -56,7 +59,7 @@ namespace AdminPortal.Controllers.Services
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                List<UserModel> o = db.Users.Select(p => new UserModel
+                List<UserModel> o = db.Users.Where(x=> x.Id != "f2d14967-211d-471b-92cf-892161c88e19").Select(p => new UserModel
                 {
                     Id = p.Id,
                     Company_ID = p.Company.ID,
@@ -84,7 +87,21 @@ namespace AdminPortal.Controllers.Services
             }
 
         }
+        [HttpGet]
+        [Route("get/CyberRiskType")]
+        public CyberRiskTypeViewModel CyberRiskType(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                CyberRiskTypeViewModel o = db.CyberRiskTypes.Where(x => x.ID == id).Select(p => new CyberRiskTypeViewModel
+                {
+                    ID = p.ID,
+                    Name = p.Name,
+                }).FirstOrDefault();
+                return o;
+            }
 
+        }
 
         [HttpGet]
         [Route("get/supplier")]
@@ -139,6 +156,7 @@ namespace AdminPortal.Controllers.Services
                     Description = p.Description,
                     Supplier_ID = p.Supplier.ID,
                     Category_ID = p.Category.ID,
+                    FilePath = p.FilePath,
                 }).FirstOrDefault();
                 return o;
             }

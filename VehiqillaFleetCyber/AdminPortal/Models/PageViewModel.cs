@@ -47,6 +47,11 @@ namespace AdminPortal.Models
 
     }
     [NotMapped]
+    public class CyberRiskTypeViewModel : CyberRiskType
+    {
+
+    }
+    [NotMapped]
     public class SupplierViewModel : Supplier
     {
 
@@ -84,6 +89,8 @@ namespace AdminPortal.Models
         public string CategoryName { set; get; }
         public string SupplierName { set; get; }
         public string Logo { set; get; }
+        public string FilePath { set; get; }
+        public string Description { set; get; }
         public int Score { set; get; }
         public int Breaches { set; get; }
         public int Vulnerabilities { set; get; }
@@ -112,7 +119,7 @@ namespace AdminPortal.Models
     [NotMapped]
     public class KnowledgerCenterViewModel : KnowledgeCenter
     {
-
+        public HttpPostedFile file { get; set; }
     }
 
 

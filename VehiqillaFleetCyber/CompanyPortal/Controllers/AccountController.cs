@@ -62,12 +62,23 @@ namespace CompanyPortal.Controllers
             using(ApplicationDbContext db = new ApplicationDbContext())
             {
                 ApplicationUser applicationUser = db.Users.FirstOrDefault(x => x.UserName == model.Email);
-                Company company = applicationUser.Company;
-                if(company!=null && company.Url != url)
+
+                if (applicationUser!=null && !applicationUser.EmailConfirmed)
                 {
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Email Verification is pending.");
                     return View(model);
                 }
+
+                if (applicationUser != null)
+                {
+                    Company company = applicationUser.Company;
+                    if (company != null && company.Url != url)
+                    {
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                    }
+                }
+               
             }
             if (!ModelState.IsValid)
             {

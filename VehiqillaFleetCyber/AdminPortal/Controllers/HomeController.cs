@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AdminPortal.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,7 +17,14 @@ namespace AdminPortal.Controllers
 
             return View();
         }
-
+        public ActionResult About()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var list = db.Contents.Where(x => x.IsDeleted == false && x.Type == "About").OrderByDescending(p => p.ID).ToList();
+                return View(list);
+            }
+        }
         [HttpGet]
         public ActionResult Logout()
         {

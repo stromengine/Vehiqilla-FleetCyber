@@ -4,6 +4,7 @@ namespace AdminPortal.Models
 {
     public class UserViewModel
     {
+       // public string ID { get; set; }
         public string ID { get; set; }
 
         [Required]

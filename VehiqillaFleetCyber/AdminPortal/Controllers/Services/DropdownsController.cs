@@ -69,5 +69,20 @@ namespace AdminPortal.Controllers.Services
                 return xx;
             }
         }
+
+        [HttpGet]
+        [Route("dropdowns/appsbysupplier")]
+        public List<NameValue> appsbysupplier(int id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                List<NameValue> xx = db.ECUApps.Where(x=>x.Supplier.ID==id).Select(p => new NameValue()
+                {
+                    ID = p.ID,
+                    Name = p.Name
+                }).OrderBy(s => s.Name).ToList();
+                return xx;
+            }
+        }
     }
 }

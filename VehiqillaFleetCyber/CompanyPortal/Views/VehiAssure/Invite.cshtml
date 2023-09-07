@@ -24,7 +24,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Supplier</th>
-                                    <th>App/ECU</th>
+                                    <th>VehiSW.</th>
                                     <th>Invite Status</th>
                                     <th>Date Created</th>
                                     <th>Action</th>
@@ -204,6 +204,9 @@
                             setTimeout(function () {
                                 window.location.reload()
                             }, 500);
+                        },
+                        error: function (o) {
+                            toastr.error("Record has not been deleted because dependent data is present.");
                         }
                     }
                     );

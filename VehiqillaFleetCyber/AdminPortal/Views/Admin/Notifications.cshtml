@@ -10,10 +10,10 @@
             <div class="nav-align-top nav-tabs-shadow mb-4">
                 <ul class="nav nav-tabs " role="tablist">
                     <li class="nav-item">
-                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Data </button>
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#data" aria-controls="navs-justified-home" aria-selected="true"><i class="tf-icons ti ti-database ti-xs me-1"></i> Notifications </button>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Record</button>
+                        <button type="button" class="nav-link click" role="tab" data-bs-toggle="tab" data-bs-target="#form" aria-controls="navs-justified-profile" aria-selected="false"><i class="tf-icons ti ti-keyboard ti-xs me-1"></i> Add Notification</button>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -57,11 +57,12 @@
                                         <div class="row">
                                             <div class="demo-inline-spacing mt-3">
                                                 <div class="list-group">
-                                                    <label class="list-group-item g-0"  style="padding: 0;">
-                                                       <input class="form-control" v-model="search" placeholder="search"/>
+                                                    <label class="list-group-item g-0" style="padding:0px" >
+                                                        <input v-on:click="selectAll($event)" style="margin: 10px; margin-left: 19px;" class="form-check-input me-1" type="checkbox" value="">
+                                                        <input class="form-control" v-model="search" placeholder="search" style="width:96%;float:right"/>
                                                     </label>
                                                     <label class="list-group-item items" v-for="(user,i) in filteredList" :key="i">
-                                                        <input v-on:click="AddRemove(user.Name,user.Email,$event)" class="form-check-input me-1" type="checkbox" value="">
+                                                        <input v-on:click="AddRemove(user.Name,user.Email,$event)" class="form-check-input me-1 xxx" type="checkbox" value="">
                                                         {{user.Name}}
                                                     </label>
 
@@ -157,6 +158,30 @@
                 });
             },
             methods: {
+                selectAll(e) {
+                    var me = this;
+                    if (e.srcElement.checked) {
+                        $('.xxx').each(function () {
+                            me.messageTo = [];
+                            $(this).prop("checked",true);
+                            $(me.users).each(function (key, value) {
+                                let x = value.Name + '<' + value.Email + '>';
+                                if (!me.messageTo.includes(x)) {
+                                    me.messageTo.push(x);
+                                }
+                            });
+
+                         
+                        })
+                    }
+                    else {
+                        $('.xxx').each(function () {
+                            $(this).prop("checked",false);
+                            me.messageTo = [];
+                        })
+                    }
+
+                },
                 AddRemove(name, email, e) {
                     console.log(e.srcElement.checked);
                     let x = name + ' <' + email + '>; ';

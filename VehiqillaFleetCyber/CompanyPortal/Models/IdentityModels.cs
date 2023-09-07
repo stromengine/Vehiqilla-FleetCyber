@@ -73,6 +73,8 @@ namespace CompanyPortal.Models
         public DbSet<VehiAssureAssessmentCustomField> VehiAssureAssessmentCustomFields { set; get; }
         public DbSet<Content> Contents { set; get; }
         public DbSet<Vehicle> Vehicles { set; get; }
+        public DbSet<Finding> Findings { set; get; }
+        public DbSet<CyberRiskType> CyberRiskTypes{ set; get; }
         public DbSet<Fleet> Fleets { set; get; }
         public DbSet<AccessList> AccessLists { set; get; }
         public DbSet<AppVehicleMap> AppVehicleMaps { set; get; }

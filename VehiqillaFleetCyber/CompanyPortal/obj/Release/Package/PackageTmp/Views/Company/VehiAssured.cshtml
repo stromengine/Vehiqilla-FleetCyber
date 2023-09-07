@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Vehi Assured";
+    ViewBag.Title = "Vehi-Assure Database";
 }
 <style>
     #online-offline {
@@ -143,7 +143,7 @@
                         <form class="composeForm" style="    padding: 5px;">
                             <div class="form-group" style="    margin: 0px;">
                                 <div class="input-group">
-                                    <input v-model="searchApp" type="text" class="form-control" placeholder="APP/ECU Name" aria-label="">
+                                    <input v-model="searchApp" type="text" class="form-control" placeholder="VehiSW. Name" aria-label="">
                                     <div class="input-group-append">
                                         <button class="btn btn-icon icon-left btn-warning" style="width: 200px;" type="button"><i class="fas fa-search"></i>Search</button>
                                     </div>
@@ -163,7 +163,7 @@
                         <div class="card-body card-type-3">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <img alt="image" style="width:100%" :src="pathToLogo(app.Logo)" class="rounded-circle author-box-picture">
+                                    <img alt="image" style="width:100%" :src="app.FilePath" class="rounded-circle author-box-picture">
                                 </div>
                                 <div class="col-sm-6">
                                     <h4 class="text-muted mb-0">{{app.Name}}</h4>
@@ -279,6 +279,7 @@
                     this.apps = [];
                     let me = this;
                     axios.get('/Company/CategoriesList').then(function (response) {
+                        me.categories=[];
                         $(response.data).each(function (key, value) {
                             me.categories.push(value);
                         });
